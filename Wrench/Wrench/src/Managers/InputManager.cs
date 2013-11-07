@@ -17,6 +17,13 @@ namespace Wrench.src.Managers
     /// </summary>
     public class InputManager : Microsoft.Xna.Framework.GameComponent
     {
+        bool needsMatrixUpdate = false;
+
+        public void SetMatrixUpdate(bool matrixUpdate)
+        {
+            needsMatrixUpdate = matrixUpdate;
+        }
+
         public InputManager(Game game)
             : base(game)
         {
@@ -44,7 +51,16 @@ namespace Wrench.src.Managers
                 Game.Exit();
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Game.Exit();
+
+            if (needsMatrixUpdate)
+                UpdateMatrix();
+
             base.Update(gameTime);
+        }
+
+        public void UpdateMatrix()
+        { 
+        
         }
     }
 }
