@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Wrench.src.Managers;
 
 namespace Wrench
 {
@@ -18,10 +19,14 @@ namespace Wrench
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        public InputManager inputManager;
+        public MatrixManager matrixManager;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            inputManager = new InputManager(this);
+            matrixManager = new MatrixManager();
             Content.RootDirectory = "Content";
         }
 
@@ -34,7 +39,7 @@ namespace Wrench
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            inputManager.Initialize();
             base.Initialize();
         }
 
@@ -66,9 +71,8 @@ namespace Wrench
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            inputManager.Update(gameTime);
+
 
             // TODO: Add your update logic here
 

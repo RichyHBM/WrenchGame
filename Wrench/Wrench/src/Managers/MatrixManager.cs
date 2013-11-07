@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Wrench.src.Managers
 {
-    public static class MatrixManager
+    public class MatrixManager
     {
         int width = 1, height = 1;
         float nearPlane = 0.1f, farPlane = 100.0f;
@@ -22,7 +22,7 @@ namespace Wrench.src.Managers
         {
             orthogonal = Matrix.CreateOrthographic(width, height, nearPlane, farPlane);
             view = Matrix.CreateLookAt(position, lookAt, up);
-            perspective = Matrix.CreatePerspectiveFieldOfView(fieldOfView, width / (float)height, nearPlane, farPlane);
+            perspective = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians( fieldOfView ), width / (float)height, nearPlane, farPlane);
             Matrix.Multiply(ref view, ref orthogonal, out viewOrthographic);
             Matrix.Multiply(ref view, ref perspective, out viewPerspective);
         }
@@ -32,7 +32,7 @@ namespace Wrench.src.Managers
             this.width = width;
             this.height = height;
             orthogonal = Matrix.CreateOrthographic(width, height, nearPlane, farPlane);
-            perspective = Matrix.CreatePerspectiveFieldOfView(fieldOfView, width / (float)height, nearPlane, farPlane);
+            perspective = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fieldOfView), width / (float)height, nearPlane, farPlane);
             Matrix.Multiply(ref view, ref orthogonal, out viewOrthographic);
             Matrix.Multiply(ref view, ref perspective, out viewPerspective);
         }
@@ -64,31 +64,31 @@ namespace Wrench.src.Managers
         public Matrix Orthographic
         {
             get { return orthogonal; }
-            private set;
+            private set{}
         }
 
         public Matrix Perspective
         {
             get { return perspective; }
-            private set;
+            private set{}
         }
 
         public Matrix View
         {
             get { return view; }
-            private set;
+            private set { }
         }
 
         public Matrix ViewPerspective
         {
             get { return viewPerspective; }
-            private set;
+            private set { }
         }
 
         public Matrix ViewOrthographic
         {
             get { return viewOrthographic; }
-            private set;
+            private set { }
         }
 
 
