@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Wrench.src.BaseClasses;
 
 namespace Wrench.src.Managers
 {
-    public class MatrixManager
+    public class MatrixManager : IManager
     {
         int width = 1, height = 1;
         float nearPlane = 0.1f, farPlane = 100.0f;
@@ -18,13 +19,22 @@ namespace Wrench.src.Managers
         Matrix viewPerspective;
         Matrix viewOrthographic;
 
-        public MatrixManager()
+        public void Initialize()
         {
             orthogonal = Matrix.CreateOrthographic(width, height, nearPlane, farPlane);
             view = Matrix.CreateLookAt(position, lookAt, up);
             perspective = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians( fieldOfView ), width / (float)height, nearPlane, farPlane);
             Matrix.Multiply(ref view, ref orthogonal, out viewOrthographic);
             Matrix.Multiply(ref view, ref perspective, out viewPerspective);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            
+        }
+
+        public void Draw(GameTime gameTime)
+        {
         }
 
         public void SetWidthHeight(int width, int height)

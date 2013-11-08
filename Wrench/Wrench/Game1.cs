@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Wrench.src.Managers;
+using Wrench.src.States;
 
 namespace Wrench
 {
@@ -19,14 +20,12 @@ namespace Wrench
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        public InputManager inputManager;
-        public MatrixManager matrixManager;
+        public static Game MainGame;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            inputManager = new InputManager(this);
-            matrixManager = new MatrixManager();
+            MainGame = this;
             Content.RootDirectory = "Content";
         }
 
@@ -39,7 +38,9 @@ namespace Wrench
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            inputManager.Initialize();
+            Manager.Initialize();
+            Manager.StateManager.PushState(new MainMenuState(this));
+            Manager.StateManager.PushState(new IntroState(this));
             base.Initialize();
         }
 
@@ -71,8 +72,7 @@ namespace Wrench
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            inputManager.Update(gameTime);
-
+            Manager.Update(gameTime);
 
             // TODO: Add your update logic here
 
@@ -85,6 +85,7 @@ namespace Wrench
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            Manager.Draw(gameTime);
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here

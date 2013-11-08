@@ -19,8 +19,10 @@ sandboxes
 sandboxes/
 Team Project/sandboxes
 Team Project/sandboxes/
-_ReSharper.Labs
-_ReSharper.Labs/
+_ReSharper.*
+_ReSharper.*/
+_ReSharper.Wrench
+_ReSharper.Wrench/
 
 # Compiled Object files
 *.slo
@@ -82,4 +84,5 @@ Thumbs.db
 
 # Other
 log.txt
-/_ReSharper.Legend of Kaah/
+/_ReSharper.Wrench/
+*.ReSharper

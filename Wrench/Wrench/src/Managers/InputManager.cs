@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Wrench.src.BaseClasses;
 
 
 namespace Wrench.src.Managers
@@ -15,50 +16,69 @@ namespace Wrench.src.Managers
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class InputManager : Microsoft.Xna.Framework.GameComponent
+    public class InputManager : IManager
     {
         bool needsMatrixUpdate = false;
+        MouseState oldMouseState, currentMouseState;
+        KeyboardState oldKeyboardState, currentKeyboardState;
+        GamePadState oldGamepadState, currentGamepadState;
 
         public void SetMatrixUpdate(bool matrixUpdate)
         {
             needsMatrixUpdate = matrixUpdate;
         }
 
-        public InputManager(Game game)
-            : base(game)
-        {
-            // TODO: Construct any child components here
-        }
-
-        /// <summary>
-        /// Allows the game component to perform any initialization it needs to before starting
-        /// to run.  This is where it can query for any required services and load content.
-        /// </summary>
-        public override void Initialize()
+        public void Initialize()
         {
             // TODO: Add your initialization code here
-
-            base.Initialize();
+            currentMouseState = Mouse.GetState();
+            oldMouseState = currentMouseState;
+            currentKeyboardState = Keyboard.GetState();
+            oldKeyboardState = currentKeyboardState;
+            currentGamepadState = GamePad.GetState(PlayerIndex.One);
+            oldGamepadState = currentGamepadState;
         }
 
         /// <summary>
         /// Allows the game component to update itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
+
+            updateStates();
+
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                Game.Exit();
+                Game1.MainGame.Exit();
             if(Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Game.Exit();
+                Game1.MainGame.Exit();
 
             if (needsMatrixUpdate)
                 UpdateMatrix();
-
-            base.Update(gameTime);
         }
 
-        public void UpdateMatrix()
+        private void updateStates()
+        {
+            oldMouseState = currentMouseState;
+            currentMouseState = Mouse.GetState();
+            oldKeyboardState = currentKeyboardState;
+            currentKeyboardState = Keyboard.GetState();
+            oldGamepadState = currentGamepadState;
+            currentGamepadState = GamePad.GetState(PlayerIndex.One);
+        }
+
+        public void Draw(GameTime gameTime)
+        {
+            
+        }
+
+        public bool HasBeenPressed(Keys key)
+        {
+            return oldKeyboardState.IsKeyUp(key) && currentKeyboardState.IsKeyDown(key);
+        }
+
+        public static void UpdateMatrix()
         { 
         
         }
