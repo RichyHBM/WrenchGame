@@ -17,21 +17,12 @@ namespace Wrench.src.BaseClasses
     /// </summary>
     public abstract class AState : Microsoft.Xna.Framework.DrawableGameComponent
     {
+        protected SpriteBatch spriteBatch;
         public AState(Game game)
             : base(game)
         {
+            spriteBatch = (Game.Services.GetService(typeof (SpriteBatch)) as SpriteBatch);
             // TODO: Construct any child components here
-        }
-
-        /// <summary>
-        /// Allows the game component to perform any initialization it needs to before starting
-        /// to run.  This is where it can query for any required services and load content.
-        /// </summary>
-        public override void Initialize()
-        {
-            // TODO: Add your initialization code here
-
-            base.Initialize();
         }
 
         /// <summary>

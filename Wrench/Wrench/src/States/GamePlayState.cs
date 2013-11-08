@@ -19,6 +19,7 @@ namespace Wrench.src.States
     /// </summary>
     public class GamePlayState : AState
     {
+        Texture2D background;
         public GamePlayState(Game game)
             : base(game)
         {
@@ -48,19 +49,29 @@ namespace Wrench.src.States
             base.Update(gameTime);
         }
 
+        public override void Draw(GameTime gameTime)
+        {
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(background, Game.GraphicsDevice.Viewport.Bounds, Color.White);
+
+            spriteBatch.End();
+            base.Draw(gameTime);
+        }
+
         public override void Resume()
         {
-            System.Console.WriteLine("Game Resume");
+
         }
 
         public override void Pause()
         {
-            System.Console.WriteLine("Game Paused");
+
         }
 
         public override void Start()
         {
-            
+            background = Game.Content.Load<Texture2D>("Textures/GamePlay");
         }
 
         public override void Stop()

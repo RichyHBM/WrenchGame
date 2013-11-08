@@ -25,6 +25,7 @@ namespace Wrench.src.Managers
             if(states.Count != 0)
                 states.Last().Pause();
 
+            state.Initialize();
             state.Start();
             state.Resume();
 

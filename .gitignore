@@ -23,6 +23,7 @@ _ReSharper.*
 _ReSharper.*/
 _ReSharper.Wrench
 _ReSharper.Wrench/
+*.cachefile
 
 # Compiled Object files
 *.slo

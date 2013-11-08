@@ -25,6 +25,10 @@ namespace Wrench
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferHeight = 480;
+            graphics.PreferredBackBufferWidth = 720;
+            graphics.ApplyChanges();
+
             MainGame = this;
             Content.RootDirectory = "Content";
         }
@@ -38,9 +42,7 @@ namespace Wrench
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            Manager.Initialize();
-            Manager.StateManager.PushState(new MainMenuState(this));
-            Manager.StateManager.PushState(new IntroState(this));
+
             base.Initialize();
         }
 
@@ -52,6 +54,13 @@ namespace Wrench
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Services.AddService(typeof(SpriteBatch), spriteBatch);
+
+            Manager.Initialize();
+            Manager.StateManager.PushState(new MainMenuState(this));
+            Manager.StateManager.PushState(new IntroState(this));
+
+            
 
             // TODO: use this.Content to load your game content here
         }
@@ -85,8 +94,10 @@ namespace Wrench
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            Manager.Draw(gameTime);
+            
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            Manager.Draw(gameTime); 
 
             // TODO: Add your drawing code here
 

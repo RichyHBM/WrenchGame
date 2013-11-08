@@ -19,21 +19,11 @@ namespace Wrench.src.States
     /// </summary>
     public class IntroState : AState
     {
+        Texture2D background;
         public IntroState(Game game)
             : base(game)
         {
             // TODO: Construct any child components here
-        }
-
-        /// <summary>
-        /// Allows the game component to perform any initialization it needs to before starting
-        /// to run.  This is where it can query for any required services and load content.
-        /// </summary>
-        public override void Initialize()
-        {
-            // TODO: Add your initialization code here
-
-            base.Initialize();
         }
 
         /// <summary>
@@ -48,19 +38,29 @@ namespace Wrench.src.States
             base.Update(gameTime);
         }
 
+        public override void Draw(GameTime gameTime)
+        {
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(background, Game.GraphicsDevice.Viewport.Bounds, Color.White);
+
+            spriteBatch.End();
+            base.Draw(gameTime);
+        }
+
         public override void Resume()
         {
-            System.Console.WriteLine("Intro Resume");
+
         }
 
         public override void Pause()
         {
-            System.Console.WriteLine("Intro Paused");
+
         }
 
         public override void Start()
         {
-
+            background = Game.Content.Load<Texture2D>("Textures/Intro");
         }
 
         public override void Stop()
