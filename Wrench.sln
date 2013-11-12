@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrench", "Wrench\Wrench\Wrench.csproj", "{CE66F297-D382-4160-99F5-28A36D825D2B}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "WrenchContent", "Wrench\WrenchContent\WrenchContent.contentproj", "{B558D6F3-4A09-4BAD-BDBD-AB45692EF47B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WrenchContent", "Wrench\WrenchContent\WrenchContent.contentproj", "{B558D6F3-4A09-4BAD-BDBD-AB45692EF47B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAssetsImporter", "CustomAssetsImporter\CustomAssetsImporter.csproj", "{97856524-677F-4850-A129-C7AD512D3FF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomAssets", "CustomAssets\CustomAssets.csproj", "{0746634E-5276-45D6-AE32-DBE800BDEC0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +21,14 @@ Global
 		{CE66F297-D382-4160-99F5-28A36D825D2B}.Release|x86.Build.0 = Release|x86
 		{B558D6F3-4A09-4BAD-BDBD-AB45692EF47B}.Debug|x86.ActiveCfg = Debug|x86
 		{B558D6F3-4A09-4BAD-BDBD-AB45692EF47B}.Release|x86.ActiveCfg = Release|x86
+		{97856524-677F-4850-A129-C7AD512D3FF7}.Debug|x86.ActiveCfg = Debug|x86
+		{97856524-677F-4850-A129-C7AD512D3FF7}.Debug|x86.Build.0 = Debug|x86
+		{97856524-677F-4850-A129-C7AD512D3FF7}.Release|x86.ActiveCfg = Release|x86
+		{97856524-677F-4850-A129-C7AD512D3FF7}.Release|x86.Build.0 = Release|x86
+		{0746634E-5276-45D6-AE32-DBE800BDEC0A}.Debug|x86.ActiveCfg = Debug|x86
+		{0746634E-5276-45D6-AE32-DBE800BDEC0A}.Debug|x86.Build.0 = Debug|x86
+		{0746634E-5276-45D6-AE32-DBE800BDEC0A}.Release|x86.ActiveCfg = Release|x86
+		{0746634E-5276-45D6-AE32-DBE800BDEC0A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

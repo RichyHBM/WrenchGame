@@ -96,6 +96,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CustomAssets\CustomAssets.csproj">
+      <Project>{0746634E-5276-45D6-AE32-DBE800BDEC0A}</Project>
+      <Name>CustomAssets</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WrenchContent\WrenchContent.contentproj">
       <Name>WrenchContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
