@@ -13,5 +13,17 @@ namespace CustomAssets
 {
     public class Level
     {
+        protected char [] map ;
+        public char[] Map { get; private set; }
+
+        public Level()
+        {
+
+        }
+
+        public void SetMap(char[] mapArr)
+        {
+            this.map = mapArr;
+        }
     }
 }

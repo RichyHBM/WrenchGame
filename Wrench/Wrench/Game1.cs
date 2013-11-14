@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Wrench.src.Managers;
 using Wrench.src.States;
+using CustomAssets;
 
 namespace Wrench
 {
@@ -60,7 +61,7 @@ namespace Wrench
             Manager.StateManager.PushState(new MainMenuState(this));
             Manager.StateManager.PushState(new IntroState(this));
 
-            
+            Level l = Content.Load<Level>("level");
 
             // TODO: use this.Content to load your game content here
         }
