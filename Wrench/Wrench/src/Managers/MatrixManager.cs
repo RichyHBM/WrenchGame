@@ -21,7 +21,7 @@ namespace Wrench.src.Managers
 
         public void Initialize()
         {
-            position = new Vector3(10,5,10);
+            position = new Vector3(3,2,3);
             orthogonal = Matrix.CreateOrthographic(width, height, nearPlane, farPlane);
             view = Matrix.CreateLookAt(position, lookAt, up);
             perspective = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians( fieldOfView ), width / (float)height, nearPlane, farPlane);

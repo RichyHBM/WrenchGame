@@ -21,14 +21,16 @@ namespace Wrench.src.Helpers
     {
         protected Level level;
         protected String levelName;
-        protected List<VertexPositionColor> vertices = new List<VertexPositionColor>();
+        protected List<VertexPositionNormalTexture> vertices = new List<VertexPositionNormalTexture>();
         protected BasicEffect effect;
+        protected Texture2D brickTexture;
 
         public LevelRenderer(Game game, String levelName)
             : base(game)
         {
             this.levelName = levelName;
             level = Game.Content.Load<Level>(levelName);
+            brickTexture = Game.Content.Load<Texture2D>("Textures/bricks");
             effect = new BasicEffect(Game.GraphicsDevice);
         }
 
@@ -40,17 +42,19 @@ namespace Wrench.src.Helpers
         {
             // TODO: Add your initialization code here
 
-            for (int y = 0; y < level.Size; y++)
+            for (int y = 0; y < level.Height; y++)
             {
-                for (int x = 0; x < level.Size; x++)
+                for (int x = 0; x < level.Width; x++)
                 {
                     if (level.GetAt(x, y) == '#')
                     {
-                        vertices.AddRange(CubeMesh.CubeMeshAt(x, y));
+                        vertices.AddRange(MapMesh.WallMeshAt(x, y));
+                    }
+                    else if (level.GetAt(x, y) == '.') {
+                        vertices.AddRange(MapMesh.FloorMeshAt(x, y));
                     }
                 }
             }
-
 
             base.Initialize();
         }
@@ -71,11 +75,12 @@ namespace Wrench.src.Helpers
             effect.World = Matrix.CreateTranslation(Vector3.Zero);
             effect.View = Manager.MatrixManager.View;
             effect.Projection = Manager.MatrixManager.Perspective;
-            effect.VertexColorEnabled = true;
+            effect.VertexColorEnabled = false;
+            effect.TextureEnabled = true;
+            effect.Texture = brickTexture;
 
             effect.CurrentTechnique.Passes[0].Apply();
-
-            GraphicsDevice.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.TriangleList, vertices.ToArray(), 0, vertices.Count / 3, VertexPositionColor.VertexDeclaration);
+            GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.TriangleList, vertices.ToArray(), 0, vertices.Count / 3, VertexPositionNormalTexture.VertexDeclaration);
 
             base.Draw(gameTime);
         }

@@ -14,22 +14,24 @@ namespace CustomAssets
     public class Level
     {
         public char[] Map;
-        public int Size;
+        public int Width;
+        public int Height;
 
         public Level()
         {
 
         }
 
-        public void SetMapAndSize(char[] mapArr, int size)
+        public void SetMapAndSize(char[] mapArr, int width, int height)
         {
             Map = mapArr;
-            Size = size;
+            Width = width;
+            Height = height;
         }
 
         public char GetAt(int x, int y)
         {
-            return Map[x + Size * y];
+            return Map[x + Width * y];
         }
     }
 }

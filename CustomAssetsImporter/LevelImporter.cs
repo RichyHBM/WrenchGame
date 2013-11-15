@@ -27,27 +27,35 @@ namespace CustomAssetsImporter
         public override Level Import(string filename, ContentImporterContext context)
         {
             StreamReader reader = new StreamReader(File.OpenRead(filename));
-
+            int levelWidth = 0;
             List<String> lines = new List<string>();
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
+                if (levelWidth < line.Length)
+                    levelWidth = line.Length;
                 lines.Add(line);
             }
-            int levelSize = 10;
 
-            char[] map = new char[levelSize * levelSize];
+            char[] map = new char[levelWidth * lines.Count];
+
             int index = 0;
             foreach (String line in lines)
             {
                 char[] lineChar = line.ToCharArray();
                 for (int j = 0; j < line.Length; j++)
                 {
-                    map[index++] = lineChar[j];
+                    if (!String.IsNullOrEmpty(lineChar[j].ToString()))
+                    {
+                        map[index++] = lineChar[j];
+                    }
+                    else {
+                        map[index++] = ' ';
+                    }
                 }
             }
             Level level = new Level();
-            level.SetMapAndSize(map, levelSize);
+            level.SetMapAndSize(map, levelWidth, lines.Count);
             return level;
         }
     }
