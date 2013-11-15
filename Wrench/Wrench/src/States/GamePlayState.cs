@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Wrench.src.BaseClasses;
 using Wrench.src.Managers;
+using Wrench.src.Helpers;
 
 
 namespace Wrench.src.States
@@ -20,9 +21,12 @@ namespace Wrench.src.States
     public class GamePlayState : AState
     {
         Texture2D background;
+        private LevelRenderer LevelRend;
+
         public GamePlayState(Game game)
             : base(game)
         {
+            LevelRend = new LevelRenderer(Game, "level");
             // TODO: Construct any child components here
         }
 
@@ -33,7 +37,7 @@ namespace Wrench.src.States
         public override void Initialize()
         {
             // TODO: Add your initialization code here
-
+            LevelRend.Initialize();
             base.Initialize();
         }
 
@@ -46,16 +50,14 @@ namespace Wrench.src.States
             // TODO: Add your update code here
             if (Manager.InputManager.HasBeenPressed(Keys.B))
                 Manager.StateManager.RemoveState(this);
+
+            LevelRend.Update(gameTime);
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin();
-
-            spriteBatch.Draw(background, Game.GraphicsDevice.Viewport.Bounds, Color.White);
-
-            spriteBatch.End();
+            LevelRend.Draw(gameTime);
             base.Draw(gameTime);
         }
 

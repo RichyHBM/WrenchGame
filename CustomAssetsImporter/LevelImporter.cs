@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 
 // TODO: replace this with the type you want to import.
-using TImport = CustomAssets.Level;
 using System.IO;
 using CustomAssets;
 
@@ -22,24 +21,22 @@ namespace CustomAssetsImporter
     /// TODO: change the ContentImporter attribute to specify the correct file
     /// extension, display name, and default processor for this importer.
     /// </summary>
-    [ContentImporter(".lev", DisplayName = "LevelImporter", DefaultProcessor = "LevelProcessor")]
-    public class LevelImporter : ContentImporter<TImport>
+    [ContentImporter(".lev", DisplayName = "LevelImporter")]
+    public class LevelImporter : ContentImporter<Level>
     {
-        public override TImport Import(string filename, ContentImporterContext context)
+        public override Level Import(string filename, ContentImporterContext context)
         {
-            System.Diagnostics.Debugger.Launch();
             StreamReader reader = new StreamReader(File.OpenRead(filename));
-            int size = 0;
+
             List<String> lines = new List<string>();
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
-                if (line.Length > size)
-                    size = line.Length;
                 lines.Add(line);
             }
+            int levelSize = 10;
 
-            char[] map = new char[size * lines.Count];
+            char[] map = new char[levelSize * levelSize];
             int index = 0;
             foreach (String line in lines)
             {
@@ -50,7 +47,7 @@ namespace CustomAssetsImporter
                 }
             }
             Level level = new Level();
-            level.SetMap(map);
+            level.SetMapAndSize(map, levelSize);
             return level;
         }
     }

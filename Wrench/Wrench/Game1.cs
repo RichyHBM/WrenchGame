@@ -53,15 +53,15 @@ namespace Wrench
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
+            
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
             Services.AddService(typeof(SpriteBatch), spriteBatch);
 
             Manager.Initialize();
             Manager.StateManager.PushState(new MainMenuState(this));
             Manager.StateManager.PushState(new IntroState(this));
-
-            Level l = Content.Load<Level>("level");
+            
 
             // TODO: use this.Content to load your game content here
         }
@@ -95,10 +95,14 @@ namespace Wrench
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            
             Manager.Draw(gameTime); 
+
+            GraphicsDevice.BlendState = BlendState.Opaque; 
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 
             // TODO: Add your drawing code here
 
