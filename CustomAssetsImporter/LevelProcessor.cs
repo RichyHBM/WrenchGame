@@ -38,7 +38,7 @@ namespace CustomAssetsImporter
                 char[] lineChar = line.ToCharArray();
                 for (int j = 0; j < line.Length; j++)
                 {
-                    if (!String.IsNullOrEmpty(lineChar[j].ToString()))
+                    if (!String.IsNullOrWhiteSpace(lineChar[j].ToString()))
                     {
                         map[index++] = lineChar[j];
                     }

@@ -29,7 +29,7 @@ namespace Wrench.src.GameObjects
             : base(game)
         {
             this.position = pos;
-            headPosition = new Vector3(0, 0.8f, 0);
+            headPosition = new Vector3(0, 0.6f, 0);
             RotationSpeed = 2f;
             ForwardSpeed = 3f;
             // TODO: Construct any child components here

@@ -49,7 +49,7 @@ namespace Wrench.src.Helpers
                     {
                         vertices.AddRange(MapMesh.WallMeshAt(x, y));
                     }
-                    else if (level.GetAt(x, y) == '.')
+                    else if (level.GetAt(x, y) == '.' || level.GetAt(x, y) == 'p')
                     {
                         vertices.AddRange(MapMesh.FloorMeshAt(x, y));
                     }

@@ -28,7 +28,15 @@ namespace Wrench.src.GameLevelItems
         {
             levelRaw = game.Content.Load<Level>("level");
             levelRend = new LevelRenderer(game, levelRaw);
-            player = new Player(game, Vector3.Zero);
+
+            Vector3 playerPos = Vector3.Zero;
+            for (int y = 0; y < levelRaw.Depth; y++)
+                for (int x = 0; x < levelRaw.Width; x++)
+                    if (levelRaw.GetAt(x, y) == 'p')
+                        playerPos = new Vector3(x - (levelRaw.Width / 2) + 0.5f, 0, y - (levelRaw.Depth / 2) + 0.5f);
+            //Corner of the box if front left, so to place player in right place we need to add .5 to the left and .5 to the front
+
+            player = new Player(game, playerPos);
             // TODO: Construct any child components here
         }
 
