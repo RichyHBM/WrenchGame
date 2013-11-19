@@ -95,6 +95,7 @@
     <Compile Include="level.lev">
       <Name>level</Name>
       <Importer>LevelImporter</Importer>
+      <Processor>LevelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +103,13 @@
       <Name>bricks</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effects\Effect1.fx">
+      <Name>Effect1</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

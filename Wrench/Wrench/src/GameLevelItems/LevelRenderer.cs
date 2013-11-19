@@ -25,11 +25,10 @@ namespace Wrench.src.Helpers
         protected BasicEffect effect;
         protected Texture2D brickTexture;
 
-        public LevelRenderer(Game game, String levelName)
+        public LevelRenderer(Game game, Level levFile)
             : base(game)
         {
-            this.levelName = levelName;
-            level = Game.Content.Load<Level>(levelName);
+            level = levFile;
             brickTexture = Game.Content.Load<Texture2D>("Textures/bricks");
             effect = new BasicEffect(Game.GraphicsDevice);
         }
@@ -42,7 +41,7 @@ namespace Wrench.src.Helpers
         {
             // TODO: Add your initialization code here
 
-            for (int y = 0; y < level.Height; y++)
+            for (int y = 0; y < level.Depth; y++)
             {
                 for (int x = 0; x < level.Width; x++)
                 {
@@ -50,7 +49,8 @@ namespace Wrench.src.Helpers
                     {
                         vertices.AddRange(MapMesh.WallMeshAt(x, y));
                     }
-                    else if (level.GetAt(x, y) == '.') {
+                    else if (level.GetAt(x, y) == '.')
+                    {
                         vertices.AddRange(MapMesh.FloorMeshAt(x, y));
                     }
                 }
@@ -72,7 +72,7 @@ namespace Wrench.src.Helpers
 
         public override void Draw(GameTime gameTime)
         {
-            effect.World = Matrix.CreateTranslation(Vector3.Zero);
+            effect.World = Matrix.CreateTranslation(new Vector3(-(level.Width / 2), 0, -(level.Depth / 2)));
             effect.View = Manager.MatrixManager.View;
             effect.Projection = Manager.MatrixManager.Perspective;
             effect.VertexColorEnabled = false;

@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using System.IO;
 using CustomAssets;
 
+using TOutput = CustomAssetsImporter.LoadedLevelFile;
+
 namespace CustomAssetsImporter
 {
     /// <summary>
@@ -21,14 +23,15 @@ namespace CustomAssetsImporter
     /// TODO: change the ContentImporter attribute to specify the correct file
     /// extension, display name, and default processor for this importer.
     /// </summary>
-    [ContentImporter(".lev", DisplayName = "LevelImporter")]
-    public class LevelImporter : ContentImporter<Level>
+    [ContentImporter(".lev", DisplayName = "LevelImporter", DefaultProcessor = "LevelProcessor")]
+    public class LevelImporter : ContentImporter<TOutput>
     {
-        public override Level Import(string filename, ContentImporterContext context)
+        public override TOutput Import(string filename, ContentImporterContext context)
         {
             StreamReader reader = new StreamReader(File.OpenRead(filename));
             int levelWidth = 0;
             List<String> lines = new List<string>();
+            //Map size is dynamic, its guessed by the size of rows/amount of lines
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
@@ -36,27 +39,12 @@ namespace CustomAssetsImporter
                     levelWidth = line.Length;
                 lines.Add(line);
             }
-
-            char[] map = new char[levelWidth * lines.Count];
-
-            int index = 0;
-            foreach (String line in lines)
-            {
-                char[] lineChar = line.ToCharArray();
-                for (int j = 0; j < line.Length; j++)
-                {
-                    if (!String.IsNullOrEmpty(lineChar[j].ToString()))
-                    {
-                        map[index++] = lineChar[j];
-                    }
-                    else {
-                        map[index++] = ' ';
-                    }
-                }
-            }
-            Level level = new Level();
-            level.SetMapAndSize(map, levelWidth, lines.Count);
-            return level;
+            //So these need to be passed over individually
+            return new LoadedLevelFile(){
+                width = levelWidth,
+                height = lines.Count,
+                map = lines
+            };
         }
     }
 }

@@ -78,6 +78,11 @@ namespace Wrench.src.Managers
             return oldKeyboardState.IsKeyUp(key) && currentKeyboardState.IsKeyDown(key);
         }
 
+        public bool IsDown(Keys key)
+        {
+            return currentKeyboardState.IsKeyDown(key);
+        }
+
         public static void UpdateMatrix()
         { 
         

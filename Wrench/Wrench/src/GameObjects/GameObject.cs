@@ -8,26 +8,30 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Wrench.src.BaseClasses;
-using Wrench.src.Managers;
-using Wrench.src.Helpers;
-using Wrench.src.GameLevelItems;
 
 
-namespace Wrench.src.States
+namespace Wrench.src.GameObjects
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class GamePlayState : AState
+    public class GameObject : Microsoft.Xna.Framework.DrawableGameComponent
     {
-        Texture2D background; 
-        GameLevel level;
+        protected Vector3 position;
+        protected Vector3 direction;
+        protected BoundingBox boundingBox;
 
-        public GamePlayState(Game game)
+        public Vector3 Position { get { return position; } private set { } }
+        public Vector3 Direction { get { return direction; } private set { } }
+        public BoundingBox BoundingBox { get { return boundingBox; } private set { } }
+
+        public float RotationSpeed { get; protected set; }
+        public float ForwardSpeed { get; protected set; }
+
+        public GameObject(Game game)
             : base(game)
         {
-            level = new GameLevel(game);
+            
             // TODO: Construct any child components here
         }
 
@@ -38,7 +42,7 @@ namespace Wrench.src.States
         public override void Initialize()
         {
             // TODO: Add your initialization code here
-            level.Initialize();
+
             base.Initialize();
         }
 
@@ -49,37 +53,8 @@ namespace Wrench.src.States
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-            if (Manager.InputManager.HasBeenPressed(Keys.B))
-                Manager.StateManager.RemoveState(this);
 
-            level.Update(gameTime);
             base.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            level.Draw(gameTime);
-            base.Draw(gameTime);
-        }
-
-        public override void Resume()
-        {
-
-        }
-
-        public override void Pause()
-        {
-
-        }
-
-        public override void Start()
-        {
-            background = Game.Content.Load<Texture2D>("Textures/GamePlay");
-        }
-
-        public override void Stop()
-        {
-            
         }
     }
 }

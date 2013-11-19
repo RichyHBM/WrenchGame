@@ -53,6 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LevelImporter.cs" />
+    <Compile Include="LevelProcessor.cs" />
+    <Compile Include="LevelWritter.cs" />
+    <Compile Include="LoadedLevelFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

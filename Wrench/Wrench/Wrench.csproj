@@ -81,9 +81,14 @@
     <Compile Include="Game1.cs" />
     <Compile Include="src\BaseClasses\AState.cs" />
     <Compile Include="src\BaseClasses\IManager.cs" />
+    <Compile Include="src\GameLevelItems\GameLevel.cs" />
+    <Compile Include="src\GameLevelItems\LevelCollisions.cs" />
+    <Compile Include="src\GameObjects\GameObject.cs" />
+    <Compile Include="src\GameObjects\Player.cs" />
+    <Compile Include="src\Helpers\Billboard.cs" />
     <Compile Include="src\Helpers\MapMesh.cs" />
     <Compile Include="src\Helpers\DebugShapeRenderer.cs" />
-    <Compile Include="src\Helpers\LevelRenderer.cs" />
+    <Compile Include="src\GameLevelItems\LevelRenderer.cs" />
     <Compile Include="src\Managers\InputManager.cs" />
     <Compile Include="src\Managers\Manager.cs" />
     <Compile Include="src\Managers\MatrixManager.cs" />

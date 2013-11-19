@@ -15,18 +15,18 @@ namespace CustomAssets
     {
         public char[] Map;
         public int Width;
-        public int Height;
+        public int Depth;
 
         public Level()
         {
 
         }
 
-        public void SetMapAndSize(char[] mapArr, int width, int height)
+        public void SetMapAndSize(char[] mapArr, int width, int depth)
         {
             Map = mapArr;
             Width = width;
-            Height = height;
+            Depth = depth;
         }
 
         public char GetAt(int x, int y)
