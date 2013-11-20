@@ -21,17 +21,17 @@ namespace Wrench.src.Managers
 
         public void Initialize()
         {
-            position = new Vector3(3,2,3);
+            position = new Vector3(3, 2, 3);
             orthogonal = Matrix.CreateOrthographic(width, height, nearPlane, farPlane);
             view = Matrix.CreateLookAt(position, lookAt, up);
-            perspective = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians( fieldOfView ), width / (float)height, nearPlane, farPlane);
+            perspective = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fieldOfView), width / (float)height, nearPlane, farPlane);
             Matrix.Multiply(ref view, ref orthogonal, out viewOrthographic);
             Matrix.Multiply(ref view, ref perspective, out viewPerspective);
         }
 
         public void Update(GameTime gameTime)
         {
-            
+
         }
 
         public void Draw(GameTime gameTime)
@@ -75,13 +75,13 @@ namespace Wrench.src.Managers
         public Matrix Orthographic
         {
             get { return orthogonal; }
-            private set{}
+            private set { }
         }
 
         public Matrix Perspective
         {
             get { return perspective; }
-            private set{}
+            private set { }
         }
 
         public Matrix View

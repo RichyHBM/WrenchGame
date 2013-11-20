@@ -21,7 +21,7 @@ namespace Wrench.src.BaseClasses
         public AState(Game game)
             : base(game)
         {
-            spriteBatch = (Game.Services.GetService(typeof (SpriteBatch)) as SpriteBatch);
+            spriteBatch = (Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch);
             // TODO: Construct any child components here
         }
 

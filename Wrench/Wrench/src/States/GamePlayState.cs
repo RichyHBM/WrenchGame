@@ -21,7 +21,7 @@ namespace Wrench.src.States
     /// </summary>
     public class GamePlayState : AState
     {
-        Texture2D background; 
+        Texture2D background;
         GameLevel level;
 
         public GamePlayState(Game game)
@@ -79,7 +79,7 @@ namespace Wrench.src.States
 
         public override void Stop()
         {
-            
+
         }
     }
 }

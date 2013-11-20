@@ -31,7 +31,7 @@ namespace Wrench.src.GameObjects
         public GameObject(Game game)
             : base(game)
         {
-            
+
             // TODO: Construct any child components here
         }
 

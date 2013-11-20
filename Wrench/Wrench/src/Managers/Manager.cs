@@ -10,7 +10,8 @@ namespace Wrench.src.Managers
     public static class Manager
     {
         static InputManager inputManager;
-        public static InputManager InputManager { 
+        public static InputManager InputManager
+        {
             get { return inputManager; }
             private set { }
         }

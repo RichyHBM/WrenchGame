@@ -51,7 +51,7 @@ namespace Wrench.src.Managers
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 Game1.MainGame.Exit();
-            if(Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Game1.MainGame.Exit();
 
             if (needsMatrixUpdate)
@@ -70,7 +70,7 @@ namespace Wrench.src.Managers
 
         public void Draw(GameTime gameTime)
         {
-            
+
         }
 
         public bool HasBeenPressed(Keys key)
@@ -84,8 +84,8 @@ namespace Wrench.src.Managers
         }
 
         public static void UpdateMatrix()
-        { 
-        
+        {
+
         }
     }
 }

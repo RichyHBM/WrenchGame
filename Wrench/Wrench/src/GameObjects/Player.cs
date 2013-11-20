@@ -87,7 +87,7 @@ namespace Wrench.src.GameObjects
             Vector3 cameraLookat = cameraPosition + transformedReference;
             Manager.MatrixManager.SetPosition(cameraPosition);
             Manager.MatrixManager.SetLookAt(cameraLookat);
-            
+
             base.Update(gameTime);
         }
 

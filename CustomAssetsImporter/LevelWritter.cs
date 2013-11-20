@@ -26,9 +26,9 @@ namespace CustomAssetsImporter
         {
             output.Write((Int32)value.Width);
             output.Write((Int32)value.Depth);
-            for ( int row = 0; row < value.Depth; row++)
+            for (int row = 0; row < value.Depth; row++)
             {
-                for ( int column = 0; column < value.Width; column++)
+                for (int column = 0; column < value.Width; column++)
                 {
                     output.Write(value.GetAt(column, row));
                 }

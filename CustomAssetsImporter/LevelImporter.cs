@@ -39,8 +39,14 @@ namespace CustomAssetsImporter
                     levelWidth = line.Length;
                 lines.Add(line);
             }
+
+            //If one of the rows is very long this makes all rows that length with empty value
+            for (int i = 0; i < lines.Count; i++)
+                while (lines[i].Length < levelWidth)
+                    lines[i] += " ";
             //So these need to be passed over individually
-            return new LoadedLevelFile(){
+            return new LoadedLevelFile()
+            {
                 width = levelWidth,
                 height = lines.Count,
                 map = lines

@@ -22,7 +22,7 @@ namespace Wrench.src.Managers
 
         public void PushState(AState state)
         {
-            if(states.Count != 0)
+            if (states.Count != 0)
                 states.Last().Pause();
 
             state.Initialize();
@@ -42,14 +42,14 @@ namespace Wrench.src.Managers
             state.Pause();
             state.Stop();
             states.Remove(state);
-            if(states.Count == 0)
+            if (states.Count == 0)
                 throw new Exception("No States Left");
             states.Last().Resume();
         }
 
         public void Initialize()
         {
-            
+
         }
 
         /// <summary>

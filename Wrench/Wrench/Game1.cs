@@ -53,7 +53,7 @@ namespace Wrench
         /// </summary>
         protected override void LoadContent()
         {
-            
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Services.AddService(typeof(SpriteBatch), spriteBatch);
@@ -61,7 +61,7 @@ namespace Wrench
             Manager.Initialize();
             Manager.StateManager.PushState(new MainMenuState(this));
             Manager.StateManager.PushState(new IntroState(this));
-            
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -97,10 +97,10 @@ namespace Wrench
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            
-            Manager.Draw(gameTime); 
 
-            GraphicsDevice.BlendState = BlendState.Opaque; 
+            Manager.Draw(gameTime);
+
+            GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 
