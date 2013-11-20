@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Wrench.src.Managers;
+using Wrench.src.Helpers;
 
 
 namespace Wrench.src.GameObjects
@@ -24,6 +25,7 @@ namespace Wrench.src.GameObjects
         float amountOfRotation = 0;
         //The position the player looks at when not rotated
         Vector3 cameraReference = Vector3.Forward;
+        Billboard gun;
 
         public Player(Game game, Vector3 pos)
             : base(game)
@@ -35,6 +37,8 @@ namespace Wrench.src.GameObjects
             boundingBox = new BoundingBox(new Vector3(-0.3f,0,-0.1f), new Vector3(-0.3f,0.8f, 0.1f));
             boxMin = new Vector3(-0.2f, 0, -0.2f);
             boxMax = new Vector3(0.2f, 0.8f, 0.2f);
+
+            gun = new Billboard(game, game.Content.Load<Texture2D>("Textures/gun"), new Vector2(0.1f));
             // TODO: Construct any child components here
         }
 
@@ -57,7 +61,7 @@ namespace Wrench.src.GameObjects
         {
             // TODO: Add your update code here
             Matrix rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
-            
+
             amountOfRotation += Manager.InputManager.MouseChange.X * RotationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             
             if (Manager.InputManager.IsDown(Keys.W))
@@ -106,6 +110,13 @@ namespace Wrench.src.GameObjects
 #endif
             boundingBox = new BoundingBox(position + boxMin, position + boxMax);
 
+            Vector3 right = Vector3.Transform(Vector3.Forward * 0.1f, Matrix.CreateRotationY(amountOfRotation - MathHelper.ToRadians(90)));
+            Vector3 forward = Vector3.Transform(Vector3.Forward * 0.25f, rotationMatrix);
+            gun.RotateZ(MathHelper.ToRadians(-5));
+            gun.RotateY(amountOfRotation - MathHelper.ToRadians(90));
+            gun.Move(position + forward + new Vector3(0, 0.42f, 0) + right);
+            gun.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -118,6 +129,7 @@ namespace Wrench.src.GameObjects
             Helpers.DebugShapeRenderer.AddLine(lineStart, lineStart + transformedReference, Color.Purple);
             Helpers.DebugShapeRenderer.AddBoundingBox(boundingBox, Color.Red);
 #endif
+            gun.Draw(gameTime);
             base.Draw(gameTime);
         }
     }
