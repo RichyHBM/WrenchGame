@@ -20,6 +20,8 @@ namespace Wrench.src.GameObjects
         protected Vector3 position;
         protected Vector3 direction;
         protected BoundingBox boundingBox;
+        protected Vector3 boxMin;
+        protected Vector3 boxMax;
 
         public Vector3 Position { get { return position; } private set { } }
         public Vector3 Direction { get { return direction; } private set { } }

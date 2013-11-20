@@ -55,7 +55,7 @@ namespace Wrench
         {
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            src.Helpers.DebugShapeRenderer.Initialize(GraphicsDevice);
             Services.AddService(typeof(SpriteBatch), spriteBatch);
 
             Manager.Initialize();
@@ -103,6 +103,8 @@ namespace Wrench
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+
+            src.Helpers.DebugShapeRenderer.Draw(gameTime, Manager.MatrixManager.View, Manager.MatrixManager.Perspective);
 
             // TODO: Add your drawing code here
 

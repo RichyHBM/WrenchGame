@@ -32,6 +32,9 @@ namespace Wrench.src.GameObjects
             headPosition = new Vector3(0, 0.6f, 0);
             RotationSpeed = 2f;
             ForwardSpeed = 3f;
+            boundingBox = new BoundingBox(new Vector3(-0.3f,0,-0.1f), new Vector3(-0.3f,0.8f, 0.1f));
+            boxMin = new Vector3(-0.2f, 0, -0.2f);
+            boxMax = new Vector3(0.2f, 0.8f, 0.2f);
             // TODO: Construct any child components here
         }
 
@@ -54,7 +57,6 @@ namespace Wrench.src.GameObjects
         {
             // TODO: Add your update code here
             Matrix rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
-            Vector3 cameraPosition = Position + headPosition;
             if (Manager.InputManager.IsDown(Keys.Left))
             {
                 amountOfRotation += RotationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -81,18 +83,31 @@ namespace Wrench.src.GameObjects
                 position.X += v.X;
             }
 
-            cameraPosition = position + headPosition;
+            Vector3 cameraPosition = position + headPosition;
             rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
             Vector3 transformedReference = Vector3.Transform(cameraReference, rotationMatrix);
             Vector3 cameraLookat = cameraPosition + transformedReference;
+#if VIEWDEBUG
+            Manager.MatrixManager.SetPosition(cameraPosition + new Vector3(1,2,1));
+            Manager.MatrixManager.SetLookAt(cameraPosition);
+#else
             Manager.MatrixManager.SetPosition(cameraPosition);
             Manager.MatrixManager.SetLookAt(cameraLookat);
+#endif
+            boundingBox = new BoundingBox(position + boxMin, position + boxMax);
 
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
+#if DEBUG
+            Vector3 lineStart = position + new Vector3(0, 0.5f, 0);
+            Matrix rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
+            Vector3 transformedReference = Vector3.Transform(Vector3.Forward * 0.3f, rotationMatrix);
+            Helpers.DebugShapeRenderer.AddLine(lineStart, lineStart + transformedReference, Color.Purple);
+            Helpers.DebugShapeRenderer.AddBoundingBox(boundingBox, Color.Red);
+#endif
             base.Draw(gameTime);
         }
     }

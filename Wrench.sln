@@ -13,22 +13,30 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
+		ViewDebug|x86 = ViewDebug|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CE66F297-D382-4160-99F5-28A36D825D2B}.Debug|x86.ActiveCfg = Debug|x86
 		{CE66F297-D382-4160-99F5-28A36D825D2B}.Debug|x86.Build.0 = Debug|x86
 		{CE66F297-D382-4160-99F5-28A36D825D2B}.Release|x86.ActiveCfg = Release|x86
 		{CE66F297-D382-4160-99F5-28A36D825D2B}.Release|x86.Build.0 = Release|x86
+		{CE66F297-D382-4160-99F5-28A36D825D2B}.ViewDebug|x86.ActiveCfg = ViewDebug|x86
+		{CE66F297-D382-4160-99F5-28A36D825D2B}.ViewDebug|x86.Build.0 = ViewDebug|x86
 		{B558D6F3-4A09-4BAD-BDBD-AB45692EF47B}.Debug|x86.ActiveCfg = Debug|x86
 		{B558D6F3-4A09-4BAD-BDBD-AB45692EF47B}.Release|x86.ActiveCfg = Release|x86
+		{B558D6F3-4A09-4BAD-BDBD-AB45692EF47B}.ViewDebug|x86.ActiveCfg = Debug|x86
 		{97856524-677F-4850-A129-C7AD512D3FF7}.Debug|x86.ActiveCfg = Debug|x86
 		{97856524-677F-4850-A129-C7AD512D3FF7}.Debug|x86.Build.0 = Debug|x86
 		{97856524-677F-4850-A129-C7AD512D3FF7}.Release|x86.ActiveCfg = Release|x86
 		{97856524-677F-4850-A129-C7AD512D3FF7}.Release|x86.Build.0 = Release|x86
+		{97856524-677F-4850-A129-C7AD512D3FF7}.ViewDebug|x86.ActiveCfg = ViewDebug|x86
+		{97856524-677F-4850-A129-C7AD512D3FF7}.ViewDebug|x86.Build.0 = ViewDebug|x86
 		{0746634E-5276-45D6-AE32-DBE800BDEC0A}.Debug|x86.ActiveCfg = Debug|x86
 		{0746634E-5276-45D6-AE32-DBE800BDEC0A}.Debug|x86.Build.0 = Debug|x86
 		{0746634E-5276-45D6-AE32-DBE800BDEC0A}.Release|x86.ActiveCfg = Release|x86
 		{0746634E-5276-45D6-AE32-DBE800BDEC0A}.Release|x86.Build.0 = Release|x86
+		{0746634E-5276-45D6-AE32-DBE800BDEC0A}.ViewDebug|x86.ActiveCfg = ViewDebug|x86
+		{0746634E-5276-45D6-AE32-DBE800BDEC0A}.ViewDebug|x86.Build.0 = ViewDebug|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
