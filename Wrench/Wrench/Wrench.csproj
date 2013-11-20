@@ -96,6 +96,7 @@
     <Compile Include="src\GameLevelItems\GameLevel.cs" />
     <Compile Include="src\GameLevelItems\LevelCollisions.cs" />
     <Compile Include="src\GameObjects\GameObject.cs" />
+    <Compile Include="src\GameObjects\HolsteredGun.cs" />
     <Compile Include="src\GameObjects\Player.cs" />
     <Compile Include="src\Helpers\Billboard.cs" />
     <Compile Include="src\Helpers\MapMesh.cs" />

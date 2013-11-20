@@ -71,10 +71,10 @@ namespace Wrench.src.Helpers
             rotation *= Matrix.CreateRotationZ(angle);
         }
 
-        public void Face(Vector3 lookAt)
-        { 
-        
-        }
+        //public void Face(Vector3 lookAt)
+        //{ 
+        //
+        //}
 
         /// <summary>
         /// Allows the game component to update itself.

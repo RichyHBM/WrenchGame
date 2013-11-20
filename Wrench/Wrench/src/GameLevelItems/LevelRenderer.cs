@@ -21,15 +21,18 @@ namespace Wrench.src.Helpers
     {
         protected Level level;
         protected String levelName;
-        protected List<VertexPositionNormalTexture> vertices = new List<VertexPositionNormalTexture>();
+        protected List<VertexPositionNormalTexture> wallVertices = new List<VertexPositionNormalTexture>();
+        protected List<VertexPositionNormalTexture> floorVertices = new List<VertexPositionNormalTexture>();
         protected BasicEffect effect;
         protected Texture2D brickTexture;
+        protected Texture2D floorTexture;
 
         public LevelRenderer(Game game, Level levFile)
             : base(game)
         {
             level = levFile;
             brickTexture = Game.Content.Load<Texture2D>("Textures/bricks");
+            floorTexture = Game.Content.Load<Texture2D>("Textures/floor");
             effect = new BasicEffect(Game.GraphicsDevice);
         }
 
@@ -47,11 +50,11 @@ namespace Wrench.src.Helpers
                 {
                     if (level.GetAt(x, y) == '#')
                     {
-                        vertices.AddRange(MapMesh.WallMeshAt(x, y));
+                        wallVertices.AddRange(MapMesh.WallMeshAt(x, y));
                     }
                     else if (level.GetAt(x, y) == '.' || level.GetAt(x, y) == 'p')
                     {
-                        vertices.AddRange(MapMesh.FloorMeshAt(x, y));
+                        floorVertices.AddRange(MapMesh.FloorMeshAt(x, y));
                     }
                 }
             }
@@ -72,15 +75,20 @@ namespace Wrench.src.Helpers
 
         public override void Draw(GameTime gameTime)
         {
-            effect.World = Matrix.CreateTranslation(new Vector3(-(level.Width / 2), 0, -(level.Depth / 2)));
+            effect.World = Matrix.Identity;
             effect.View = Manager.MatrixManager.View;
             effect.Projection = Manager.MatrixManager.Perspective;
             effect.VertexColorEnabled = false;
             effect.TextureEnabled = true;
-            effect.Texture = brickTexture;
 
+            effect.Texture = brickTexture;
             effect.CurrentTechnique.Passes[0].Apply();
-            GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.TriangleList, vertices.ToArray(), 0, vertices.Count / 3, VertexPositionNormalTexture.VertexDeclaration);
+            GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.TriangleList, wallVertices.ToArray(), 0, wallVertices.Count / 3, VertexPositionNormalTexture.VertexDeclaration);
+
+            effect.Texture = floorTexture;
+            effect.CurrentTechnique.Passes[0].Apply();
+            GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.TriangleList, floorVertices.ToArray(), 0, floorVertices.Count / 3, VertexPositionNormalTexture.VertexDeclaration);
+
 
             base.Draw(gameTime);
         }
