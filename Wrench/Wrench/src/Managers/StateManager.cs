@@ -19,6 +19,8 @@ namespace Wrench.src.Managers
     public class StateManager : IManager
     {
         List<AState> states = new List<AState>();
+        protected Game game;
+
 
         public void PushState(AState state)
         {
@@ -46,10 +48,10 @@ namespace Wrench.src.Managers
                 throw new Exception("No States Left");
             states.Last().Resume();
         }
-
-        public void Initialize()
+        
+        public void Initialize(Game game)
         {
-
+            this.game = game;
         }
 
         /// <summary>

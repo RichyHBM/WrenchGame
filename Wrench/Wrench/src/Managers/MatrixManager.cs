@@ -19,8 +19,11 @@ namespace Wrench.src.Managers
         Matrix viewPerspective;
         Matrix viewOrthographic;
 
-        public void Initialize()
+        protected Game game;
+
+        public void Initialize(Game game)
         {
+            this.game = game;
             position = new Vector3(3, 2, 3);
             orthogonal = Matrix.CreateOrthographic(width, height, nearPlane, farPlane);
             view = Matrix.CreateLookAt(position, lookAt, up);

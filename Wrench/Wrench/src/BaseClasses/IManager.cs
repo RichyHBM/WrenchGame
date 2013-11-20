@@ -8,7 +8,8 @@ namespace Wrench.src.BaseClasses
 {
     public interface IManager
     {
-        void Initialize();
+        
+        void Initialize(Game game);
         void Update(GameTime gameTime);
         void Draw(GameTime gameTime);
 

@@ -58,7 +58,7 @@ namespace Wrench
             src.Helpers.DebugShapeRenderer.Initialize(GraphicsDevice);
             Services.AddService(typeof(SpriteBatch), spriteBatch);
 
-            Manager.Initialize();
+            Manager.Initialize(this);
             Manager.StateManager.PushState(new MainMenuState(this));
             Manager.StateManager.PushState(new IntroState(this));
 
@@ -81,7 +81,7 @@ namespace Wrench
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {
+        {            
             Manager.Update(gameTime);
 
             // TODO: Add your update logic here

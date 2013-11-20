@@ -23,13 +23,21 @@ namespace Wrench.src.Managers
         KeyboardState oldKeyboardState, currentKeyboardState;
         GamePadState oldGamepadState, currentGamepadState;
 
+        Vector2 mouseChange = Vector2.Zero;
+        public Vector2 MouseChange { get { return mouseChange; } private set { } }
+        Vector2 mousePositionToCenter = Vector2.Zero;
+        public Vector2 MousePositionToCenter { get { return mousePositionToCenter; } private set { } }
+
+        protected Game game;
+
         public void SetMatrixUpdate(bool matrixUpdate)
         {
             needsMatrixUpdate = matrixUpdate;
         }
 
-        public void Initialize()
+        public void Initialize(Game game)
         {
+            this.game = game;
             // TODO: Add your initialization code here
             currentMouseState = Mouse.GetState();
             oldMouseState = currentMouseState;
@@ -37,6 +45,8 @@ namespace Wrench.src.Managers
             oldKeyboardState = currentKeyboardState;
             currentGamepadState = GamePad.GetState(PlayerIndex.One);
             oldGamepadState = currentGamepadState;
+
+            Mouse.SetPosition(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height / 2);
         }
 
         /// <summary>
@@ -51,7 +61,7 @@ namespace Wrench.src.Managers
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 Game1.MainGame.Exit();
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.F5))
                 Game1.MainGame.Exit();
 
             if (needsMatrixUpdate)
@@ -66,6 +76,14 @@ namespace Wrench.src.Managers
             currentKeyboardState = Keyboard.GetState();
             oldGamepadState = currentGamepadState;
             currentGamepadState = GamePad.GetState(PlayerIndex.One);
+
+            Point centerOfScreen = new Point(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height / 2);
+            mouseChange.X = centerOfScreen.X - currentMouseState.X;
+            mouseChange.Y = centerOfScreen.Y - currentMouseState.Y;
+            mousePositionToCenter += mouseChange;
+            Mouse.SetPosition(centerOfScreen.X, centerOfScreen.Y);
+
+            Console.WriteLine(mousePositionToCenter);
         }
 
         public void Draw(GameTime gameTime)

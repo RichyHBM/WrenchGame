@@ -30,8 +30,8 @@ namespace Wrench.src.GameObjects
         {
             this.position = pos;
             headPosition = new Vector3(0, 0.6f, 0);
-            RotationSpeed = 2f;
-            ForwardSpeed = 3f;
+            RotationSpeed = 0.2f;
+            ForwardSpeed = 2f;
             boundingBox = new BoundingBox(new Vector3(-0.3f,0,-0.1f), new Vector3(-0.3f,0.8f, 0.1f));
             boxMin = new Vector3(-0.2f, 0, -0.2f);
             boxMax = new Vector3(0.2f, 0.8f, 0.2f);
@@ -57,16 +57,10 @@ namespace Wrench.src.GameObjects
         {
             // TODO: Add your update code here
             Matrix rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
-            if (Manager.InputManager.IsDown(Keys.Left))
-            {
-                amountOfRotation += RotationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            if (Manager.InputManager.IsDown(Keys.Right))
-            {
-                amountOfRotation -= RotationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-
-            if (Manager.InputManager.IsDown(Keys.Up))
+            
+            amountOfRotation += Manager.InputManager.MouseChange.X * RotationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
+            if (Manager.InputManager.IsDown(Keys.W))
             {
                 Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation);
                 Vector3 v = new Vector3(0, 0, -ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
@@ -74,9 +68,25 @@ namespace Wrench.src.GameObjects
                 position.Z += v.Z;
                 position.X += v.X;
             }
-            if (Manager.InputManager.IsDown(Keys.Down))
+            if (Manager.InputManager.IsDown(Keys.S))
             {
                 Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation);
+                Vector3 v = new Vector3(0, 0, ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                v = Vector3.Transform(v, forwardMovement);
+                position.Z += v.Z;
+                position.X += v.X;
+            }
+            if (Manager.InputManager.IsDown(Keys.A))
+            {
+                Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation + MathHelper.ToRadians(90));
+                Vector3 v = new Vector3(0, 0, -ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                v = Vector3.Transform(v, forwardMovement);
+                position.Z += v.Z;
+                position.X += v.X;
+            }
+            if (Manager.InputManager.IsDown(Keys.D))
+            {
+                Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation + MathHelper.ToRadians(90));
                 Vector3 v = new Vector3(0, 0, ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 v = Vector3.Transform(v, forwardMovement);
                 position.Z += v.Z;

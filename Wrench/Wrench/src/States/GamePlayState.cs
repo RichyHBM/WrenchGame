@@ -53,6 +53,7 @@ namespace Wrench.src.States
                 Manager.StateManager.RemoveState(this);
 
             level.Update(gameTime);
+
             base.Update(gameTime);
         }
 

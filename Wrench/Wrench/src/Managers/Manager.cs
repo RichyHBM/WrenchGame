@@ -30,15 +30,15 @@ namespace Wrench.src.Managers
             private set { }
         }
 
-        public static void Initialize()
+        public static void Initialize(Game game)
         {
             inputManager = new InputManager();
             matrixManager = new MatrixManager();
             stateManager = new StateManager();
 
-            inputManager.Initialize();
-            matrixManager.Initialize();
-            stateManager.Initialize();
+            inputManager.Initialize(game);
+            matrixManager.Initialize(game);
+            stateManager.Initialize(game);
 
 
         }
