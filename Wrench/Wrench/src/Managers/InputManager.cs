@@ -46,7 +46,7 @@ namespace Wrench.src.Managers
             currentGamepadState = GamePad.GetState(PlayerIndex.One);
             oldGamepadState = currentGamepadState;
 
-            Mouse.SetPosition(game.GraphicsDevice.Viewport.Width / 2, game.GraphicsDevice.Viewport.Height / 2);
+            
         }
 
         /// <summary>
@@ -81,9 +81,6 @@ namespace Wrench.src.Managers
             mouseChange.X = centerOfScreen.X - currentMouseState.X;
             mouseChange.Y = centerOfScreen.Y - currentMouseState.Y;
             mousePositionToCenter += mouseChange;
-            Mouse.SetPosition(centerOfScreen.X, centerOfScreen.Y);
-
-            Console.WriteLine(mousePositionToCenter);
         }
 
         public void Draw(GameTime gameTime)

@@ -65,6 +65,12 @@ namespace Wrench.src.GameLevelItems
             levelRend.Update(gameTime);
             player.Update(gameTime);
             levelCollisions.Update(gameTime);
+
+            if (levelCollisions.IsColliding(player.BoundingBox))
+            {
+                player.Backup(gameTime);
+                player.ReverseVelocity();
+            }
             base.Update(gameTime);
         }
 

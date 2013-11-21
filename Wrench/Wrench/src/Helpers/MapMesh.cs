@@ -98,5 +98,23 @@ namespace Wrench.src.Helpers
             nonIndexedCube.Add(new VertexPositionNormalTexture(topRightFront, Vector3.Up, uvx1y1));
             return nonIndexedCube.ToArray();
         }
+
+        public static VertexPositionNormalTexture[] CeilingMeshAt(int x, int y)
+        {
+            List<VertexPositionNormalTexture> nonIndexedCube = new List<VertexPositionNormalTexture>();
+            Vector3 bottomLeftFront = new Vector3(0.0f + x, 1.0f, 1.0f + y);
+            Vector3 bottomRightFront = new Vector3(1.0f + x, 1.0f, 1.0f + y);
+            Vector3 bottomLeftBack = new Vector3(0.0f + x, 1.0f, 0.0f + y);
+            Vector3 bottomRightBack = new Vector3(1.0f + x, 1.0f, 0.0f + y);
+
+            // Back face
+            nonIndexedCube.Add(new VertexPositionNormalTexture(bottomLeftFront, Vector3.Down, uvx1y0));
+            nonIndexedCube.Add(new VertexPositionNormalTexture(bottomRightBack, Vector3.Down, uvx0y1));
+            nonIndexedCube.Add(new VertexPositionNormalTexture(bottomLeftBack, Vector3.Down, uvx0y0));
+            nonIndexedCube.Add(new VertexPositionNormalTexture(bottomRightBack, Vector3.Down, uvx0y1));
+            nonIndexedCube.Add(new VertexPositionNormalTexture(bottomLeftFront, Vector3.Down, uvx1y0));
+            nonIndexedCube.Add(new VertexPositionNormalTexture(bottomRightFront, Vector3.Down, uvx1y1));
+            return nonIndexedCube.ToArray();
+        }
     }
 }

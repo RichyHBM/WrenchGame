@@ -54,6 +54,7 @@ namespace Wrench.src.States
 
             level.Update(gameTime);
 
+            Mouse.SetPosition(Game.GraphicsDevice.Viewport.Width / 2, Game.GraphicsDevice.Viewport.Height / 2);
             base.Update(gameTime);
         }
 

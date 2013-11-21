@@ -18,13 +18,14 @@ namespace Wrench.src.GameObjects
     public class GameObject : Microsoft.Xna.Framework.DrawableGameComponent
     {
         protected Vector3 position;
-        protected Vector3 direction;
+        protected Vector3 velocity;
         protected BoundingBox boundingBox;
         protected Vector3 boxMin;
         protected Vector3 boxMax;
+        public Vector3 lastPosition;
 
         public Vector3 Position { get { return position; } private set { } }
-        public Vector3 Direction { get { return direction; } private set { } }
+        public Vector3 Velocity { get { return velocity; } private set { } }
         public BoundingBox BoundingBox { get { return boundingBox; } private set { } }
 
         public float RotationSpeed { get; protected set; }
@@ -55,8 +56,23 @@ namespace Wrench.src.GameObjects
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-
+            velocity += -velocity * ForwardSpeed * 5 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             base.Update(gameTime);
+        }
+
+
+        public void MoveForward(GameTime gameTime)
+        {
+            lastPosition = position;
+            position += velocity * ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+        public virtual void Backup(GameTime gameTime)
+        {
+            position = lastPosition;
+        }
+        public void ReverseVelocity()
+        {
+            velocity.X = -velocity.X;
         }
     }
 }

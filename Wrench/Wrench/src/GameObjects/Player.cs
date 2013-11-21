@@ -33,10 +33,11 @@ namespace Wrench.src.GameObjects
             this.position = pos;
             headPosition = new Vector3(0, 0.6f, 0);
             RotationSpeed = 0.2f;
-            ForwardSpeed = 2f;
-            boundingBox = new BoundingBox(new Vector3(-0.3f,0,-0.1f), new Vector3(-0.3f,0.8f, 0.1f));
-            boxMin = new Vector3(-0.2f, 0, -0.2f);
-            boxMax = new Vector3(0.2f, 0.8f, 0.2f);
+            ForwardSpeed = 10f;
+            
+            boxMin = new Vector3(-0.25f, 0, -0.25f);
+            boxMax = new Vector3(0.25f, 0.8f, 0.25f);
+            boundingBox = new BoundingBox(boxMin, boxMax);
 
             gun = new HolsteredGun(game, game.Content.Load<Texture2D>("Textures/gun"), new Vector2(0.1f));
             // TODO: Construct any child components here
@@ -69,33 +70,31 @@ namespace Wrench.src.GameObjects
                 Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation);
                 Vector3 v = new Vector3(0, 0, -ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 v = Vector3.Transform(v, forwardMovement);
-                position.Z += v.Z;
-                position.X += v.X;
+                velocity += v;
             }
             if (Manager.InputManager.IsDown(Keys.S))
             {
                 Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation);
                 Vector3 v = new Vector3(0, 0, ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 v = Vector3.Transform(v, forwardMovement);
-                position.Z += v.Z;
-                position.X += v.X;
+                velocity += v;
             }
             if (Manager.InputManager.IsDown(Keys.A))
             {
                 Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation + MathHelper.ToRadians(90));
                 Vector3 v = new Vector3(0, 0, -ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 v = Vector3.Transform(v, forwardMovement);
-                position.Z += v.Z;
-                position.X += v.X;
+                velocity += v;
             }
             if (Manager.InputManager.IsDown(Keys.D))
             {
                 Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation + MathHelper.ToRadians(90));
                 Vector3 v = new Vector3(0, 0, ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 v = Vector3.Transform(v, forwardMovement);
-                position.Z += v.Z;
-                position.X += v.X;
+                velocity += v;
             }
+
+            MoveForward(gameTime);
 
             Vector3 cameraPosition = position + headPosition;
             rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
@@ -113,6 +112,27 @@ namespace Wrench.src.GameObjects
             gun.Update(gameTime);
 
             base.Update(gameTime);
+        }
+
+        public override void Backup(GameTime gameTime)
+        {
+            position = lastPosition;
+            velocity = -velocity;
+            Matrix rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
+            Vector3 cameraPosition = position + headPosition;
+            rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
+            Vector3 transformedReference = Vector3.Transform(cameraReference, rotationMatrix);
+            Vector3 cameraLookat = cameraPosition + transformedReference;
+#if VIEWDEBUG
+            Manager.MatrixManager.SetPosition(cameraPosition + new Vector3(1,2,1));
+            Manager.MatrixManager.SetLookAt(cameraPosition);
+#else
+            Manager.MatrixManager.SetPosition(cameraPosition);
+            Manager.MatrixManager.SetLookAt(cameraLookat);
+#endif
+            boundingBox = new BoundingBox(position + boxMin, position + boxMax);
+            gun.SetPositionRotation(position, amountOfRotation);
+            gun.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
