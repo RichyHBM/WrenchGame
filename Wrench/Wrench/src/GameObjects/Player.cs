@@ -26,6 +26,9 @@ namespace Wrench.src.GameObjects
         //The position the player looks at when not rotated
         Vector3 cameraReference = Vector3.Forward;
         HolsteredGun gun;
+        SpriteFont font;
+
+        int health = 100;
 
         public Player(Game game, Vector3 pos)
             : base(game)
@@ -35,10 +38,10 @@ namespace Wrench.src.GameObjects
             RotationSpeed = 0.2f;
             ForwardSpeed = 10f;
             
-            boxMin = new Vector3(-0.25f, 0, -0.25f);
-            boxMax = new Vector3(0.25f, 0.8f, 0.25f);
+            boxMin = new Vector3(-0.235f, 0, -0.235f);
+            boxMax = new Vector3(0.235f, 0.8f, 0.235f);
             boundingBox = new BoundingBox(boxMin, boxMax);
-
+            font = Game.Content.Load<SpriteFont>("TextFont");
             gun = new HolsteredGun(game, game.Content.Load<Texture2D>("Textures/gun"), new Vector2(0.1f));
             // TODO: Construct any child components here
         }
@@ -137,6 +140,16 @@ namespace Wrench.src.GameObjects
 
         public override void Draw(GameTime gameTime)
         {
+
+            SpriteBatch sp = Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
+            sp.Begin();
+            sp.DrawString(font, "Life: " + health, new Vector2(10, 10), Color.Black);
+            sp.End();
+
+            GraphicsDevice.BlendState = BlendState.Opaque;
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+
 #if DEBUG
             Vector3 lineStart = position + new Vector3(0, 0.5f, 0);
             Matrix rotationMatrix = Matrix.CreateRotationY(amountOfRotation);

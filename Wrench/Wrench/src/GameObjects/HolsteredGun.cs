@@ -39,7 +39,7 @@ namespace Wrench.src.GameObjects
         {
             Matrix rotationMatrix = Matrix.CreateRotationY(rot);
             Vector3 right = Vector3.Transform(Vector3.Forward * 0.1f, Matrix.CreateRotationY(rot - MathHelper.ToRadians(90)));
-            Vector3 forward = Vector3.Transform(Vector3.Forward * 0.25f, rotationMatrix);
+            Vector3 forward = Vector3.Transform(Vector3.Forward * 0.19f, rotationMatrix);
             RotateZ(MathHelper.ToRadians(-5));
             RotateY(rot - MathHelper.ToRadians(90));
             Move(pos + forward + new Vector3(0, 0.42f, 0) + right);

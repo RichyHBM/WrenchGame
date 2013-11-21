@@ -11,7 +11,7 @@ namespace Wrench.src.Managers
     {
         int width = 1, height = 1;
         float nearPlane = 0.1f, farPlane = 100.0f;
-        float fieldOfView = 75;
+        float fieldOfView = 95;
         Vector3 position = Vector3.UnitZ, lookAt = Vector3.Zero, up = Vector3.Up;
         Matrix orthogonal;
         Matrix perspective;

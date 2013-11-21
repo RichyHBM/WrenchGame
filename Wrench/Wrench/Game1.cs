@@ -26,8 +26,9 @@ namespace Wrench
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 480;
-            graphics.PreferredBackBufferWidth = 720;
+            //graphics.PreferredBackBufferHeight = 720;
+            //graphics.PreferredBackBufferWidth = 1280;
+            graphics.ToggleFullScreen();
             graphics.ApplyChanges();
 
             MainGame = this;
