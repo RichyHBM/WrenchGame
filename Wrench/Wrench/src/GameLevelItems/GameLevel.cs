@@ -23,7 +23,8 @@ namespace Wrench.src.GameLevelItems
         LevelRenderer levelRend;
         Level levelRaw;
         LevelCollisions levelCollisions;
-        Player player;
+        List<GameObject> objects = new List<GameObject>();
+        private Player player;
         public GameLevel(Game game)
             : base(game)
         {
@@ -35,10 +36,11 @@ namespace Wrench.src.GameLevelItems
             for (int y = 0; y < levelRaw.Depth; y++)
                 for (int x = 0; x < levelRaw.Width; x++)
                     if (levelRaw.GetAt(x, y) == 'p')
-                        playerPos = new Vector3(x + 0.5f, 0, y + 0.5f);
+                        player = new Player(game, new Vector3(x + 0.5f, 0, y + 0.5f));
+                    else if (levelRaw.GetAt(x, y) == 'e')
+                        objects.Add(new Enemy(game, new Vector3(x + 0.5f, 0, y + 0.5f)));
             //Corner of the box if front left, so to place player in right place we need to add .5 to the left and .5 to the front
-
-            player = new Player(game, playerPos);
+            objects.Add(player);
             // TODO: Construct any child components here
         }
 
@@ -50,7 +52,11 @@ namespace Wrench.src.GameLevelItems
         {
             // TODO: Add your initialization code here
             levelRend.Initialize();
-            player.Initialize();
+            foreach (GameObject obj in objects)
+            {
+                obj.Initialize();
+            }
+
             levelCollisions.Initialize();
             base.Initialize();
         }
@@ -63,13 +69,24 @@ namespace Wrench.src.GameLevelItems
         {
             // TODO: Add your update code here
             levelRend.Update(gameTime);
-            player.Update(gameTime);
+            foreach (GameObject obj in objects)
+            {
+                if(obj is Enemy)
+                    (obj as Enemy).Update(gameTime, player.Position);
+                else
+                    obj.Update(gameTime);
+            }
+            
             levelCollisions.Update(gameTime);
 
-            if (levelCollisions.IsColliding(player.BoundingBox))
+            foreach (GameObject obj in objects)
             {
-                player.Backup(gameTime);
-                player.ReverseVelocity();
+
+                if (levelCollisions.IsColliding(obj.BoundingBox))
+                {
+                    obj.Backup(gameTime);
+                    obj.ReverseVelocity();
+                }
             }
             base.Update(gameTime);
         }
@@ -77,7 +94,10 @@ namespace Wrench.src.GameLevelItems
         public override void Draw(GameTime gameTime)
         {
             levelRend.Draw(gameTime);
-            player.Draw(gameTime);
+            foreach (GameObject obj in objects)
+            {
+                obj.Draw(gameTime);
+            }
             levelCollisions.Draw(gameTime);
             base.Draw(gameTime);
         }

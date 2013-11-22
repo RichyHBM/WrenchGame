@@ -55,7 +55,7 @@ namespace Wrench.src.Helpers
                     {
                         wallVertices.AddRange(MapMesh.WallMeshAt(x, y));
                     }
-                    else if (level.GetAt(x, y) == '.' || level.GetAt(x, y) == 'p')
+                    else if (level.GetAt(x, y) == '.' || level.GetAt(x, y) == 'p' || level.GetAt(x, y) == 'e')
                     {
                         floorVertices.AddRange(MapMesh.FloorMeshAt(x, y));
                         ceilingVertices.AddRange(MapMesh.CeilingMeshAt(x, y));

@@ -26,9 +26,9 @@ namespace Wrench
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            //graphics.PreferredBackBufferHeight = 720;
-            //graphics.PreferredBackBufferWidth = 1280;
-            graphics.ToggleFullScreen();
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1280;
+            //graphics.ToggleFullScreen();
             graphics.ApplyChanges();
 
             MainGame = this;
@@ -60,9 +60,13 @@ namespace Wrench
             Services.AddService(typeof(SpriteBatch), spriteBatch);
 
             Manager.Initialize(this);
+            Manager.StateManager.PushState(new GamePlayState(this));
             Manager.StateManager.PushState(new MainMenuState(this));
             Manager.StateManager.PushState(new IntroState(this));
 
+#if VIEWDEBUG
+            Manager.MatrixManager.SetFieldOfView(75);
+#endif
 
             // TODO: use this.Content to load your game content here
         }

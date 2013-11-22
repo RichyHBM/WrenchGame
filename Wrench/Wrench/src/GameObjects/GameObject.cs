@@ -69,6 +69,7 @@ namespace Wrench.src.GameObjects
         public virtual void Backup(GameTime gameTime)
         {
             position = lastPosition;
+            boundingBox = new BoundingBox(position + boxMin, position + boxMax);
         }
         public void ReverseVelocity()
         {

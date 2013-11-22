@@ -51,6 +51,15 @@ namespace Wrench.src.Managers
             Matrix.Multiply(ref view, ref perspective, out viewPerspective);
         }
 
+        public void SetFieldOfView(float fov)
+        {
+            this.fieldOfView = fov;
+            orthogonal = Matrix.CreateOrthographic(width, height, nearPlane, farPlane);
+            perspective = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fieldOfView), width / (float)height, nearPlane, farPlane);
+            Matrix.Multiply(ref view, ref orthogonal, out viewOrthographic);
+            Matrix.Multiply(ref view, ref perspective, out viewPerspective);
+        }
+
         public void SetPosition(Vector3 position)
         {
             this.position = position;

@@ -35,7 +35,7 @@ namespace Wrench.src.GameObjects
         {
             this.position = pos;
             headPosition = new Vector3(0, 0.6f, 0);
-            RotationSpeed = 0.2f;
+            RotationSpeed = 0.1f;
             ForwardSpeed = 10f;
             
             boxMin = new Vector3(-0.235f, 0, -0.235f);
@@ -120,7 +120,6 @@ namespace Wrench.src.GameObjects
         public override void Backup(GameTime gameTime)
         {
             position = lastPosition;
-            velocity = -velocity;
             Matrix rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
             Vector3 cameraPosition = position + headPosition;
             rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
@@ -155,7 +154,7 @@ namespace Wrench.src.GameObjects
             Matrix rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
             Vector3 transformedReference = Vector3.Transform(Vector3.Forward * 0.3f, rotationMatrix);
             Helpers.DebugShapeRenderer.AddLine(lineStart, lineStart + transformedReference, Color.Purple);
-            Helpers.DebugShapeRenderer.AddBoundingBox(boundingBox, Color.Red);
+            Helpers.DebugShapeRenderer.AddBoundingBox(boundingBox, Color.Green);
 #endif
             gun.Draw(gameTime);
             base.Draw(gameTime);

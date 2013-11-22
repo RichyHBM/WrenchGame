@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Wrench.src.GameObjects;
 using Wrench.src.Managers;
 
 
@@ -23,6 +24,7 @@ namespace Wrench.src.Helpers
         protected BasicEffect effect;
         protected Matrix rotation = Matrix.Identity;
         protected Matrix translation = Matrix.Identity;
+        protected Vector3 position;
         public Billboard(Game game, Texture2D texture, Vector2 size)
             : base(game)
         {
@@ -55,6 +57,7 @@ namespace Wrench.src.Helpers
 
         public void Move(Vector3 pos)
         {
+            position = pos;
             Matrix.CreateTranslation(ref pos, out translation);
         }
 
@@ -71,10 +74,10 @@ namespace Wrench.src.Helpers
             rotation *= Matrix.CreateRotationZ(angle);
         }
 
-        //public void Face(Vector3 lookAt)
-        //{ 
-        //
-        //}
+        public void Face(Vector3 lookAt)
+        {
+            rotation *= Matrix.CreateLookAt(position, lookAt, Vector3.Up);
+        }
 
         /// <summary>
         /// Allows the game component to update itself.

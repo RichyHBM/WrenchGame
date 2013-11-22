@@ -45,7 +45,7 @@ namespace Wrench.src.States
         {
             // TODO: Add your update code here
             if (Manager.InputManager.HasBeenPressed(Keys.Enter))
-                Manager.StateManager.PushState(new GamePlayState(Game));
+                Manager.StateManager.RemoveState(this);
             base.Update(gameTime);
         }
 
