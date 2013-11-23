@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Wrench.src.Helpers;
 using CustomAssets;
 using Wrench.src.GameObjects;
+using Wrench.src.Managers;
 
 
 namespace Wrench.src.GameLevelItems
@@ -28,7 +29,7 @@ namespace Wrench.src.GameLevelItems
         public GameLevel(Game game)
             : base(game)
         {
-            levelRaw = game.Content.Load<Level>("level");
+            levelRaw = ContentPreImporter.GetLevel("level");
             levelRend = new LevelRenderer(game, levelRaw);
             levelCollisions = new LevelCollisions(game, levelRaw);
 

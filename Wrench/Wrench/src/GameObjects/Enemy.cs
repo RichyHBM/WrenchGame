@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Wrench.src.Helpers;
+using Wrench.src.Managers;
 
 namespace Wrench.src.GameObjects
 {
@@ -21,7 +22,7 @@ namespace Wrench.src.GameObjects
             boxMin = new Vector3(-0.235f, 0, -0.235f);
             boxMax = new Vector3(0.235f, 0.8f, 0.235f);
             boundingBox = new BoundingBox(boxMin, boxMax);
-            billboard = new Billboard(game, game.Content.Load<Texture2D>("Textures/enemy"), Vector2.One/2);
+            billboard = new Billboard(game, ContentPreImporter.GetTexture("Textures/enemy"), Vector2.One / 2);
         }
 
         public void Update(GameTime gameTime, Vector3 playerPos)
@@ -34,9 +35,7 @@ namespace Wrench.src.GameObjects
             direction.Normalize();
             float rotation = (float)Math.Acos(Vector3.Dot(Vector3.Backward, direction));
 
-            Console.WriteLine(rotation);
             billboard.RotateY(rotation);
-            //billboard.Face(playerPos);
             
             billboard.Update(gameTime);
 

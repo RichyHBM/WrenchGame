@@ -60,7 +60,7 @@ namespace Wrench.src.States
 
         public override void Start()
         {
-            background = Game.Content.Load<Texture2D>("Textures/Intro");
+            background = ContentPreImporter.GetTexture("Textures/Intro");
         }
 
         public override void Stop()

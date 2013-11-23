@@ -45,7 +45,7 @@ namespace Wrench.src.Managers
             state.Stop();
             states.Remove(state);
             if (states.Count == 0)
-                throw new Exception("No States Left");
+                game.Exit();
             states.Last().Resume();
         }
         

@@ -30,6 +30,13 @@ namespace Wrench.src.Managers
 
         protected Game game;
 
+        public enum MouseButton
+        {
+            Left,
+            Right,
+            Middle
+        }
+
         public void SetMatrixUpdate(bool matrixUpdate)
         {
             needsMatrixUpdate = matrixUpdate;
@@ -60,9 +67,9 @@ namespace Wrench.src.Managers
 
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                Game1.MainGame.Exit();
+                game.Exit();
             if (Keyboard.GetState().IsKeyDown(Keys.F5))
-                Game1.MainGame.Exit();
+                game.Exit();
 
             if (needsMatrixUpdate)
                 UpdateMatrix();
@@ -96,6 +103,24 @@ namespace Wrench.src.Managers
         public bool IsDown(Keys key)
         {
             return currentKeyboardState.IsKeyDown(key);
+        }
+
+        
+
+        public bool HasBeenClicked(MouseButton button)
+        { 
+            switch(button)
+            {
+                case MouseButton.Left:
+                    return (currentMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released);
+                case MouseButton.Right:
+                    return (currentMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released);
+                case MouseButton.Middle:
+                    return (currentMouseState.MiddleButton == ButtonState.Pressed && oldMouseState.MiddleButton == ButtonState.Released);
+
+            }
+            return false;
+            
         }
 
         public static void UpdateMatrix()

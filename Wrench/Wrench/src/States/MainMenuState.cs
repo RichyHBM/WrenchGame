@@ -46,6 +46,8 @@ namespace Wrench.src.States
             // TODO: Add your update code here
             if (Manager.InputManager.HasBeenPressed(Keys.Enter))
                 Manager.StateManager.RemoveState(this);
+            if (Manager.InputManager.HasBeenPressed(Keys.Escape))
+                Game.Exit();
             base.Update(gameTime);
         }
 
@@ -71,7 +73,7 @@ namespace Wrench.src.States
 
         public override void Start()
         {
-            background = Game.Content.Load<Texture2D>("Textures/Menu");
+            background = ContentPreImporter.GetTexture("Textures/Menu");
         }
 
         public override void Stop()

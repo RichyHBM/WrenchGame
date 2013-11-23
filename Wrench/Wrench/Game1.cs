@@ -21,7 +21,6 @@ namespace Wrench
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        public static Game MainGame;
 
         public Game1()
         {
@@ -31,7 +30,6 @@ namespace Wrench
             //graphics.ToggleFullScreen();
             graphics.ApplyChanges();
 
-            MainGame = this;
             Content.RootDirectory = "Content";
         }
 
@@ -54,7 +52,7 @@ namespace Wrench
         /// </summary>
         protected override void LoadContent()
         {
-
+            ContentPreImporter.Initialize(this);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             src.Helpers.DebugShapeRenderer.Initialize(GraphicsDevice);
             Services.AddService(typeof(SpriteBatch), spriteBatch);

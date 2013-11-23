@@ -33,9 +33,9 @@ namespace Wrench.src.Helpers
             : base(game)
         {
             level = levFile;
-            brickTexture = Game.Content.Load<Texture2D>("Textures/bricks");
-            floorTexture = Game.Content.Load<Texture2D>("Textures/floor");
-            ceilingTexture = Game.Content.Load<Texture2D>("Textures/ceiling");
+            brickTexture = ContentPreImporter.GetTexture("Textures/bricks");
+            floorTexture = ContentPreImporter.GetTexture("Textures/floor");
+            ceilingTexture = ContentPreImporter.GetTexture("Textures/ceiling");
             effect = new BasicEffect(Game.GraphicsDevice);
         }
 

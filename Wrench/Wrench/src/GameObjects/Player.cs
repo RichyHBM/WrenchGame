@@ -28,6 +28,8 @@ namespace Wrench.src.GameObjects
         HolsteredGun gun;
         SpriteFont font;
 
+        public bool Shot { get; private set; }
+
         int health = 100;
 
         public Player(Game game, Vector3 pos)
@@ -41,8 +43,8 @@ namespace Wrench.src.GameObjects
             boxMin = new Vector3(-0.235f, 0, -0.235f);
             boxMax = new Vector3(0.235f, 0.8f, 0.235f);
             boundingBox = new BoundingBox(boxMin, boxMax);
-            font = Game.Content.Load<SpriteFont>("TextFont");
-            gun = new HolsteredGun(game, game.Content.Load<Texture2D>("Textures/gun"), new Vector2(0.1f));
+            font = ContentPreImporter.GetFont("TextFont");
+            gun = new HolsteredGun(game, ContentPreImporter.GetTexture("Textures/gun"), new Vector2(0.1f));
             // TODO: Construct any child components here
         }
 
@@ -103,6 +105,15 @@ namespace Wrench.src.GameObjects
             rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
             Vector3 transformedReference = Vector3.Transform(cameraReference, rotationMatrix);
             Vector3 cameraLookat = cameraPosition + transformedReference;
+
+            Shot = false;
+            if (Manager.InputManager.HasBeenClicked(InputManager.MouseButton.Left))
+            {
+                Shot = true;
+            }
+
+
+
 #if VIEWDEBUG
             Manager.MatrixManager.SetPosition(cameraPosition + new Vector3(1,2,1));
             Manager.MatrixManager.SetLookAt(cameraPosition);

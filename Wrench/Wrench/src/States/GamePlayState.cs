@@ -49,7 +49,7 @@ namespace Wrench.src.States
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-            if (Manager.InputManager.HasBeenPressed(Keys.B))
+            if (Manager.InputManager.HasBeenPressed(Keys.Escape))
                 Manager.StateManager.PushState(new MainMenuState(Game));
 
             level.Update(gameTime);
@@ -60,6 +60,7 @@ namespace Wrench.src.States
 
         public override void Draw(GameTime gameTime)
         {
+
             level.Draw(gameTime);
             base.Draw(gameTime);
         }
@@ -76,7 +77,7 @@ namespace Wrench.src.States
 
         public override void Start()
         {
-            background = Game.Content.Load<Texture2D>("Textures/GamePlay");
+            background = ContentPreImporter.GetTexture("Textures/GamePlay");
         }
 
         public override void Stop()
