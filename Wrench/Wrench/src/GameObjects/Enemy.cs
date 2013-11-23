@@ -50,5 +50,10 @@ namespace Wrench.src.GameObjects
 #endif
             base.Draw(gameTime);
         }
+
+        public override void Hit()
+        {
+            Alive = false;
+        }
     }
 }

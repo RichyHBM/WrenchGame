@@ -28,6 +28,8 @@ namespace Wrench.src.GameObjects
         HolsteredGun gun;
         SpriteFont font;
 
+        public float Rotation { get { return amountOfRotation; } private set { } }
+
         public bool Shot { get; private set; }
 
         int health = 100;
@@ -169,6 +171,13 @@ namespace Wrench.src.GameObjects
 #endif
             gun.Draw(gameTime);
             base.Draw(gameTime);
+        }
+
+        public override void Hit()
+        {
+            health -= 20;
+            if (health <= 0)
+                Alive = false;
         }
     }
 }

@@ -80,15 +80,55 @@ namespace Wrench.src.GameLevelItems
             
             levelCollisions.Update(gameTime);
 
-            foreach (GameObject obj in objects)
+            if (levelCollisions.IsColliding(player.BoundingBox))
             {
+                    player.Backup(gameTime);
+                    player.ReverseVelocity();
+            }
 
-                if (levelCollisions.IsColliding(obj.BoundingBox))
+            if (player.Shot)
+            { 
+                Matrix forwardMovement = Matrix.CreateRotationY(player.Rotation);
+                Vector3 direction = Vector3.Transform(Vector3.Forward, forwardMovement);
+                direction.Normalize();
+                Vector3 pos = player.Position + (Vector3.Up / 2.0f);
+
+                Ray ray = new Ray(pos, direction);
+                foreach (GameObject obj in objects)
                 {
-                    obj.Backup(gameTime);
-                    obj.ReverseVelocity();
+                    if (obj is Enemy)
+                    {
+                        float? enemyDist = ray.Intersects(obj.BoundingBox);
+                        if (enemyDist != null)
+                        {
+                            bool inSight = true;
+                            foreach (BoundingBox box in levelCollisions.LevelCollisionBoxes)
+                            { 
+                                float? distWall = ray.Intersects (box);
+                                if (distWall != null &&distWall < enemyDist)
+                                {
+                                    inSight = false;
+                                    break;
+                                }
+                            }
+                            if (inSight)
+                            {
+                                obj.Hit();
+                                break;
+                            }
+                        }
+                    }
                 }
             }
+
+            List<GameObject> toRemove = new List<GameObject>();
+            foreach (GameObject obj in objects)
+                if (obj.Alive == false)
+                    toRemove.Add(obj);
+
+            foreach (GameObject obj in toRemove)
+                objects.Remove(obj);
+
             base.Update(gameTime);
         }
 

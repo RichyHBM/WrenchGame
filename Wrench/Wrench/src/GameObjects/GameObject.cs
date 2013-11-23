@@ -15,7 +15,7 @@ namespace Wrench.src.GameObjects
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class GameObject : Microsoft.Xna.Framework.DrawableGameComponent
+    public abstract class GameObject : Microsoft.Xna.Framework.DrawableGameComponent
     {
         protected Vector3 position;
         protected Vector3 velocity;
@@ -31,10 +31,12 @@ namespace Wrench.src.GameObjects
         public float RotationSpeed { get; protected set; }
         public float ForwardSpeed { get; protected set; }
 
+        public bool Alive { get; protected set; } 
+
         public GameObject(Game game)
             : base(game)
         {
-
+            Alive = true;
             // TODO: Construct any child components here
         }
 
@@ -75,5 +77,7 @@ namespace Wrench.src.GameObjects
         {
             velocity.X = -velocity.X;
         }
+
+        public abstract void Hit();
     }
 }

@@ -20,7 +20,7 @@ namespace Wrench.src.GameLevelItems
     {
         Level level;
         List<BoundingBox> levelBoxes = new List<BoundingBox>();
-
+        public List<BoundingBox> LevelCollisionBoxes { get { return levelBoxes;  } private set { } }
         public LevelCollisions(Game game, Level lev)
             : base(game)
         {
