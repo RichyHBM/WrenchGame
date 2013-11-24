@@ -21,6 +21,7 @@ namespace Wrench
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont font;
 
         public Game1()
         {
@@ -61,9 +62,10 @@ namespace Wrench
             Manager.StateManager.PushState(new GamePlayState(this));
             Manager.StateManager.PushState(new MainMenuState(this));
             Manager.StateManager.PushState(new IntroState(this));
+            font = ContentPreImporter.GetFont("TextFont");
 
 #if VIEWDEBUG
-            Manager.MatrixManager.SetFieldOfView(75);
+            Manager.MatrixManager.SetFieldOfView(55);
 #endif
 
             // TODO: use this.Content to load your game content here
@@ -103,6 +105,10 @@ namespace Wrench
 
             Manager.Draw(gameTime);
 
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, "Framerate: " + gameTime.ElapsedGameTime.TotalMilliseconds, new Vector2(10, 45), Color.Black);
+            spriteBatch.End();
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;

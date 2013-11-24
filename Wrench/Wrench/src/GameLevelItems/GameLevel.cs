@@ -12,6 +12,7 @@ using Wrench.src.Helpers;
 using CustomAssets;
 using Wrench.src.GameObjects;
 using Wrench.src.Managers;
+using Wrench.src.States;
 
 
 namespace Wrench.src.GameLevelItems
@@ -26,20 +27,27 @@ namespace Wrench.src.GameLevelItems
         LevelCollisions levelCollisions;
         List<GameObject> objects = new List<GameObject>();
         private Player player;
+        int enemies = 0;
+        SpriteFont font;
+
         public GameLevel(Game game)
             : base(game)
         {
             levelRaw = ContentPreImporter.GetLevel("level");
             levelRend = new LevelRenderer(game, levelRaw);
             levelCollisions = new LevelCollisions(game, levelRaw);
+            font = ContentPreImporter.GetFont("TextFont");
 
             Vector3 playerPos = Vector3.Zero;
             for (int y = 0; y < levelRaw.Depth; y++)
                 for (int x = 0; x < levelRaw.Width; x++)
                     if (levelRaw.GetAt(x, y) == 'p')
-                        player = new Player(game, new Vector3(x + 0.5f, 0, y + 0.5f));
-                    else if (levelRaw.GetAt(x, y) == 'e')
-                        objects.Add(new Enemy(game, new Vector3(x + 0.5f, 0, y + 0.5f)));
+                        player = new Player(game, new Vector3(x, 0, y));
+                    else if (levelRaw.GetAt(x, y) == 'e'){
+                        objects.Add(new Enemy(game, new Vector3(x, 0, y), levelRaw));
+                        enemies++;
+                    }
+
             //Corner of the box if front left, so to place player in right place we need to add .5 to the left and .5 to the front
             objects.Add(player);
             // TODO: Construct any child components here
@@ -72,75 +80,149 @@ namespace Wrench.src.GameLevelItems
             levelRend.Update(gameTime);
             foreach (GameObject obj in objects)
             {
-                if(obj is Enemy)
-                    (obj as Enemy).Update(gameTime, player.Position);
+                if (obj is Enemy)
+                {
+                    Enemy en = obj as Enemy;
+
+                    en.Update(gameTime, player, isInSighten(en, player));
+                }
                 else
                     obj.Update(gameTime);
             }
-            
+
             levelCollisions.Update(gameTime);
 
-            if (levelCollisions.IsColliding(player.BoundingBox))
+            foreach (GameObject obj in objects)
             {
-                    player.Backup(gameTime);
-                    player.ReverseVelocity();
+                if (levelCollisions.IsColliding(obj.BoundingBox))
+                {
+                    obj.Backup(gameTime);
+                    obj.ReverseVelocity();
+                }
             }
-
+        
             if (player.Shot)
-            { 
-                Matrix forwardMovement = Matrix.CreateRotationY(player.Rotation);
-                Vector3 direction = Vector3.Transform(Vector3.Forward, forwardMovement);
-                direction.Normalize();
-                Vector3 pos = player.Position + (Vector3.Up / 2.0f);
-
-                Ray ray = new Ray(pos, direction);
+            {
                 foreach (GameObject obj in objects)
                 {
                     if (obj is Enemy)
                     {
-                        float? enemyDist = ray.Intersects(obj.BoundingBox);
-                        if (enemyDist != null)
+                        if (isInDirection(player, obj))
                         {
-                            bool inSight = true;
-                            foreach (BoundingBox box in levelCollisions.LevelCollisionBoxes)
-                            { 
-                                float? distWall = ray.Intersects (box);
-                                if (distWall != null &&distWall < enemyDist)
-                                {
-                                    inSight = false;
-                                    break;
-                                }
-                            }
-                            if (inSight)
-                            {
-                                obj.Hit();
-                                break;
-                            }
+                            obj.Hit();
+                            break;
                         }
                     }
+
                 }
             }
 
             List<GameObject> toRemove = new List<GameObject>();
             foreach (GameObject obj in objects)
                 if (obj.Alive == false)
+                {
                     toRemove.Add(obj);
-
+                    if(obj is Enemy)
+                        enemies--;
+                }
             foreach (GameObject obj in toRemove)
                 objects.Remove(obj);
+
+            if(!player.Alive)
+                Manager.StateManager.PushState(new LoseState(Game));
+            if(enemies == 0)
+                Manager.StateManager.PushState(new WinState(Game));
+
 
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
+            
             levelRend.Draw(gameTime);
             foreach (GameObject obj in objects)
             {
                 obj.Draw(gameTime);
             }
             levelCollisions.Draw(gameTime);
+
+            SpriteBatch sp = Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
+            sp.Begin();
+            sp.DrawString(font, "Enemies: " + enemies, new Vector2(10, 5), Color.Black);
+            sp.End();
+
+            GraphicsDevice.BlendState = BlendState.Opaque;
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+
             base.Draw(gameTime);
+        }
+
+        Random ran = new Random();
+        private Vector3 GetRandomEmpty()
+        {
+            Vector3 vec = new Vector3();
+            vec.Y = 0;
+            do
+            {
+                vec.X = ran.Next(levelRaw.Width);
+                vec.Z = ran.Next(levelRaw.Depth);
+            } while (levelRaw.GetAt((int)vec.X, (int)vec.Z) == '#');
+
+            return vec;
+        }
+
+        public bool isInSighten(GameObject one, GameObject two)
+        {
+            Vector3 pos = one.Position + (Vector3.Up / 2.0f);
+            Vector3 dir = two.Position - one.Position;
+            dir.Normalize();
+            Ray ray = new Ray(pos, dir);
+
+            float? enemyDist = ray.Intersects(two.BoundingBox);
+            bool inSight = false;
+            if (enemyDist != null)
+            {
+                inSight = true;
+                foreach (BoundingBox box in levelCollisions.LevelCollisionBoxes)
+                {
+                    float? distWall = ray.Intersects(box);
+                    if (distWall != null && distWall < enemyDist)
+                    {
+                        inSight = false;
+                        break;
+                    }
+                }
+            }
+            return inSight;
+        }
+
+        public bool isInDirection(GameObject one, GameObject two)
+        {
+            Matrix forwardMovement = Matrix.CreateRotationY(one.Rotation);
+            Vector3 direction = Vector3.Transform(Vector3.Forward, forwardMovement);
+            direction.Normalize();
+            Vector3 pos = one.Position + (Vector3.Up / 2.0f);
+
+            Ray ray = new Ray(pos, direction);
+
+            float? enemyDist = ray.Intersects(two.BoundingBox);
+            bool inSight = false;
+            if (enemyDist != null)
+            {
+                inSight = true;
+                foreach (BoundingBox box in levelCollisions.LevelCollisionBoxes)
+                {
+                    float? distWall = ray.Intersects(box);
+                    if (distWall != null && distWall < enemyDist)
+                    {
+                        inSight = false;
+                        break;
+                    }
+                }
+            }
+            return inSight;
         }
     }
 }

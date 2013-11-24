@@ -79,6 +79,14 @@ namespace Wrench.src.Helpers
             rotation *= Matrix.CreateLookAt(position, lookAt, Vector3.Up);
         }
 
+        public void ForceUpdate()
+        {
+            effect.World = rotation * translation;
+            rotation = Matrix.Identity;
+            effect.View = Manager.MatrixManager.View;
+            effect.Projection = Manager.MatrixManager.Perspective;
+        }
+
         /// <summary>
         /// Allows the game component to update itself.
         /// </summary>

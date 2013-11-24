@@ -8,8 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Wrench.src.BaseClasses;
 using Wrench.src.Managers;
+using Wrench.src.BaseClasses;
 
 
 namespace Wrench.src.States
@@ -17,10 +17,10 @@ namespace Wrench.src.States
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class MainMenuState : AState
+    public class WinState : AState
     {
         Texture2D background;
-        public MainMenuState(Game game)
+        public WinState(Game game)
             : base(game)
         {
             // TODO: Construct any child components here
@@ -44,8 +44,6 @@ namespace Wrench.src.States
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-            if (Manager.InputManager.HasBeenPressed(Keys.Enter))
-                Manager.StateManager.RemoveState(this);
             if (Manager.InputManager.HasBeenPressed(Keys.Escape))
                 Game.Exit();
             base.Update(gameTime);
@@ -63,8 +61,7 @@ namespace Wrench.src.States
 
         public override void Start()
         {
-            background = ContentPreImporter.GetTexture("Textures/Menu");
+            background = ContentPreImporter.GetTexture("Textures/Win");
         }
-
     }
 }

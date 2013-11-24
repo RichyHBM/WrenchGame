@@ -14,9 +14,11 @@ namespace Wrench.src.Helpers
         static Vector2 uvx1y0 = new Vector2(1, 0);
         static Vector2 uvx1y1 = new Vector2(1, 1);
 
-        public static VertexPositionNormalTexture[] WallMeshAt(int x, int y)
+        public static VertexPositionNormalTexture[] WallMeshAt(float x, float y)
         {
             List<VertexPositionNormalTexture> nonIndexedCube = new List<VertexPositionNormalTexture>();
+            x -= 0.5f;
+            y -= 0.5f;
 
             Vector3 topLeftFront = new Vector3(0.0f + x, 1.0f, 1.0f + y);
             Vector3 bottomLeftFront = new Vector3(0.0f + x, 0.0f, 1.0f + y);
@@ -81,8 +83,10 @@ namespace Wrench.src.Helpers
             return nonIndexedCube.ToArray();
         }
 
-        public static VertexPositionNormalTexture[] FloorMeshAt(int x, int y)
+        public static VertexPositionNormalTexture[] FloorMeshAt(float x, float y)
         {
+            x -= 0.5f;
+            y -= 0.5f;
             List<VertexPositionNormalTexture> nonIndexedCube = new List<VertexPositionNormalTexture>();
             Vector3 topLeftFront = new Vector3(0.0f + x, 0.0f, 1.0f + y);
             Vector3 topRightFront = new Vector3(1.0f + x, 0.0f, 1.0f + y);
@@ -99,8 +103,10 @@ namespace Wrench.src.Helpers
             return nonIndexedCube.ToArray();
         }
 
-        public static VertexPositionNormalTexture[] CeilingMeshAt(int x, int y)
+        public static VertexPositionNormalTexture[] CeilingMeshAt(float x, float y)
         {
+            x -= 0.5f;
+            y -= 0.5f;
             List<VertexPositionNormalTexture> nonIndexedCube = new List<VertexPositionNormalTexture>();
             Vector3 bottomLeftFront = new Vector3(0.0f + x, 1.0f, 1.0f + y);
             Vector3 bottomRightFront = new Vector3(1.0f + x, 1.0f, 1.0f + y);

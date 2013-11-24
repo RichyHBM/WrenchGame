@@ -21,6 +21,7 @@ namespace Wrench.src.Managers
         static Dictionary<String, Texture2D> textureList = new Dictionary<string, Texture2D>();
         static Dictionary<String, Level> levelList = new Dictionary<string, Level>();
         static Dictionary<String, SpriteFont> fontList = new Dictionary<string, SpriteFont>();
+        static Dictionary<String, BasicEffect> effectList = new Dictionary<string, BasicEffect>();
 
         public static void Initialize(Game game)
         {
@@ -31,7 +32,9 @@ namespace Wrench.src.Managers
                                     "Textures/GamePlay",
                                     "Textures/gun",
                                     "Textures/Intro",
-                                    "Textures/Menu"};
+                                    "Textures/Menu",
+                                    "Textures/Win",
+                                    "Textures/Lose"};
 
             string[] levelNames = {"level"};
             string[] fontNames = { "TextFont" };
@@ -50,6 +53,8 @@ namespace Wrench.src.Managers
             {
                 fontList.Add(name, game.Content.Load<SpriteFont>(name));
             }
+
+            effectList.Add("DEFAULT", new BasicEffect(game.GraphicsDevice));
         }
 
         public static Texture2D GetTexture(string name)
@@ -78,5 +83,16 @@ namespace Wrench.src.Managers
 
             return f;
         }
+
+        public static BasicEffect GetEffect(string name)
+        {
+            BasicEffect be;
+            if (!effectList.TryGetValue(name, out be))
+                throw new Exception("Asset not preloaded");
+
+            return be;
+        }
+
+        
     }
 }

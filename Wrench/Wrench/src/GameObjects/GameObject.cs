@@ -31,6 +31,8 @@ namespace Wrench.src.GameObjects
         public float RotationSpeed { get; protected set; }
         public float ForwardSpeed { get; protected set; }
 
+        public float Rotation { get { return amountOfRotation; } private set { } }
+        protected float amountOfRotation = 0;
         public bool Alive { get; protected set; } 
 
         public GameObject(Game game)

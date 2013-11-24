@@ -110,7 +110,9 @@
     <Compile Include="src\Managers\StateManager.cs" />
     <Compile Include="src\States\GamePlayState.cs" />
     <Compile Include="src\States\IntroState.cs" />
+    <Compile Include="src\States\LoseState.cs" />
     <Compile Include="src\States\MainMenuState.cs" />
+    <Compile Include="src\States\WinState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

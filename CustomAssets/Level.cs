@@ -29,8 +29,10 @@ namespace CustomAssets
             Depth = depth;
         }
 
-        public char GetAt(int x, int y)
+        public Char GetAt(int x, int y)
         {
+            if (x + Width * y >= Map.Count())
+                return '#';
             return Map[x + Width * y];
         }
     }

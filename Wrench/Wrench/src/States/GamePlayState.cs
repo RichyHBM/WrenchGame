@@ -28,6 +28,7 @@ namespace Wrench.src.States
             : base(game)
         {
             level = new GameLevel(game);
+            level.Initialize();
             // TODO: Construct any child components here
         }
 
@@ -38,7 +39,7 @@ namespace Wrench.src.States
         public override void Initialize()
         {
             // TODO: Add your initialization code here
-            level.Initialize();
+            
             base.Initialize();
         }
 

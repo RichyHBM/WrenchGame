@@ -41,10 +41,10 @@ namespace Wrench.src.BaseClasses
 
         }
 
-        public abstract void Resume();
-        public abstract void Pause();
-        public abstract void Start();
-        public abstract void Stop();
+        public virtual void Resume() { }
+        public virtual void Pause() { }
+        public virtual void Start() { }
+        public virtual void Stop() { }
 
     }
 }

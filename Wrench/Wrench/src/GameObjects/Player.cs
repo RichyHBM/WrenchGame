@@ -21,14 +21,13 @@ namespace Wrench.src.GameObjects
     {
         //its position will always be on the floor, so we need an offset to 'elevate' the camera
         Vector3 headPosition;
-        //In this game the player can only rotate around y
-        float amountOfRotation = 0;
+        
         //The position the player looks at when not rotated
         Vector3 cameraReference = Vector3.Forward;
         HolsteredGun gun;
         SpriteFont font;
 
-        public float Rotation { get { return amountOfRotation; } private set { } }
+        
 
         public bool Shot { get; private set; }
 
@@ -44,9 +43,27 @@ namespace Wrench.src.GameObjects
             
             boxMin = new Vector3(-0.235f, 0, -0.235f);
             boxMax = new Vector3(0.235f, 0.8f, 0.235f);
-            boundingBox = new BoundingBox(boxMin, boxMax);
+            boundingBox = new BoundingBox(position + boxMin, position + boxMax);
             font = ContentPreImporter.GetFont("TextFont");
             gun = new HolsteredGun(game, ContentPreImporter.GetTexture("Textures/gun"), new Vector2(0.1f));
+
+            gun.SetPositionRotation(position, amountOfRotation);
+            gun.ForceUpdate();
+
+
+            Matrix rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
+            Vector3 cameraPosition = position + headPosition;
+            rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
+            Vector3 transformedReference = Vector3.Transform(cameraReference, rotationMatrix);
+            Vector3 cameraLookat = cameraPosition + transformedReference;
+
+#if VIEWDEBUG
+            Manager.MatrixManager.SetPosition(cameraPosition + new Vector3(1f, 4.0f, 1f));
+            Manager.MatrixManager.SetLookAt(cameraPosition);
+#else
+            Manager.MatrixManager.SetPosition(cameraPosition);
+            Manager.MatrixManager.SetLookAt(cameraLookat);
+#endif
             // TODO: Construct any child components here
         }
 
@@ -117,7 +134,7 @@ namespace Wrench.src.GameObjects
 
 
 #if VIEWDEBUG
-            Manager.MatrixManager.SetPosition(cameraPosition + new Vector3(1,2,1));
+            Manager.MatrixManager.SetPosition(cameraPosition + new Vector3(1f, 4.0f, 1f));
             Manager.MatrixManager.SetLookAt(cameraPosition);
 #else
             Manager.MatrixManager.SetPosition(cameraPosition);
@@ -139,7 +156,7 @@ namespace Wrench.src.GameObjects
             Vector3 transformedReference = Vector3.Transform(cameraReference, rotationMatrix);
             Vector3 cameraLookat = cameraPosition + transformedReference;
 #if VIEWDEBUG
-            Manager.MatrixManager.SetPosition(cameraPosition + new Vector3(1,2,1));
+            Manager.MatrixManager.SetPosition(cameraPosition + new Vector3(1f,10.0f,1f));
             Manager.MatrixManager.SetLookAt(cameraPosition);
 #else
             Manager.MatrixManager.SetPosition(cameraPosition);
@@ -155,7 +172,7 @@ namespace Wrench.src.GameObjects
 
             SpriteBatch sp = Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
             sp.Begin();
-            sp.DrawString(font, "Life: " + health, new Vector2(10, 10), Color.Black);
+            sp.DrawString(font, "Life: " + health, new Vector2(10, 25), Color.Black);
             sp.End();
 
             GraphicsDevice.BlendState = BlendState.Opaque;
@@ -175,7 +192,7 @@ namespace Wrench.src.GameObjects
 
         public override void Hit()
         {
-            health -= 20;
+            health -= 5;
             if (health <= 0)
                 Alive = false;
         }

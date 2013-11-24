@@ -28,6 +28,7 @@ namespace CustomAssetsImporter
     {
         public override TOutput Import(string filename, ContentImporterContext context)
         {
+            //System.Diagnostics.Debugger.Launch();
             StreamReader reader = new StreamReader(File.OpenRead(filename));
             int levelWidth = 0;
             List<String> lines = new List<string>();

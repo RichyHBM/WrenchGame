@@ -32,13 +32,12 @@ namespace Wrench.src.GameLevelItems
                     if (level.GetAt(x, y) == '#')
                     {
                         levelBoxes.Add(new BoundingBox(
-                                new Vector3(0.0f + x, 0.0f, 0.0f + y),
-                                new Vector3(1.0f + x, 1.0f, 1.0f + y)
-                            ));// (MapMesh.WallMeshAt(x, y));
+                                new Vector3(0.0f + x - 0.5f, 0.0f, 0.0f + y - 0.5f),
+                                new Vector3(1.0f + x - 0.5f, 1.0f, 1.0f + y - 0.5f)
+                            ));
                     }
                 }
             }
-            // TODO: Construct any child components here
         }
 
         public bool IsColliding(BoundingBox box)
