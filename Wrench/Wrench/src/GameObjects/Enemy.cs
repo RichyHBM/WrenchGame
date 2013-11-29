@@ -8,19 +8,24 @@ using Wrench.src.Helpers;
 using Wrench.src.Managers;
 using CustomAssets;
 
+
 namespace Wrench.src.GameObjects
 {
     public class Enemy : GameObject
     {
+        public static int EnemyLife = 5;
         Billboard billboard;
         Vector3 target;
         Random rand = new Random();
-        int life = 5;
+        int life = Enemy.EnemyLife;
         Level level;
+        Texture2D[] textures;
 
         public Enemy(Game game, Vector3 pos, Level l)
             : base(game)
         {
+            textures = new Texture2D[Enemy.EnemyLife];
+
             this.level = l;
             this.position = pos;
             RotationSpeed = 0.1f;
@@ -28,7 +33,14 @@ namespace Wrench.src.GameObjects
             boxMin = new Vector3(-0.235f, 0, -0.235f);
             boxMax = new Vector3(0.235f, 0.8f, 0.235f);
             boundingBox = new BoundingBox(position + boxMin, position + boxMax);
-            billboard = new Billboard(game, ContentPreImporter.GetTexture("Textures/enemy"), Vector2.One / 2);
+
+            textures[4] = ContentPreImporter.GetTexture("Textures/enemy");
+            textures[3] = ContentPreImporter.GetTexture("Textures/enemy4");
+            textures[2] = ContentPreImporter.GetTexture("Textures/enemy3");
+            textures[1] = ContentPreImporter.GetTexture("Textures/enemy2");
+            textures[0] = ContentPreImporter.GetTexture("Textures/enemy1");
+
+            billboard = new Billboard(game, textures[4], Vector2.One / 2);
             billboard.Move(position + new Vector3(0, 0.25f, 0));
             billboard.ForceUpdate();
             target = pos;
@@ -60,18 +72,11 @@ namespace Wrench.src.GameObjects
             v = Vector3.Transform(v, forwardMovement);
 
             velocity += v;
-            
             MoveForward(gameTime);
-
             boundingBox = new BoundingBox(position + boxMin, position + boxMax);
-
             billboard.Move(position + new Vector3(0, 0.25f, 0));
-
             billboard.RotateY(amountOfRotation);
-            
             billboard.Update(gameTime);
-            
-
 
             base.Update(gameTime);
         }
@@ -99,8 +104,8 @@ namespace Wrench.src.GameObjects
             Vector3 lineStart = position + new Vector3(0, 0.5f, 0);
             Matrix rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
             Vector3 transformedReference = Vector3.Transform(Vector3.Backward * 0.3f, rotationMatrix);
+
             Helpers.DebugShapeRenderer.AddLine(lineStart, lineStart + transformedReference, Color.Purple);
-            
             Helpers.DebugShapeRenderer.AddBoundingBox(boundingBox, Color.Red);
 #endif
             base.Draw(gameTime);
@@ -111,6 +116,10 @@ namespace Wrench.src.GameObjects
             life--;
             if(life <=0)
                 Alive = false;
+            else
+            {
+                billboard.SetTexture(textures[life - 1]);
+            }
         }
     }
 }

@@ -26,7 +26,9 @@ namespace Wrench.src.GameObjects
         Vector3 cameraReference = Vector3.Forward;
         HolsteredGun gun;
         SpriteFont font;
-
+        private Texture2D gunFlashTexture;
+        private Texture2D gunTexture;
+        private DateTime bulletTime;
         
 
         public bool Shot { get; private set; }
@@ -36,6 +38,7 @@ namespace Wrench.src.GameObjects
         public Player(Game game, Vector3 pos)
             : base(game)
         {
+            bulletTime = DateTime.Today;
             this.position = pos;
             headPosition = new Vector3(0, 0.6f, 0);
             RotationSpeed = 0.1f;
@@ -45,7 +48,10 @@ namespace Wrench.src.GameObjects
             boxMax = new Vector3(0.235f, 0.8f, 0.235f);
             boundingBox = new BoundingBox(position + boxMin, position + boxMax);
             font = ContentPreImporter.GetFont("TextFont");
-            gun = new HolsteredGun(game, ContentPreImporter.GetTexture("Textures/gun"), new Vector2(0.1f));
+            gunTexture = ContentPreImporter.GetTexture("Textures/gun");
+            gunFlashTexture = ContentPreImporter.GetTexture("Textures/gunflash");
+
+            gun = new HolsteredGun(game, gunTexture, new Vector2(0.1f));
 
             gun.SetPositionRotation(position, amountOfRotation);
             gun.ForceUpdate();
@@ -125,11 +131,17 @@ namespace Wrench.src.GameObjects
             Vector3 transformedReference = Vector3.Transform(cameraReference, rotationMatrix);
             Vector3 cameraLookat = cameraPosition + transformedReference;
 
+            
             Shot = false;
             if (Manager.InputManager.HasBeenClicked(InputManager.MouseButton.Left))
             {
                 Shot = true;
+                gun.SetTexture(gunFlashTexture);
+                bulletTime = DateTime.Now.AddSeconds(0.1);
             }
+
+            if (DateTime.Now > bulletTime)
+                gun.SetTexture(gunTexture);
 
 
 
@@ -186,7 +198,9 @@ namespace Wrench.src.GameObjects
             Helpers.DebugShapeRenderer.AddLine(lineStart, lineStart + transformedReference, Color.Purple);
             Helpers.DebugShapeRenderer.AddBoundingBox(boundingBox, Color.Green);
 #endif
+
             gun.Draw(gameTime);
+
             base.Draw(gameTime);
         }
 

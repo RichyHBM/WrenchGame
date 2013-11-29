@@ -29,6 +29,7 @@ namespace Wrench.src.GameLevelItems
         private Player player;
         int enemies = 0;
         SpriteFont font;
+        bool needsFlash = false;
 
         public GameLevel(Game game)
             : base(game)
@@ -100,9 +101,11 @@ namespace Wrench.src.GameLevelItems
                     obj.ReverseVelocity();
                 }
             }
-        
+
+            needsFlash = false;
             if (player.Shot)
             {
+                needsFlash = true;
                 foreach (GameObject obj in objects)
                 {
                     if (obj is Enemy)
@@ -147,6 +150,7 @@ namespace Wrench.src.GameLevelItems
             }
             levelCollisions.Draw(gameTime);
 
+            
             SpriteBatch sp = Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
             sp.Begin();
             sp.DrawString(font, "Enemies: " + enemies, new Vector2(10, 5), Color.Black);

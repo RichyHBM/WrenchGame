@@ -44,6 +44,12 @@ namespace Wrench.src.Helpers
             effect.Texture = texture;
         }
 
+        public void SetTexture(Texture2D t)
+        {
+            this.texture = t;
+
+        }
+
         /// <summary>
         /// Allows the game component to perform any initialization it needs to before starting
         /// to run.  This is where it can query for any required services and load content.
@@ -105,6 +111,7 @@ namespace Wrench.src.Helpers
         public override void Draw(GameTime gameTime)
         {
             Game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            effect.Texture = texture;
 
             effect.CurrentTechnique.Passes[0].Apply();
             Game.GraphicsDevice.DrawUserPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, vertices, 0, vertices.Length / 3);
