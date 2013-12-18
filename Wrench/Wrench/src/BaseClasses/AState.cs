@@ -12,12 +12,20 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Wrench.src.BaseClasses
 {
+    public enum InnerState
+    {
+        Appearing,
+        Showing,
+        Fading
+    }
+
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
     public abstract class AState : Microsoft.Xna.Framework.DrawableGameComponent
     {
         protected SpriteBatch spriteBatch;
+        protected InnerState state = InnerState.Appearing;
         public AState(Game game)
             : base(game)
         {

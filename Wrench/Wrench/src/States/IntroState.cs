@@ -19,10 +19,14 @@ namespace Wrench.src.States
     /// </summary>
     public class IntroState : AState
     {
-        Texture2D background;
+        SpriteFont font;
+        float alpha = 0;
+        private float time = 0;
+        
         public IntroState(Game game)
             : base(game)
         {
+            
             // TODO: Construct any child components here
         }
 
@@ -33,16 +37,40 @@ namespace Wrench.src.States
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-            if (Manager.InputManager.HasBeenPressed(Keys.Enter))
-                Manager.StateManager.RemoveState(this);
+            
+            switch (state)
+            {
+                case InnerState.Appearing:
+                    if (alpha >= 254.0f)
+                        state = InnerState.Showing;
+                    alpha += (float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.1f;
+                    break;
+                case InnerState.Showing:
+                    if(time > 3000)
+                        state = InnerState.Fading;
+                    time += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    break;
+                case InnerState.Fading:
+                    if (alpha <= 1.0f)
+                        Manager.StateManager.RemoveState(this);
+                    alpha -= (float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.1f;
+                    break;
+            }
+
+            alpha = MathHelper.Clamp(alpha, 0.0f, 255.0f);
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
+
             spriteBatch.Begin();
 
-            spriteBatch.Draw(background, Game.GraphicsDevice.Viewport.Bounds, Color.White);
+            
+            Vector2 center = new Vector2(Game.GraphicsDevice.Viewport.Bounds.Center.X,
+                                         Game.GraphicsDevice.Viewport.Bounds.Center.Y);
+
+            spriteBatch.DrawString(font, "Wrench", center, new Color((int)alpha, (int)alpha, (int)alpha), 0.0f, font.MeasureString("Wrench") / 2.0f, 1.0f, SpriteEffects.None, 1.0f);
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -60,7 +88,7 @@ namespace Wrench.src.States
 
         public override void Start()
         {
-            background = ContentPreImporter.GetTexture("Textures/Intro");
+            font = ContentPreImporter.GetFont("LargeFont");
         }
 
         public override void Stop()

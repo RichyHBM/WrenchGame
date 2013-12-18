@@ -19,7 +19,7 @@ namespace Wrench.src.States
     /// </summary>
     public class MainMenuState : AState
     {
-        Texture2D background;
+        SpriteFont font;
         public MainMenuState(Game game)
             : base(game)
         {
@@ -55,15 +55,15 @@ namespace Wrench.src.States
         {
             spriteBatch.Begin();
 
-            spriteBatch.Draw(background, Game.GraphicsDevice.Viewport.Bounds, Color.White);
-
+            spriteBatch.DrawString(font, "Wrench", new Vector2(10, 10), Color.White);
+            
             spriteBatch.End();
             base.Draw(gameTime);
         }
 
         public override void Start()
         {
-            background = ContentPreImporter.GetTexture("Textures/Menu");
+            font = ContentPreImporter.GetFont("LargeFont");
         }
 
     }

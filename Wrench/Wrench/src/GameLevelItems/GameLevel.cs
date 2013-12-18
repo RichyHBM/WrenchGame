@@ -29,7 +29,6 @@ namespace Wrench.src.GameLevelItems
         private Player player;
         int enemies = 0;
         SpriteFont font;
-        bool needsFlash = false;
 
         public GameLevel(Game game)
             : base(game)
@@ -102,10 +101,8 @@ namespace Wrench.src.GameLevelItems
                 }
             }
 
-            needsFlash = false;
             if (player.Shot)
             {
-                needsFlash = true;
                 foreach (GameObject obj in objects)
                 {
                     if (obj is Enemy)

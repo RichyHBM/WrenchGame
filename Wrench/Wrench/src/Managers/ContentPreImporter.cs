@@ -42,7 +42,7 @@ namespace Wrench.src.Managers
                                     "Textures/Lose"};
 
             string[] levelNames = {"level"};
-            string[] fontNames = { "TextFont" };
+            string[] fontNames = { "TextFont", "LargeFont" };
 
             foreach (string name in textureNames)
             {
