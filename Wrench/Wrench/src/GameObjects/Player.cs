@@ -94,29 +94,32 @@ namespace Wrench.src.GameObjects
             Matrix rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
 
             amountOfRotation += Manager.InputManager.MouseChange.X * RotationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            
-            if (Manager.InputManager.IsDown(Keys.W))
+
+            //Amount returned by joystick is much smaller, so multiply it by a large number
+            amountOfRotation -= Manager.InputManager.RightThumbstick().X * 50 * RotationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (Manager.InputManager.IsDown(Keys.W) || Manager.InputManager.IsDown(Buttons.LeftThumbstickUp))
             {
                 Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation);
                 Vector3 v = new Vector3(0, 0, -ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 v = Vector3.Transform(v, forwardMovement);
                 velocity += v;
             }
-            if (Manager.InputManager.IsDown(Keys.S))
+            if (Manager.InputManager.IsDown(Keys.S) || Manager.InputManager.IsDown(Buttons.LeftThumbstickDown))
             {
                 Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation);
                 Vector3 v = new Vector3(0, 0, ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 v = Vector3.Transform(v, forwardMovement);
                 velocity += v;
             }
-            if (Manager.InputManager.IsDown(Keys.A))
+            if (Manager.InputManager.IsDown(Keys.A) || Manager.InputManager.IsDown(Buttons.LeftThumbstickLeft))
             {
                 Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation + MathHelper.ToRadians(90));
                 Vector3 v = new Vector3(0, 0, -ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 v = Vector3.Transform(v, forwardMovement);
                 velocity += v;
             }
-            if (Manager.InputManager.IsDown(Keys.D))
+            if (Manager.InputManager.IsDown(Keys.D) || Manager.InputManager.IsDown(Buttons.LeftThumbstickRight))
             {
                 Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation + MathHelper.ToRadians(90));
                 Vector3 v = new Vector3(0, 0, ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
@@ -133,7 +136,7 @@ namespace Wrench.src.GameObjects
 
             
             Shot = false;
-            if (Manager.InputManager.HasBeenClicked(InputManager.MouseButton.Left))
+            if (Manager.InputManager.HasBeenClicked(InputManager.MouseButton.Left) || Manager.InputManager.HasBeenPressed(Buttons.A))
             {
                 Shot = true;
                 gun.SetTexture(gunFlashTexture);

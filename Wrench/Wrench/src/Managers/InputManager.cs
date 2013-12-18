@@ -52,8 +52,6 @@ namespace Wrench.src.Managers
             oldKeyboardState = currentKeyboardState;
             currentGamepadState = GamePad.GetState(PlayerIndex.One);
             oldGamepadState = currentGamepadState;
-
-            
         }
 
         /// <summary>
@@ -62,9 +60,7 @@ namespace Wrench.src.Managers
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void Update(GameTime gameTime)
         {
-
             updateStates();
-
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 game.Exit();
@@ -90,6 +86,11 @@ namespace Wrench.src.Managers
             mousePositionToCenter += mouseChange;
         }
 
+        public bool HasBeenPressed(Buttons button)
+        {
+            return oldGamepadState.IsButtonUp(button) && currentGamepadState.IsButtonDown(button);
+        }
+
         public void Draw(GameTime gameTime)
         {
 
@@ -105,7 +106,15 @@ namespace Wrench.src.Managers
             return currentKeyboardState.IsKeyDown(key);
         }
 
-        
+        public bool IsDown(Buttons button)
+        {
+            return  currentGamepadState.IsButtonDown(button);
+        }
+
+        public Vector2 RightThumbstick()
+        {
+            return currentGamepadState.ThumbSticks.Right;
+        }
 
         public bool HasBeenClicked(MouseButton button)
         { 
@@ -117,10 +126,8 @@ namespace Wrench.src.Managers
                     return (currentMouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released);
                 case MouseButton.Middle:
                     return (currentMouseState.MiddleButton == ButtonState.Pressed && oldMouseState.MiddleButton == ButtonState.Released);
-
             }
             return false;
-            
         }
 
         public static void UpdateMatrix()
