@@ -22,6 +22,7 @@ namespace Wrench
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont font;
+        SoundEffectInstance backgroundMusic;
 
         public Game1()
         {
@@ -64,6 +65,8 @@ namespace Wrench
             Manager.StateManager.PushState(new MainMenuState(this));
             Manager.StateManager.PushState(new IntroState(this));
             font = ContentPreImporter.GetFont("TextFont");
+            backgroundMusic = ContentPreImporter.GetSound("Nerves").CreateInstance();  // Put the name of your song in instead of "song_title"
+            backgroundMusic.Play();
 
 #if VIEWDEBUG
             Manager.MatrixManager.SetFieldOfView(55);
@@ -87,7 +90,9 @@ namespace Wrench
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {            
+        {
+            if (backgroundMusic.State == SoundState.Stopped)
+                backgroundMusic.Play();
             Manager.Update(gameTime);
 
             // TODO: Add your update logic here

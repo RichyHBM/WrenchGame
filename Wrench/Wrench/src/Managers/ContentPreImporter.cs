@@ -22,6 +22,7 @@ namespace Wrench.src.Managers
         static Dictionary<String, Texture2D> textureList = new Dictionary<string, Texture2D>();
         static Dictionary<String, Level> levelList = new Dictionary<string, Level>();
         static Dictionary<String, SpriteFont> fontList = new Dictionary<string, SpriteFont>();
+        static Dictionary<String, SoundEffect> soundList = new Dictionary<string, SoundEffect>();
 
         public static void Initialize(Game game)
         {
@@ -30,7 +31,7 @@ namespace Wrench.src.Managers
             DirectoryInfo textureDir = new DirectoryInfo(contentPath + "/Textures/");
             DirectoryInfo levelDir = new DirectoryInfo(contentPath + "/Levels/");
             DirectoryInfo fontDir = new DirectoryInfo(contentPath + "/Fonts/");
-
+            DirectoryInfo soundDir = new DirectoryInfo(contentPath + "/Audio/");
 
             foreach (FileInfo file in textureDir.GetFiles())
             {
@@ -51,6 +52,13 @@ namespace Wrench.src.Managers
                 string fileName = file.Name.Replace(file.Extension, "");
                 string fullPath = "Fonts/" + fileName;
                 fontList.Add(fileName, game.Content.Load<SpriteFont>(fullPath));
+            }
+
+            foreach (FileInfo file in soundDir.GetFiles())
+            {
+                string fileName = file.Name.Replace(file.Extension, "");
+                string fullPath = "Audio/" + fileName;
+                soundList.Add(fileName, game.Content.Load<SoundEffect>(fullPath));
             }
 
         }
@@ -80,6 +88,15 @@ namespace Wrench.src.Managers
                 throw new Exception("Asset not preloaded");
 
             return f;
+        }
+
+        public static SoundEffect GetSound(string name)
+        {
+            SoundEffect s;
+            if (!soundList.TryGetValue(name, out s))
+                throw new Exception("Asset not preloaded");
+
+            return s;
         }
     }
 }

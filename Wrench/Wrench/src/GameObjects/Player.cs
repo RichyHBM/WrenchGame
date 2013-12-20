@@ -29,6 +29,8 @@ namespace Wrench.src.GameObjects
         private Texture2D gunFlashTexture;
         private Texture2D gunTexture;
         private DateTime bulletTime;
+        SoundEffect shotSound;
+        SoundEffect hurtSound;
         
 
         public bool Shot { get; private set; }
@@ -51,6 +53,8 @@ namespace Wrench.src.GameObjects
             gunTexture = ContentPreImporter.GetTexture("gun");
             gunFlashTexture = ContentPreImporter.GetTexture("gunflash");
 
+            shotSound = ContentPreImporter.GetSound("shot");
+            hurtSound = ContentPreImporter.GetSound("playerHurt");
             gun = new HolsteredGun(game, gunTexture, new Vector2(0.1f));
 
             gun.SetPositionRotation(position, amountOfRotation);
@@ -140,6 +144,7 @@ namespace Wrench.src.GameObjects
             {
                 Shot = true;
                 gun.SetTexture(gunFlashTexture);
+                shotSound.Play();
                 bulletTime = DateTime.Now.AddSeconds(0.1);
             }
 
@@ -209,6 +214,7 @@ namespace Wrench.src.GameObjects
 
         public override void Hit()
         {
+            hurtSound.Play();
             health -= 5;
             if (health <= 0)
                 Alive = false;

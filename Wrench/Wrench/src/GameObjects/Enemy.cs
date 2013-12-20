@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Wrench.src.Helpers;
 using Wrench.src.Managers;
 using CustomAssets;
+using Microsoft.Xna.Framework.Audio;
 
 
 namespace Wrench.src.GameObjects
@@ -20,6 +21,7 @@ namespace Wrench.src.GameObjects
         int life = Enemy.EnemyLife;
         Level level;
         Texture2D[] textures;
+        SoundEffect hurtSound;
 
         public Enemy(Game game, Vector3 pos, Level l)
             : base(game)
@@ -39,6 +41,7 @@ namespace Wrench.src.GameObjects
             textures[2] = ContentPreImporter.GetTexture("enemy3");
             textures[1] = ContentPreImporter.GetTexture("enemy2");
             textures[0] = ContentPreImporter.GetTexture("enemy1");
+            hurtSound = ContentPreImporter.GetSound("enemyHurt");
 
             billboard = new Billboard(game, textures[4], Vector2.One / 2);
             billboard.Move(position + new Vector3(0, 0.25f, 0));
@@ -113,6 +116,7 @@ namespace Wrench.src.GameObjects
 
         public override void Hit()
         {
+            hurtSound.Play();
             life--;
             if(life <=0)
                 Alive = false;
