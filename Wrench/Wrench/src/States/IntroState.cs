@@ -70,6 +70,7 @@ namespace Wrench.src.States
             Vector2 center = new Vector2(Game.GraphicsDevice.Viewport.Bounds.Center.X,
                                          Game.GraphicsDevice.Viewport.Bounds.Center.Y);
 
+
             spriteBatch.DrawString(font, "Wrench", center, new Color((int)alpha, (int)alpha, (int)alpha), 0.0f, font.MeasureString("Wrench") / 2.0f, 1.0f, SpriteEffects.None, 1.0f);
 
             spriteBatch.End();

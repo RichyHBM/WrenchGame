@@ -19,7 +19,9 @@ namespace Wrench.src.States
     /// </summary>
     public class LoseState : AState
     {
-        Texture2D background;
+        SpriteFont titleFont;
+        SpriteFont optionsFont;
+
         public LoseState(Game game)
             : base(game)
         {
@@ -53,7 +55,12 @@ namespace Wrench.src.States
         {
             spriteBatch.Begin();
 
-            spriteBatch.Draw(background, Game.GraphicsDevice.Viewport.Bounds, Color.White);
+            Vector2 center = new Vector2(Game.GraphicsDevice.Viewport.Bounds.Center.X,
+                                         Game.GraphicsDevice.Viewport.Bounds.Center.Y);
+
+            spriteBatch.DrawString(titleFont, "You Lose", center - (Vector2.UnitY * 50), Color.White, 0.0f, titleFont.MeasureString("You Lose") / 2.0f, 1.0f, SpriteEffects.None, 1.0f);
+            spriteBatch.DrawString(optionsFont, "Press Escape to quit", center + (Vector2.UnitY * 100), Color.White, 0.0f, optionsFont.MeasureString("Press Escape to quit") / 2.0f, 0.5f, SpriteEffects.None, 1.0f);
+
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -61,7 +68,8 @@ namespace Wrench.src.States
 
         public override void Start()
         {
-            background = ContentPreImporter.GetTexture("Textures/Lose");
+            titleFont = ContentPreImporter.GetFont("LargeFont");
+            optionsFont = ContentPreImporter.GetFont("MediumFont");
         }
     }
 }

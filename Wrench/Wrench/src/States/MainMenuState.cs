@@ -19,7 +19,16 @@ namespace Wrench.src.States
     /// </summary>
     public class MainMenuState : AState
     {
-        SpriteFont font;
+        SpriteFont titleFont;
+        SpriteFont optionsFont;
+        Options currentChoice = Options.Play;
+
+        enum Options
+        {
+            Play,
+            Quit
+        }
+
         public MainMenuState(Game game)
             : base(game)
         {
@@ -45,9 +54,44 @@ namespace Wrench.src.States
         {
             // TODO: Add your update code here
             if (Manager.InputManager.HasBeenPressed(Keys.Enter))
-                Manager.StateManager.RemoveState(this);
-            if (Manager.InputManager.HasBeenPressed(Keys.Escape))
-                Game.Exit();
+            {
+                switch(currentChoice)
+                {
+                    case Options.Play:
+                        Manager.StateManager.RemoveState(this);
+                        break;
+                    case Options.Quit:
+                        Game.Exit();
+                        break;
+                }
+            }
+
+            if (Manager.InputManager.HasBeenPressed(Keys.Up))
+            {
+                switch (currentChoice)
+                {
+                    case Options.Play:
+                        currentChoice = Options.Quit;
+                        break;
+                    case Options.Quit:
+                        currentChoice = Options.Play;
+                        break;
+                }
+            }
+
+            if (Manager.InputManager.HasBeenPressed(Keys.Down))
+            {
+                switch (currentChoice)
+                {
+                    case Options.Play:
+                        currentChoice = Options.Quit;
+                        break;
+                    case Options.Quit:
+                        currentChoice = Options.Play;
+                        break;
+                }
+            }
+                
             base.Update(gameTime);
         }
 
@@ -55,15 +99,30 @@ namespace Wrench.src.States
         {
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(font, "Wrench", new Vector2(10, 10), Color.White);
-            
+            spriteBatch.DrawString(titleFont, "Wrench", new Vector2(10, 10), Color.White);
+
+            if (currentChoice == Options.Play)
+            {
+                spriteBatch.DrawString(optionsFont, "Play <<<", new Vector2(10, 300), Color.Gold);
+                spriteBatch.DrawString(optionsFont, "Quit", new Vector2(10, 410), Color.White);
+            }
+            else if (currentChoice == Options.Quit)
+            {
+                spriteBatch.DrawString(optionsFont, "Play", new Vector2(10, 300), Color.White);
+                spriteBatch.DrawString(optionsFont, "Quit <<<", new Vector2(10, 410), Color.Gold);
+            }
+            else{
+                spriteBatch.DrawString(optionsFont, "Play", new Vector2(10, 300), Color.White);
+                spriteBatch.DrawString(optionsFont, "Quit", new Vector2(10, 410), Color.White);
+            }
             spriteBatch.End();
             base.Draw(gameTime);
         }
 
         public override void Start()
         {
-            font = ContentPreImporter.GetFont("LargeFont");
+            titleFont = ContentPreImporter.GetFont("LargeFont");
+            optionsFont = ContentPreImporter.GetFont("MediumFont");
         }
 
     }

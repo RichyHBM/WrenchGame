@@ -35,14 +35,10 @@ namespace Wrench.src.Managers
                                     "Textures/enemy1",
                                     "Textures/GamePlay",
                                     "Textures/gun",
-                                    "Textures/gunflash",
-                                    "Textures/Intro",
-                                    "Textures/Menu",
-                                    "Textures/Win",
-                                    "Textures/Lose"};
+                                    "Textures/gunflash"};
 
-            string[] levelNames = {"level"};
-            string[] fontNames = { "TextFont", "LargeFont" };
+            string[] levelNames = {"Levels/level"};
+            string[] fontNames = { "TextFont", "LargeFont", "MediumFont" };
 
             foreach (string name in textureNames)
             {

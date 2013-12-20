@@ -26,8 +26,9 @@ namespace Wrench
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 720;
-            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 576;
+            graphics.PreferredBackBufferWidth = 1024;
+            
             //graphics.ToggleFullScreen();
             graphics.ApplyChanges();
 
@@ -105,10 +106,12 @@ namespace Wrench
 
             Manager.Draw(gameTime);
 
-
+#if DEBUG
             spriteBatch.Begin();
             spriteBatch.DrawString(font, "Framerate: " + gameTime.ElapsedGameTime.TotalMilliseconds, new Vector2(10, 45), Color.Black);
             spriteBatch.End();
+#endif
+
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
