@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using CustomAssets;
+using System.IO;
 
 
 namespace Wrench.src.Managers
@@ -21,41 +22,37 @@ namespace Wrench.src.Managers
         static Dictionary<String, Texture2D> textureList = new Dictionary<string, Texture2D>();
         static Dictionary<String, Level> levelList = new Dictionary<string, Level>();
         static Dictionary<String, SpriteFont> fontList = new Dictionary<string, SpriteFont>();
-        static Dictionary<String, BasicEffect> effectList = new Dictionary<string, BasicEffect>();
 
         public static void Initialize(Game game)
         {
-            string[] textureNames = {"Textures/bricks",
-                                    "Textures/ceiling",
-                                    "Textures/floor",
-                                    "Textures/enemy",
-                                    "Textures/enemy4",
-                                    "Textures/enemy3",
-                                    "Textures/enemy2",
-                                    "Textures/enemy1",
-                                    "Textures/GamePlay",
-                                    "Textures/gun",
-                                    "Textures/gunflash"};
+            string contentPath = game.Content.RootDirectory;
 
-            string[] levelNames = {"Levels/level"};
-            string[] fontNames = { "TextFont", "LargeFont", "MediumFont" };
+            DirectoryInfo textureDir = new DirectoryInfo(contentPath + "/Textures/");
+            DirectoryInfo levelDir = new DirectoryInfo(contentPath + "/Levels/");
+            DirectoryInfo fontDir = new DirectoryInfo(contentPath + "/Fonts/");
 
-            foreach (string name in textureNames)
+
+            foreach (FileInfo file in textureDir.GetFiles())
             {
-                textureList.Add(name, game.Content.Load<Texture2D>(name));
+                string fileName = file.Name.Replace(file.Extension, "");
+                string fullPath = "Textures/" + fileName;
+                textureList.Add(fileName, game.Content.Load<Texture2D>(fullPath ));
             }
 
-            foreach (string name in levelNames)
+            foreach (FileInfo file in levelDir.GetFiles())
             {
-                levelList.Add(name, game.Content.Load<Level>(name));
+                string fileName = file.Name.Replace(file.Extension, "");
+                string fullPath = "Levels/" + fileName;
+                levelList.Add(fileName, game.Content.Load<Level>(fullPath));
             }
 
-            foreach (string name in fontNames)
+            foreach (FileInfo file in fontDir.GetFiles())
             {
-                fontList.Add(name, game.Content.Load<SpriteFont>(name));
+                string fileName = file.Name.Replace(file.Extension, "");
+                string fullPath = "Fonts/" + fileName;
+                fontList.Add(fileName, game.Content.Load<SpriteFont>(fullPath));
             }
 
-            effectList.Add("DEFAULT", new BasicEffect(game.GraphicsDevice));
         }
 
         public static Texture2D GetTexture(string name)
@@ -84,16 +81,5 @@ namespace Wrench.src.Managers
 
             return f;
         }
-
-        public static BasicEffect GetEffect(string name)
-        {
-            BasicEffect be;
-            if (!effectList.TryGetValue(name, out be))
-                throw new Exception("Asset not preloaded");
-
-            return be;
-        }
-
-        
     }
 }

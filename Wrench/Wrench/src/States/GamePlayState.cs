@@ -21,7 +21,6 @@ namespace Wrench.src.States
     /// </summary>
     public class GamePlayState : AState
     {
-        Texture2D background;
         GameLevel level;
 
         public GamePlayState(Game game)
@@ -78,7 +77,6 @@ namespace Wrench.src.States
 
         public override void Start()
         {
-            background = ContentPreImporter.GetTexture("Textures/GamePlay");
         }
 
         public override void Stop()

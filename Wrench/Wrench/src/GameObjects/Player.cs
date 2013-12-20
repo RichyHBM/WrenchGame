@@ -48,8 +48,8 @@ namespace Wrench.src.GameObjects
             boxMax = new Vector3(0.235f, 0.8f, 0.235f);
             boundingBox = new BoundingBox(position + boxMin, position + boxMax);
             font = ContentPreImporter.GetFont("TextFont");
-            gunTexture = ContentPreImporter.GetTexture("Textures/gun");
-            gunFlashTexture = ContentPreImporter.GetTexture("Textures/gunflash");
+            gunTexture = ContentPreImporter.GetTexture("gun");
+            gunFlashTexture = ContentPreImporter.GetTexture("gunflash");
 
             gun = new HolsteredGun(game, gunTexture, new Vector2(0.1f));
 

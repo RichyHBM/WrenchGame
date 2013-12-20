@@ -34,11 +34,11 @@ namespace Wrench.src.GameObjects
             boxMax = new Vector3(0.235f, 0.8f, 0.235f);
             boundingBox = new BoundingBox(position + boxMin, position + boxMax);
 
-            textures[4] = ContentPreImporter.GetTexture("Textures/enemy");
-            textures[3] = ContentPreImporter.GetTexture("Textures/enemy4");
-            textures[2] = ContentPreImporter.GetTexture("Textures/enemy3");
-            textures[1] = ContentPreImporter.GetTexture("Textures/enemy2");
-            textures[0] = ContentPreImporter.GetTexture("Textures/enemy1");
+            textures[4] = ContentPreImporter.GetTexture("enemy");
+            textures[3] = ContentPreImporter.GetTexture("enemy4");
+            textures[2] = ContentPreImporter.GetTexture("enemy3");
+            textures[1] = ContentPreImporter.GetTexture("enemy2");
+            textures[0] = ContentPreImporter.GetTexture("enemy1");
 
             billboard = new Billboard(game, textures[4], Vector2.One / 2);
             billboard.Move(position + new Vector3(0, 0.25f, 0));

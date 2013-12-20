@@ -33,7 +33,7 @@ namespace Wrench.src.GameLevelItems
         public GameLevel(Game game)
             : base(game)
         {
-            levelRaw = ContentPreImporter.GetLevel("Levels/level");
+            levelRaw = ContentPreImporter.GetLevel("level");
             levelRend = new LevelRenderer(game, levelRaw);
             levelCollisions = new LevelCollisions(game, levelRaw);
             font = ContentPreImporter.GetFont("TextFont");
