@@ -47,6 +47,8 @@ namespace Wrench.src.GameObjects
             billboard.Move(position + new Vector3(0, 0.25f, 0));
             billboard.ForceUpdate();
             target = pos;
+
+            billboard.OverrideFog(GlobalSettings.FogEnabled, GlobalSettings.FogColor, GlobalSettings.FogStart, GlobalSettings.FogEnd * 2.1f);
         }
 
         public void Update(GameTime gameTime, Player player, bool seesPlayer)

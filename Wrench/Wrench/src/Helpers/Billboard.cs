@@ -42,6 +42,19 @@ namespace Wrench.src.Helpers
             effect = new BasicEffect(game.GraphicsDevice);            
             effect.TextureEnabled = true;
             effect.Texture = texture;
+
+            effect.FogEnabled = GlobalSettings.FogEnabled;
+            effect.FogColor = GlobalSettings.FogColor;
+            effect.FogStart = GlobalSettings.FogStart;
+            effect.FogEnd = GlobalSettings.FogEnd;
+        }
+
+        public void OverrideFog(bool enable, Vector3 color, float start, float end)
+        {
+            effect.FogEnabled = enable;
+            effect.FogColor = color;
+            effect.FogStart = start;
+            effect.FogEnd = end;
         }
 
         public void SetTexture(Texture2D t)

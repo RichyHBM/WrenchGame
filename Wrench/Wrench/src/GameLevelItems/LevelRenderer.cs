@@ -37,6 +37,11 @@ namespace Wrench.src.Helpers
             floorTexture = ContentPreImporter.GetTexture("floor");
             ceilingTexture = ContentPreImporter.GetTexture("ceiling");
             effect = new BasicEffect(Game.GraphicsDevice);
+
+            effect.FogEnabled = GlobalSettings.FogEnabled;
+            effect.FogColor = GlobalSettings.FogColor;
+            effect.FogStart = GlobalSettings.FogStart;
+            effect.FogEnd = GlobalSettings.FogEnd;
         }
 
         /// <summary>
