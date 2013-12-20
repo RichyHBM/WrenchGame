@@ -46,7 +46,7 @@ namespace Wrench.src.States
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-            if (Manager.InputManager.HasBeenPressed(Keys.Escape))
+            if (Manager.InputManager.HasBeenPressed(Keys.Escape) || Manager.InputManager.HasBeenPressed(Buttons.Y))
                 Game.Exit();
             base.Update(gameTime);
         }
