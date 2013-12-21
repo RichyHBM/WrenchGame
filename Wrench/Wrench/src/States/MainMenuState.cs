@@ -22,6 +22,7 @@ namespace Wrench.src.States
         SpriteFont titleFont;
         SpriteFont optionsFont;
         Options currentChoice = Options.Play;
+        string difficultyString;
 
         enum Options
         {
@@ -32,6 +33,18 @@ namespace Wrench.src.States
         public MainMenuState(Game game)
             : base(game)
         {
+            switch (GlobalSettings.Difficulty)
+            {
+                case GlobalSettings.DifficultyEnum.Easy:
+                    difficultyString = "Easy >";
+                    break;
+                case GlobalSettings.DifficultyEnum.Medium:
+                    difficultyString = "< Medium >";
+                    break;
+                case GlobalSettings.DifficultyEnum.Hard:
+                    difficultyString = "< Hard";
+                    break;
+            }
             // TODO: Construct any child components here
         }
 
@@ -58,7 +71,7 @@ namespace Wrench.src.States
                 switch(currentChoice)
                 {
                     case Options.Play:
-                        Manager.StateManager.RemoveState(this);
+                        Manager.StateManager.PushState(new GamePlayState(Game));
                         break;
                     case Options.Quit:
                         Game.Exit();
@@ -66,7 +79,7 @@ namespace Wrench.src.States
                 }
             }
 
-            if (Manager.InputManager.HasBeenPressed(Keys.Up))
+            if (Manager.InputManager.HasBeenPressed(Keys.Up) || Manager.InputManager.HasBeenPressed(Buttons.LeftThumbstickUp))
             {
                 switch (currentChoice)
                 {
@@ -79,7 +92,7 @@ namespace Wrench.src.States
                 }
             }
 
-            if (Manager.InputManager.HasBeenPressed(Keys.Down))
+            if (Manager.InputManager.HasBeenPressed(Keys.Down) || Manager.InputManager.HasBeenPressed(Buttons.LeftThumbstickDown))
             {
                 switch (currentChoice)
                 {
@@ -89,6 +102,42 @@ namespace Wrench.src.States
                     case Options.Quit:
                         currentChoice = Options.Play;
                         break;
+                }
+            }
+
+            if (Manager.InputManager.HasBeenPressed(Keys.Left) || Manager.InputManager.HasBeenPressed(Buttons.LeftThumbstickLeft))
+            {
+                if (currentChoice == Options.Play)
+                {
+                    switch (GlobalSettings.Difficulty)
+                    { 
+                        case GlobalSettings.DifficultyEnum.Medium:
+                            GlobalSettings.Difficulty = GlobalSettings.DifficultyEnum.Easy;
+                            difficultyString = "Easy >";
+                            break;
+                        case GlobalSettings.DifficultyEnum.Hard:
+                            GlobalSettings.Difficulty = GlobalSettings.DifficultyEnum.Medium;
+                            difficultyString = "< Medium >";
+                            break;
+                    }
+                }
+            }
+
+            if (Manager.InputManager.HasBeenPressed(Keys.Right) || Manager.InputManager.HasBeenPressed(Buttons.LeftThumbstickRight))
+            {
+                if (currentChoice == Options.Play)
+                {
+                    switch (GlobalSettings.Difficulty)
+                    {
+                        case GlobalSettings.DifficultyEnum.Easy:
+                            GlobalSettings.Difficulty = GlobalSettings.DifficultyEnum.Medium;
+                            difficultyString = "< Medium >";
+                            break;
+                        case GlobalSettings.DifficultyEnum.Medium:
+                            GlobalSettings.Difficulty = GlobalSettings.DifficultyEnum.Hard;
+                            difficultyString = "< Hard";
+                            break;
+                    }
                 }
             }
                 
@@ -99,21 +148,20 @@ namespace Wrench.src.States
         {
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(titleFont, "Wrench", new Vector2(10, 10), Color.White);
+
+            spriteBatch.Draw(backdrop, Game.GraphicsDevice.Viewport.Bounds, Color.Black);
+            //Font has weird top spacing, so draw at -50
+            spriteBatch.DrawString(titleFont, "Wrench", new Vector2(10, -50), Color.White);
 
             if (currentChoice == Options.Play)
             {
-                spriteBatch.DrawString(optionsFont, "Play <<<", new Vector2(10, 300), Color.Gold);
+                spriteBatch.DrawString(optionsFont, "Play  " + difficultyString, new Vector2(10, 300), Color.Gold);
                 spriteBatch.DrawString(optionsFont, "Quit", new Vector2(10, 410), Color.White);
             }
             else if (currentChoice == Options.Quit)
             {
                 spriteBatch.DrawString(optionsFont, "Play", new Vector2(10, 300), Color.White);
                 spriteBatch.DrawString(optionsFont, "Quit <<<", new Vector2(10, 410), Color.Gold);
-            }
-            else{
-                spriteBatch.DrawString(optionsFont, "Play", new Vector2(10, 300), Color.White);
-                spriteBatch.DrawString(optionsFont, "Quit", new Vector2(10, 410), Color.White);
             }
             spriteBatch.End();
             base.Draw(gameTime);

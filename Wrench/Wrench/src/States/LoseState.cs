@@ -53,8 +53,10 @@ namespace Wrench.src.States
 
         public override void Draw(GameTime gameTime)
         {
+
             spriteBatch.Begin();
 
+            spriteBatch.Draw(backdrop, Game.GraphicsDevice.Viewport.Bounds, Color.Black);
             Vector2 center = new Vector2(Game.GraphicsDevice.Viewport.Bounds.Center.X,
                                          Game.GraphicsDevice.Viewport.Bounds.Center.Y);
 

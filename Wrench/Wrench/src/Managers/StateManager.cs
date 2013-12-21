@@ -66,7 +66,14 @@ namespace Wrench.src.Managers
 
         public void Draw(GameTime gameTime)
         {
-            states.Last().Draw(gameTime);
+            foreach (AState state in states)
+            {
+                game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+                game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+                game.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+
+                state.Draw(gameTime);
+            }
         }
     }
 }

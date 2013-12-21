@@ -113,6 +113,7 @@
     <Compile Include="src\States\IntroState.cs" />
     <Compile Include="src\States\LoseState.cs" />
     <Compile Include="src\States\MainMenuState.cs" />
+    <Compile Include="src\States\PauseState.cs" />
     <Compile Include="src\States\WinState.cs" />
   </ItemGroup>
   <ItemGroup>

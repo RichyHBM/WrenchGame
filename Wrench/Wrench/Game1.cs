@@ -63,7 +63,6 @@ namespace Wrench
             Services.AddService(typeof(SpriteBatch), spriteBatch);
 
             Manager.Initialize(this);
-            Manager.StateManager.PushState(new GamePlayState(this));
             Manager.StateManager.PushState(new MainMenuState(this));
             Manager.StateManager.PushState(new IntroState(this));
             font = ContentPreImporter.GetFont("TextFont");

@@ -50,7 +50,7 @@ namespace Wrench.src.States
         {
             // TODO: Add your update code here
             if (Manager.InputManager.HasBeenPressed(Keys.Escape))
-                Manager.StateManager.PushState(new MainMenuState(Game));
+                Manager.StateManager.PushState(new PauseState(Game, this));
 
             level.Update(gameTime);
 
@@ -60,6 +60,12 @@ namespace Wrench.src.States
 
         public override void Draw(GameTime gameTime)
         {
+            spriteBatch.Begin();
+            spriteBatch.Draw(backdrop, Game.GraphicsDevice.Viewport.Bounds, Color.Black);
+            spriteBatch.End();
+            Game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            Game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            Game.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 
             level.Draw(gameTime);
             base.Draw(gameTime);

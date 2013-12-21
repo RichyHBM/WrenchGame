@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Wrench.src.Managers;
 
 
 namespace Wrench.src.BaseClasses
@@ -26,9 +27,12 @@ namespace Wrench.src.BaseClasses
     {
         protected SpriteBatch spriteBatch;
         protected InnerState state = InnerState.Appearing;
+        protected Texture2D backdrop;
+        
         public AState(Game game)
             : base(game)
         {
+            backdrop = ContentPreImporter.GetTexture("backDrop");
             spriteBatch = (Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch);
             // TODO: Construct any child components here
         }
