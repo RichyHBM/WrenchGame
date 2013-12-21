@@ -39,14 +39,24 @@ namespace Wrench.src.GameLevelItems
             font = ContentPreImporter.GetFont("TextFont");
 
             Vector3 playerPos = Vector3.Zero;
+            int enemyFound = 0;
             for (int y = 0; y < levelRaw.Depth; y++)
+            {
                 for (int x = 0; x < levelRaw.Width; x++)
+                {
                     if (levelRaw.GetAt(x, y) == 'p')
                         player = new Player(game, new Vector3(x, 0, y));
-                    else if (levelRaw.GetAt(x, y) == 'e'){
-                        objects.Add(new Enemy(game, new Vector3(x, 0, y), levelRaw));
-                        enemies++;
+                    else if (levelRaw.GetAt(x, y) == 'e')
+                    {
+                        enemyFound++;
+                        if ((enemyFound % GlobalSettings.EnemyFrequency) == 0)
+                        {
+                            objects.Add(new Enemy(game, new Vector3(x, 0, y), levelRaw));
+                            enemies++;
+                        }
                     }
+                }
+            }
 
             //Corner of the box if front left, so to place player in right place we need to add .5 to the left and .5 to the front
             objects.Add(player);

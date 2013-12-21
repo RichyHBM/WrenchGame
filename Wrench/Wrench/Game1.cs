@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Wrench.src.Managers;
 using Wrench.src.States;
 using CustomAssets;
+using Wrench.src;
 
 namespace Wrench
 {
@@ -45,6 +46,7 @@ namespace Wrench
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            GlobalSettings.Difficulty = GlobalSettings.DifficultyEnum.Easy;
 
             base.Initialize();
         }
@@ -117,7 +119,7 @@ namespace Wrench
             spriteBatch.End();
 #endif
 
-            GraphicsDevice.BlendState = BlendState.Opaque;
+            GraphicsDevice.BlendState = BlendState.AlphaBlend;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 

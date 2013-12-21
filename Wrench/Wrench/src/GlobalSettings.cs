@@ -6,11 +6,43 @@ using Microsoft.Xna.Framework;
 
 namespace Wrench.src
 {
-    class GlobalSettings
+    public static class GlobalSettings
     {
-        public const bool FogEnabled = true;
-        public static readonly Vector3 FogColor = Color.Black.ToVector3();
-        public const float FogStart = 0.3f;
-        public const float FogEnd = 1.5f;
+        public enum DifficultyEnum { Easy, Medium, Hard };
+        private static DifficultyEnum difficulty;
+        public static DifficultyEnum Difficulty { 
+            set 
+            {
+                switch (value)
+                { 
+                    case DifficultyEnum.Easy:
+                        FogStart = 1.2f;
+                        FogEnd = 2.5f;
+                        EnemyFrequency = 3;
+                        break;
+                    case DifficultyEnum.Medium:
+                        FogStart = 0.7f;
+                        FogEnd = 1.8f;
+                        EnemyFrequency = 2;
+                        break;
+                    case DifficultyEnum.Hard:
+                        FogStart = 0.3f;
+                        FogEnd = 1.0f;
+                        EnemyFrequency = 1;
+                        break;
+                }
+                FogEnabled = true;
+                FogColor = Color.Black.ToVector3();
+                difficulty = value; 
+
+            } 
+            get { return difficulty; } 
+        }
+
+        public static bool FogEnabled { private set; get; }
+        public static Vector3 FogColor { private set; get; }
+        public static float FogStart { private set; get; }
+        public static float FogEnd { private set; get; }
+        public static int EnemyFrequency { private set; get; }
     }
 }
