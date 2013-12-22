@@ -8,47 +8,32 @@ using Wrench.src.Helpers;
 using Wrench.src.Managers;
 using CustomAssets;
 using Microsoft.Xna.Framework.Audio;
+using Wrench.src.GameObjects;
 
 
-namespace Wrench.src.GameObjects
+namespace Wrench.src.BaseClass
 {
-    public class Enemy : GameObject
+    public abstract class Enemy : GameObject
     {
-        public static int EnemyLife = 5;
-        Billboard billboard;
-        Vector3 target;
-        Random rand = new Random();
-        int life = Enemy.EnemyLife;
-        Level level;
-        Texture2D[] textures;
-        SoundEffect hurtSound;
+        protected Billboard billboard;
+        protected Vector3 target;
+        protected Random rand = new Random();
+        protected int life;
+        protected Level level;
+        protected Texture2D[] textures;
+        protected SoundEffect hurtSound;
+        public int Damage { protected set; get; }
 
         public Enemy(Game game, Vector3 pos, Level l)
             : base(game)
         {
-            textures = new Texture2D[Enemy.EnemyLife];
-
             this.level = l;
             this.position = pos;
-            RotationSpeed = 0.1f;
-            ForwardSpeed = 6f;
+            
             boxMin = new Vector3(-0.235f, 0, -0.235f);
             boxMax = new Vector3(0.235f, 0.8f, 0.235f);
             boundingBox = new BoundingBox(position + boxMin, position + boxMax);
 
-            textures[4] = ContentPreImporter.GetTexture("enemy");
-            textures[3] = ContentPreImporter.GetTexture("enemy4");
-            textures[2] = ContentPreImporter.GetTexture("enemy3");
-            textures[1] = ContentPreImporter.GetTexture("enemy2");
-            textures[0] = ContentPreImporter.GetTexture("enemy1");
-            hurtSound = ContentPreImporter.GetSound("enemyHurt");
-
-            billboard = new Billboard(game, textures[4], Vector2.One / 2);
-            billboard.Move(position + new Vector3(0, 0.25f, 0));
-            billboard.ForceUpdate();
-            target = pos;
-
-            billboard.OverrideFog(GlobalSettings.FogEnabled, GlobalSettings.FogColor, GlobalSettings.FogStart, GlobalSettings.FogEnd * 2.1f);
         }
 
         public void Update(GameTime gameTime, Player player, bool seesPlayer)
@@ -67,7 +52,7 @@ namespace Wrench.src.GameObjects
             {
                 position = GetRandomPosition();
                 target = position + new Vector3((float)rand.NextDouble() - 0.5f, 0, (float)rand.NextDouble() - 0.5f) * 20;
-                player.Hit();
+                player.Hit(Damage);
             }
 
             amountOfRotation = -(float)(Math.Atan2(target.Z - position.Z, target.X - position.X) - MathHelper.ToRadians(90));
@@ -116,7 +101,7 @@ namespace Wrench.src.GameObjects
             base.Draw(gameTime);
         }
 
-        public override void Hit()
+        public override void Hit(int damage)
         {
             hurtSound.Play();
             life--;

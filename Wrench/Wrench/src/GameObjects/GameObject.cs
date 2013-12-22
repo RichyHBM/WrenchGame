@@ -80,6 +80,6 @@ namespace Wrench.src.GameObjects
             velocity.X = -velocity.X;
         }
 
-        public abstract void Hit();
+        public abstract void Hit(int damage);
     }
 }

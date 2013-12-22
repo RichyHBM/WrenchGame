@@ -13,6 +13,8 @@ using CustomAssets;
 using Wrench.src.GameObjects;
 using Wrench.src.Managers;
 using Wrench.src.States;
+using Wrench.src.BaseClass;
+using Wrench.src.GameObjects.Enemies;
 
 
 namespace Wrench.src.GameLevelItems
@@ -54,7 +56,16 @@ namespace Wrench.src.GameLevelItems
                         enemyFound++;
                         if ((enemyFound % GlobalSettings.EnemyFrequency) == 0)
                         {
-                            objects.Add(new Enemy(game, new Vector3(x, 0, y), levelRaw));
+                            objects.Add(new RedHead(game, new Vector3(x, 0, y), levelRaw));
+                            enemies++;
+                        }
+                    }
+                    else if (levelRaw.GetAt(x, y).ToString().ToLower() == "g")
+                    {
+                        enemyFound++;
+                        if ((enemyFound % GlobalSettings.EnemyFrequency) == 0)
+                        {
+                            objects.Add(new GreenGhost(game, new Vector3(x, 0, y), levelRaw));
                             enemies++;
                         }
                     }
@@ -123,7 +134,7 @@ namespace Wrench.src.GameLevelItems
                     {
                         if (isInDirection(player, obj))
                         {
-                            obj.Hit();
+                            obj.Hit(0);
                             break;
                         }
                     }

@@ -95,10 +95,12 @@
     <Compile Include="src\BaseClasses\IManager.cs" />
     <Compile Include="src\GameLevelItems\GameLevel.cs" />
     <Compile Include="src\GameLevelItems\LevelCollisions.cs" />
-    <Compile Include="src\GameObjects\Enemy.cs" />
+    <Compile Include="src\BaseClasses\Enemy.cs" />
+    <Compile Include="src\GameObjects\Enemies\GreenGhost.cs" />
     <Compile Include="src\GameObjects\GameObject.cs" />
     <Compile Include="src\GameObjects\HolsteredGun.cs" />
     <Compile Include="src\GameObjects\Player.cs" />
+    <Compile Include="src\GameObjects\Enemies\RedHead.cs" />
     <Compile Include="src\GlobalSettings.cs" />
     <Compile Include="src\Helpers\Billboard.cs" />
     <Compile Include="src\Helpers\MapMesh.cs" />

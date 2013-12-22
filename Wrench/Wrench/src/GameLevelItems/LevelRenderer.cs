@@ -60,12 +60,12 @@ namespace Wrench.src.Helpers
                     {
                         wallVertices.AddRange(MapMesh.WallMeshAt(x, y));
                     }
-                    else if (level.GetAt(x, y) == '.' || level.GetAt(x, y) == 'p' || level.GetAt(x, y) == 'e')
+                    else if (level.GetAt(x, y) == '.' || level.GetAt(x, y) == 'p' || level.GetAt(x, y) == 'e' || level.GetAt(x, y) == 'g')
                     {
                         floorVertices.AddRange(MapMesh.FloorMeshAt(x, y));
                         ceilingVertices.AddRange(MapMesh.CeilingMeshAt(x, y));
                     }
-                    else if (level.GetAt(x, y) == ',' || level.GetAt(x, y) == 'P' || level.GetAt(x, y) == 'E')
+                    else if (level.GetAt(x, y) == ',' || level.GetAt(x, y) == 'P' || level.GetAt(x, y) == 'E' || level.GetAt(x, y) == 'G')
                     {
                         floorVertices.AddRange(MapMesh.FloorMeshAt(x, y));
                     }

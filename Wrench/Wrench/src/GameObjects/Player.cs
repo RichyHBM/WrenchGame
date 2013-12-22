@@ -211,10 +211,10 @@ namespace Wrench.src.GameObjects
             base.Draw(gameTime);
         }
 
-        public override void Hit()
+        public override void Hit(int damage)
         {
             hurtSound.Play();
-            health -= 5;
+            health -= damage;
             if (health <= 0)
                 Alive = false;
         }
