@@ -21,10 +21,12 @@ namespace Wrench.src.States
     {
         SpriteFont titleFont;
         SpriteFont optionsFont;
+        GamePlayState gameState;
 
-        public WinState(Game game)
+        public WinState(Game game, GamePlayState gameState)
             : base(game)
         {
+            this.gameState = gameState;
             // TODO: Construct any child components here
         }
 
@@ -47,7 +49,10 @@ namespace Wrench.src.States
         {
             // TODO: Add your update code here
             if (Manager.InputManager.HasBeenPressed(Keys.Escape) || Manager.InputManager.HasBeenPressed(Buttons.Y))
-                Game.Exit();
+            {
+                Manager.StateManager.RemoveState(gameState);
+                Manager.StateManager.RemoveState(this);
+            }
             base.Update(gameTime);
         }
 

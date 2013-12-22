@@ -23,10 +23,10 @@ namespace Wrench.src.States
     {
         GameLevel level;
 
-        public GamePlayState(Game game)
+        public GamePlayState(Game game, string levenName)
             : base(game)
         {
-            level = new GameLevel(game);
+            level = new GameLevel(game, this, levenName);
             level.Initialize();
             // TODO: Construct any child components here
         }

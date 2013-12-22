@@ -175,7 +175,7 @@ namespace Wrench.src.GameObjects
             Vector3 transformedReference = Vector3.Transform(cameraReference, rotationMatrix);
             Vector3 cameraLookat = cameraPosition + transformedReference;
 #if VIEWDEBUG
-            Manager.MatrixManager.SetPosition(cameraPosition + new Vector3(1f,10.0f,1f));
+            Manager.MatrixManager.SetPosition(cameraPosition + new Vector3(1f, 4.0f,1f));
             Manager.MatrixManager.SetLookAt(cameraPosition);
 #else
             Manager.MatrixManager.SetPosition(cameraPosition);

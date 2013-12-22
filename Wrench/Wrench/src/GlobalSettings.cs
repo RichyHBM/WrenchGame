@@ -31,7 +31,11 @@ namespace Wrench.src
                         EnemyFrequency = 1;
                         break;
                 }
+#if DEBUG
+                FogEnabled = false;
+#else
                 FogEnabled = true;
+#endif
                 FogColor = Color.Black.ToVector3();
                 difficulty = value; 
 

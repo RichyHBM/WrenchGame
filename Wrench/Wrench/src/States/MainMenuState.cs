@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -71,7 +71,7 @@ namespace Wrench.src.States
                 switch(currentChoice)
                 {
                     case Options.Play:
-                        Manager.StateManager.PushState(new GamePlayState(Game));
+                        Manager.StateManager.PushState(new LevelSelectionState(Game));
                         break;
                     case Options.Quit:
                         Game.Exit();
@@ -148,7 +148,6 @@ namespace Wrench.src.States
         {
             spriteBatch.Begin();
 
-
             spriteBatch.Draw(backdrop, Game.GraphicsDevice.Viewport.Bounds, Color.Black);
             //Font has weird top spacing, so draw at -50
             spriteBatch.DrawString(titleFont, "Wrench", new Vector2(10, -50), Color.White);
@@ -161,7 +160,7 @@ namespace Wrench.src.States
             else if (currentChoice == Options.Quit)
             {
                 spriteBatch.DrawString(optionsFont, "Play", new Vector2(10, 300), Color.White);
-                spriteBatch.DrawString(optionsFont, "Quit <<<", new Vector2(10, 410), Color.Gold);
+                spriteBatch.DrawString(optionsFont, "Quit", new Vector2(10, 410), Color.Gold);
             }
             spriteBatch.End();
             base.Draw(gameTime);

@@ -98,5 +98,10 @@ namespace Wrench.src.Managers
 
             return s;
         }
+
+        public static List<String> LevelNames()
+        {
+            return levelList.Keys.ToList<String>();
+        }
     }
 }

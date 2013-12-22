@@ -30,11 +30,13 @@ namespace Wrench.src.GameLevelItems
         int enemies = 0;
         SpriteFont font;
         Skybox skybox;
+        GamePlayState gameState;
 
-        public GameLevel(Game game)
+        public GameLevel(Game game, GamePlayState gameState, string levenName)
             : base(game)
         {
-            levelRaw = ContentPreImporter.GetLevel("Arena");
+            this.gameState = gameState;
+            levelRaw = ContentPreImporter.GetLevel(levenName);
             levelRend = new LevelRenderer(game, levelRaw);
             levelCollisions = new LevelCollisions(game, levelRaw);
             font = ContentPreImporter.GetFont("TextFont");
@@ -143,9 +145,9 @@ namespace Wrench.src.GameLevelItems
                 objects.Remove(obj);
 
             if(!player.Alive)
-                Manager.StateManager.PushState(new LoseState(Game));
+                Manager.StateManager.PushState(new LoseState(Game, gameState));
             if(enemies == 0)
-                Manager.StateManager.PushState(new WinState(Game));
+                Manager.StateManager.PushState(new WinState(Game, gameState));
 
 
             base.Update(gameTime);

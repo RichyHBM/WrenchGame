@@ -101,13 +101,13 @@ namespace Wrench.src.States
 
             if (currentChoice == Options.Resume)
             {
-                spriteBatch.DrawString(optionsFont, "Resume <<<", new Vector2(10, 300), Color.Gold);
+                spriteBatch.DrawString(optionsFont, "Resume", new Vector2(10, 300), Color.Gold);
                 spriteBatch.DrawString(optionsFont, "Quit to menu", new Vector2(10, 410), Color.White);
             }
             else if (currentChoice == Options.QuitToMenu)
             {
                 spriteBatch.DrawString(optionsFont, "Resume", new Vector2(10, 300), Color.White);
-                spriteBatch.DrawString(optionsFont, "Quit to menu <<<", new Vector2(10, 410), Color.Gold);
+                spriteBatch.DrawString(optionsFont, "Quit to menu", new Vector2(10, 410), Color.Gold);
             }
             else{
                 spriteBatch.DrawString(optionsFont, "Resume", new Vector2(10, 300), Color.White);

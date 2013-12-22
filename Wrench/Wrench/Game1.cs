@@ -114,7 +114,10 @@ namespace Wrench
 
 #if DEBUG
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Framerate: " + gameTime.ElapsedGameTime.TotalMilliseconds, new Vector2(10, 45), Color.Black);
+            if(gameTime.IsRunningSlowly)
+                spriteBatch.DrawString(font, "Framerate: " + gameTime.ElapsedGameTime.TotalMilliseconds, new Vector2(10, 45), Color.Yellow);
+            else
+                spriteBatch.DrawString(font, "Framerate: " + gameTime.ElapsedGameTime.TotalMilliseconds, new Vector2(10, 45), Color.Green);
             spriteBatch.End();
 #endif
 
