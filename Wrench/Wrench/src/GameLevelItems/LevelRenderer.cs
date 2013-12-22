@@ -65,6 +65,10 @@ namespace Wrench.src.Helpers
                         floorVertices.AddRange(MapMesh.FloorMeshAt(x, y));
                         ceilingVertices.AddRange(MapMesh.CeilingMeshAt(x, y));
                     }
+                    else if (level.GetAt(x, y) == ',' || level.GetAt(x, y) == 'P' || level.GetAt(x, y) == 'E')
+                    {
+                        floorVertices.AddRange(MapMesh.FloorMeshAt(x, y));
+                    }
                 }
             }
 
@@ -90,18 +94,26 @@ namespace Wrench.src.Helpers
             effect.VertexColorEnabled = false;
             effect.TextureEnabled = true;
 
-            effect.Texture = brickTexture;
-            effect.CurrentTechnique.Passes[0].Apply();
-            GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.TriangleList, wallVertices.ToArray(), 0, wallVertices.Count / 3, VertexPositionNormalTexture.VertexDeclaration);
-
-            effect.Texture = floorTexture;
-            effect.CurrentTechnique.Passes[0].Apply();
-            GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.TriangleList, floorVertices.ToArray(), 0, floorVertices.Count / 3, VertexPositionNormalTexture.VertexDeclaration);
-
-            effect.Texture = ceilingTexture;
-            effect.CurrentTechnique.Passes[0].Apply();
-            GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.TriangleList, ceilingVertices.ToArray(), 0, ceilingVertices.Count / 3, VertexPositionNormalTexture.VertexDeclaration);
+            if (wallVertices.Count > 0)
+            {
+                effect.Texture = brickTexture;
+                effect.CurrentTechnique.Passes[0].Apply();
+                GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.TriangleList, wallVertices.ToArray(), 0, wallVertices.Count / 3, VertexPositionNormalTexture.VertexDeclaration);
+            } 
             
+            if (floorVertices.Count > 0)
+            {
+                effect.Texture = floorTexture;
+                effect.CurrentTechnique.Passes[0].Apply();
+                GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.TriangleList, floorVertices.ToArray(), 0, floorVertices.Count / 3, VertexPositionNormalTexture.VertexDeclaration);
+            }
+            
+            if (ceilingVertices.Count > 0)
+            {
+                effect.Texture = ceilingTexture;
+                effect.CurrentTechnique.Passes[0].Apply();
+                GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.TriangleList, ceilingVertices.ToArray(), 0, ceilingVertices.Count / 3, VertexPositionNormalTexture.VertexDeclaration);
+            }
             base.Draw(gameTime);
         }
     }

@@ -31,7 +31,6 @@ namespace Wrench.src.GameObjects
         private DateTime bulletTime;
         SoundEffect shotSound;
         SoundEffect hurtSound;
-        
 
         public bool Shot { get; private set; }
 
@@ -192,7 +191,7 @@ namespace Wrench.src.GameObjects
 
             SpriteBatch sp = Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
             sp.Begin();
-            sp.DrawString(font, "Life: " + health, new Vector2(10, 25), Color.Black);
+            sp.DrawString(font, "Life: " + health, new Vector2(10, 25), Color.Red);
             sp.End();
 
             GraphicsDevice.BlendState = BlendState.Opaque;

@@ -104,6 +104,7 @@
     <Compile Include="src\Helpers\MapMesh.cs" />
     <Compile Include="src\Helpers\DebugShapeRenderer.cs" />
     <Compile Include="src\GameLevelItems\LevelRenderer.cs" />
+    <Compile Include="src\Helpers\Skybox.cs" />
     <Compile Include="src\Managers\ContentPreImporter.cs" />
     <Compile Include="src\Managers\InputManager.cs" />
     <Compile Include="src\Managers\Manager.cs" />

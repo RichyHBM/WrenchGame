@@ -29,11 +29,12 @@ namespace Wrench.src.GameLevelItems
         private Player player;
         int enemies = 0;
         SpriteFont font;
+        Skybox skybox;
 
         public GameLevel(Game game)
             : base(game)
         {
-            levelRaw = ContentPreImporter.GetLevel("level");
+            levelRaw = ContentPreImporter.GetLevel("Arena");
             levelRend = new LevelRenderer(game, levelRaw);
             levelCollisions = new LevelCollisions(game, levelRaw);
             font = ContentPreImporter.GetFont("TextFont");
@@ -44,9 +45,9 @@ namespace Wrench.src.GameLevelItems
             {
                 for (int x = 0; x < levelRaw.Width; x++)
                 {
-                    if (levelRaw.GetAt(x, y) == 'p')
+                    if (levelRaw.GetAt(x, y).ToString().ToLower()  == "p")
                         player = new Player(game, new Vector3(x, 0, y));
-                    else if (levelRaw.GetAt(x, y) == 'e')
+                    else if (levelRaw.GetAt(x, y).ToString().ToLower() == "e")
                     {
                         enemyFound++;
                         if ((enemyFound % GlobalSettings.EnemyFrequency) == 0)
@@ -58,6 +59,7 @@ namespace Wrench.src.GameLevelItems
                 }
             }
 
+            skybox = new Skybox(Game, 50, ContentPreImporter.GetTexture("grimmnight_small"));
             //Corner of the box if front left, so to place player in right place we need to add .5 to the left and .5 to the front
             objects.Add(player);
             // TODO: Construct any child components here
@@ -127,6 +129,8 @@ namespace Wrench.src.GameLevelItems
                 }
             }
 
+            skybox.SetPosition(player.Position);
+
             List<GameObject> toRemove = new List<GameObject>();
             foreach (GameObject obj in objects)
                 if (obj.Alive == false)
@@ -149,7 +153,7 @@ namespace Wrench.src.GameLevelItems
 
         public override void Draw(GameTime gameTime)
         {
-            
+            skybox.Draw(gameTime);
             levelRend.Draw(gameTime);
             foreach (GameObject obj in objects)
             {
@@ -160,7 +164,7 @@ namespace Wrench.src.GameLevelItems
             
             SpriteBatch sp = Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
             sp.Begin();
-            sp.DrawString(font, "Enemies: " + enemies, new Vector2(10, 5), Color.Black);
+            sp.DrawString(font, "Enemies: " + enemies, new Vector2(10, 5), Color.Red);
             sp.End();
 
             GraphicsDevice.BlendState = BlendState.Opaque;

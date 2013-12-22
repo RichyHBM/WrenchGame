@@ -1,0 +1,2 @@
+Nerves downloaded from incomptech.com, created by Kevin MacLeod. Converted to wav and shortened to play on xna easier
+Skybox texture, slightly modified version of Grimm Night by Hipshot
