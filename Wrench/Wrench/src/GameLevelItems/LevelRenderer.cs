@@ -52,6 +52,9 @@ namespace Wrench.src.Helpers
         {
             // TODO: Add your initialization code here
 
+            string floorAndCeeling = ".pegh";
+            string floor = ",PEGH";
+
             for (int y = 0; y < level.Depth; y++)
             {
                 for (int x = 0; x < level.Width; x++)
@@ -60,12 +63,12 @@ namespace Wrench.src.Helpers
                     {
                         wallVertices.AddRange(MapMesh.WallMeshAt(x, y));
                     }
-                    else if (level.GetAt(x, y) == '.' || level.GetAt(x, y) == 'p' || level.GetAt(x, y) == 'e' || level.GetAt(x, y) == 'g')
+                    else if (floorAndCeeling.Contains(level.GetAt(x, y)))
                     {
                         floorVertices.AddRange(MapMesh.FloorMeshAt(x, y));
                         ceilingVertices.AddRange(MapMesh.CeilingMeshAt(x, y));
                     }
-                    else if (level.GetAt(x, y) == ',' || level.GetAt(x, y) == 'P' || level.GetAt(x, y) == 'E' || level.GetAt(x, y) == 'G')
+                    else if (floor.Contains(level.GetAt(x, y)))
                     {
                         floorVertices.AddRange(MapMesh.FloorMeshAt(x, y));
                     }

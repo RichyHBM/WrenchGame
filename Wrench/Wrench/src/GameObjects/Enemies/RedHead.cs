@@ -7,7 +7,7 @@ using CustomAssets;
 using Wrench.src.Managers;
 using Wrench.src.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using Wrench.src.BaseClass;
+using Wrench.src.BaseClasses;
 
 namespace Wrench.src.GameObjects.Enemies
 {

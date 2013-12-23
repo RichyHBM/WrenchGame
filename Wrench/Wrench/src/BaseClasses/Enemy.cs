@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Audio;
 using Wrench.src.GameObjects;
 
 
-namespace Wrench.src.BaseClass
+namespace Wrench.src.BaseClasses
 {
     public abstract class Enemy : GameObject
     {

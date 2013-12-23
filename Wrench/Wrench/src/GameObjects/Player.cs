@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Wrench.src.Managers;
 using Wrench.src.Helpers;
+using Wrench.src.BaseClasses;
 
 
 namespace Wrench.src.GameObjects
@@ -35,6 +36,8 @@ namespace Wrench.src.GameObjects
         public bool Shot { get; private set; }
 
         int health = 100;
+
+        public int Health { get { return health; } private set { } }
 
         public Player(Game game, Vector3 pos)
             : base(game)
@@ -164,6 +167,12 @@ namespace Wrench.src.GameObjects
             gun.Update(gameTime);
 
             base.Update(gameTime);
+        }
+
+        public void AddLife(int amount)
+        {
+            health += amount;
+            health = (int)MathHelper.Clamp(health, 0, 100);
         }
 
         public override void Backup(GameTime gameTime)

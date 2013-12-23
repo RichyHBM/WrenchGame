@@ -13,8 +13,9 @@ using CustomAssets;
 using Wrench.src.GameObjects;
 using Wrench.src.Managers;
 using Wrench.src.States;
-using Wrench.src.BaseClass;
+using Wrench.src.BaseClasses;
 using Wrench.src.GameObjects.Enemies;
+using Wrench.src.GameObjects.Pickups;
 
 
 namespace Wrench.src.GameLevelItems
@@ -69,6 +70,10 @@ namespace Wrench.src.GameLevelItems
                             enemies++;
                         }
                     }
+                    else if (levelRaw.GetAt(x, y).ToString().ToLower() == "h")
+                    {
+                        objects.Add(new Health(game, new Vector3(x, 0, y)));                        
+                    }
                 }
             }
 
@@ -110,6 +115,12 @@ namespace Wrench.src.GameLevelItems
                     Enemy en = obj as Enemy;
 
                     en.Update(gameTime, player, isInSighten(en, player));
+                }
+                else if (obj is Pickup)
+                {
+                    Pickup pick = obj as Pickup;
+
+                    pick.Update(gameTime, player);
                 }
                 else
                     obj.Update(gameTime);

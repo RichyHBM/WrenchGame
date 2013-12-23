@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Wrench.src.BaseClass;
+using Wrench.src.BaseClasses;
 using Wrench.src.Managers;
 using Microsoft.Xna.Framework;
 using Wrench.src.Helpers;
