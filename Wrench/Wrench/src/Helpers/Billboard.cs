@@ -21,10 +21,17 @@ namespace Wrench.src.Helpers
     {
         protected Texture2D texture;
         protected VertexPositionTexture[] vertices;
-        protected BasicEffect effect;
+        protected Effect effect;
         protected Matrix rotation = Matrix.Identity;
         protected Matrix translation = Matrix.Identity;
         protected Vector3 position;
+        protected Matrix world = Matrix.Identity;
+
+        protected bool fogEnabled;
+        protected float fogStart;
+        protected float fogEnd;
+        protected Vector3 fogColor;
+
         public Billboard(Game game, Texture2D texture, Vector2 size)
             : base(game)
         {
@@ -39,22 +46,20 @@ namespace Wrench.src.Helpers
                 new VertexPositionTexture(new Vector3(0.5f * size.X, 0.0f * size.Y, 0.0f), new Vector2(1, 1))
             };
 
-            effect = new BasicEffect(game.GraphicsDevice);            
-            effect.TextureEnabled = true;
-            effect.Texture = texture;
+            effect = ContentPreImporter.GetEffect("Billboard");
 
-            effect.FogEnabled = GlobalSettings.FogEnabled;
-            effect.FogColor = GlobalSettings.FogColor;
-            effect.FogStart = GlobalSettings.FogStart;
-            effect.FogEnd = GlobalSettings.FogEnd;
+            fogEnabled = GlobalSettings.FogEnabled;
+            fogStart = GlobalSettings.FogStart;
+            fogEnd = GlobalSettings.FogEnd;
+            fogColor = GlobalSettings.FogColor;
         }
 
         public void OverrideFog(bool enable, Vector3 color, float start, float end)
         {
-            effect.FogEnabled = enable;
-            effect.FogColor = color;
-            effect.FogStart = start;
-            effect.FogEnd = end;
+            fogEnabled = enable;
+            fogStart = start;
+            fogEnd = end;
+            fogColor = color;
         }
 
         public void SetTexture(Texture2D t)
@@ -100,10 +105,8 @@ namespace Wrench.src.Helpers
 
         public void ForceUpdate()
         {
-            effect.World = rotation * translation;
+            world = rotation * translation;
             rotation = Matrix.Identity;
-            effect.View = Manager.MatrixManager.View;
-            effect.Projection = Manager.MatrixManager.Perspective;
         }
 
         /// <summary>
@@ -113,10 +116,8 @@ namespace Wrench.src.Helpers
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-            effect.World = rotation * translation;
+            world = rotation * translation;
             rotation = Matrix.Identity;
-            effect.View = Manager.MatrixManager.View;
-            effect.Projection = Manager.MatrixManager.Perspective;
 
             base.Update(gameTime);
         }
@@ -124,7 +125,15 @@ namespace Wrench.src.Helpers
         public override void Draw(GameTime gameTime)
         {
             Game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
-            effect.Texture = texture;
+            effect.Parameters["Texture"].SetValue(texture);
+            effect.Parameters["World"].SetValue(world);
+            effect.Parameters["View"].SetValue(Manager.MatrixManager.View);
+            effect.Parameters["Projection"].SetValue(Manager.MatrixManager.Perspective);
+
+            effect.Parameters["FogStart"].SetValue(fogStart);
+            effect.Parameters["FogEnd"].SetValue(fogEnd);
+            effect.Parameters["FogColor"].SetValue(new Vector4(fogColor, 255));
+            effect.Parameters["FogEnabled"].SetValue(fogEnabled);
 
             effect.CurrentTechnique.Passes[0].Apply();
             Game.GraphicsDevice.DrawUserPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, vertices, 0, vertices.Length / 3);
