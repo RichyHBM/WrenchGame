@@ -16,6 +16,7 @@ namespace Wrench.src.GameObjects.Enemies
         public RedHead(Game game, Vector3 pos, Level l)
             : base(game, pos, l)
         {
+            //Parameters for this specific enemy
             life = 5;
             textures = new Texture2D[life];
             Damage = 5;
@@ -26,7 +27,7 @@ namespace Wrench.src.GameObjects.Enemies
             boxMin = new Vector3(-0.235f, 0, -0.235f);
             boxMax = new Vector3(0.235f, 0.8f, 0.235f);
             boundingBox = new BoundingBox(position + boxMin, position + boxMax);
-
+            //Different textures for each life count
             textures[4] = ContentPreImporter.GetTexture("RedHead");
             textures[3] = ContentPreImporter.GetTexture("RedHead4");
             textures[2] = ContentPreImporter.GetTexture("RedHead3");
@@ -38,7 +39,7 @@ namespace Wrench.src.GameObjects.Enemies
             billboard.Move(position + new Vector3(0, 0.25f, 0));
             billboard.ForceUpdate();
             target = pos;
-
+            //Set new values for the fog if required
             billboard.OverrideFog(GlobalSettings.FogEnabled, GlobalSettings.FogColor, GlobalSettings.FogStart, GlobalSettings.FogEnd * 2.1f);
         }
     }

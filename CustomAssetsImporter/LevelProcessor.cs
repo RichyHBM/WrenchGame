@@ -28,6 +28,7 @@ namespace CustomAssetsImporter
     [ContentProcessor(DisplayName = "CustomAssetsImporter.LevelProcessor")]
     public class LevelProcessor : ContentProcessor<TInput, TOutput>
     {
+        //Processes the file contents and converts them into a level
         public override TOutput Process(TInput input, ContentProcessorContext context)
         {
             char[] map = new char[input.width * input.height];
@@ -36,6 +37,7 @@ namespace CustomAssetsImporter
             foreach (String line in input.map)
             {
                 char[] lineChar = line.ToCharArray();
+                //If the tile is blank fill it in with a floor '.'
                 for (int j = 0; j < line.Length; j++)
                 {
                     if (!String.IsNullOrWhiteSpace(lineChar[j].ToString()))

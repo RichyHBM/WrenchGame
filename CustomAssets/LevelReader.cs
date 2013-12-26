@@ -20,6 +20,7 @@ namespace CustomAssets
     /// </summary>
     public class LevelReader : ContentTypeReader<TRead>
     {
+        //Reads the compiled file
         protected override TRead Read(ContentReader input, TRead existingInstance)
         {
             int width = input.ReadInt32();

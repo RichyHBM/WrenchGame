@@ -9,11 +9,13 @@ using Wrench.src.Helpers;
 
 namespace Wrench.src.GameObjects.Pickups
 {
+    //Health pickup
     public class Health : Pickup
     {
         public Health(Game game, Vector3 pos)
             : base(game, pos)
-        { 
+        {
+            //Assets for the health pickup
             texture = ContentPreImporter.GetTexture("HealthPack");
             pickupSound = ContentPreImporter.GetSound("Pickup");
 
@@ -22,7 +24,7 @@ namespace Wrench.src.GameObjects.Pickups
             billboard.ForceUpdate();
         }
 
-
+        //Add health to the player and remove the pickup
         public override void DoEffect(Player p)
         {
             if (p.Health == 100) return;

@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Wrench.src.States
 {
+    //State for level selection
     public class LevelSelectionState : AState
     {
         SpriteFont titleFont;
@@ -41,7 +42,7 @@ namespace Wrench.src.States
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
+            // Update state or selection depending on key press
             if (Manager.InputManager.HasBeenPressed(Keys.Escape) || Manager.InputManager.HasBeenPressed(Buttons.Y))
             {
                 //remove this
@@ -63,24 +64,25 @@ namespace Wrench.src.States
 
             if (Manager.InputManager.HasBeenPressed(Keys.Down) || Manager.InputManager.HasBeenPressed(Buttons.LeftThumbstickDown))
             {
-                if (selectedLevel < levelNames.Count-1) selectedLevel++;
+                if (selectedLevel < levelNames.Count - 1) selectedLevel++;
             }
-                
+
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
+            //Draw state drawing a blank screen first
             spriteBatch.Begin();
             spriteBatch.Draw(backdrop, Game.GraphicsDevice.Viewport.Bounds, Color.Black);
             //Font has weird top spacing, so draw at -50
             spriteBatch.DrawString(titleFont, "Levels", new Vector2(10, -50), Color.White);
-
+            //Draw selected, previous and next level
             if (selectedLevel > 0)
                 spriteBatch.DrawString(optionsFont, levelNames[selectedLevel - 1], new Vector2(10, 190), Color.White);
-            
+
             spriteBatch.DrawString(optionsFont, "> " + levelNames[selectedLevel], new Vector2(10, 300), Color.Gold);
-            
+
             if (selectedLevel < levelNames.Count - 1)
                 spriteBatch.DrawString(optionsFont, levelNames[selectedLevel + 1], new Vector2(10, 410), Color.White);
 

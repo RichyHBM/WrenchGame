@@ -37,7 +37,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	output.Position = mul(viewPosition, Projection);
 
 	output.UV = input.UV;
-	 
+	//Returns a 0 to 1 value depending on the z of the vertex(distance to the camera)
     output.FogFactor = saturate((FogEnd - output.Position.z) / (FogEnd - FogStart));
     
 	return output;
@@ -49,6 +49,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	clip(texColor.a - 0.2f );
     
 	float4 finalColor = texColor;
+	//Give fog depending on the amount of fog factor
 	if(FogEnabled)
 		finalColor = input.FogFactor * texColor + (1.0 - input.FogFactor) * FogColor;
 	return finalColor;

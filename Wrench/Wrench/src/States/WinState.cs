@@ -17,6 +17,7 @@ namespace Wrench.src.States
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
+    // State that displays a win message
     public class WinState : AState
     {
         SpriteFont titleFont;
@@ -47,7 +48,7 @@ namespace Wrench.src.States
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
+            //Remove state if correct Buttons is pressed
             if (Manager.InputManager.HasBeenPressed(Keys.Escape) || Manager.InputManager.HasBeenPressed(Buttons.Y))
             {
                 Manager.StateManager.RemoveState(gameState);
@@ -58,7 +59,7 @@ namespace Wrench.src.States
 
         public override void Draw(GameTime gameTime)
         {
-
+            //Draw state drawing a blank screen first
             spriteBatch.Begin();
             spriteBatch.Draw(backdrop, Game.GraphicsDevice.Viewport.Bounds, Color.Black);
 

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace CustomAssetsImporter
 {
+    //Class to hold file data
     public class LoadedLevelFile
     {
         public int width;

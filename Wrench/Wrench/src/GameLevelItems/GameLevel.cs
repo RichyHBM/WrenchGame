@@ -23,6 +23,7 @@ namespace Wrench.src.GameLevelItems
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
+    // Main level class, renders level and updates & checks collisions between objects
     public class GameLevel : Microsoft.Xna.Framework.DrawableGameComponent
     {
         LevelRenderer levelRend;
@@ -46,14 +47,16 @@ namespace Wrench.src.GameLevelItems
 
             Vector3 playerPos = Vector3.Zero;
             int enemyFound = 0;
+            //Build the game level creating the enemies, player and pickups
             for (int y = 0; y < levelRaw.Depth; y++)
             {
                 for (int x = 0; x < levelRaw.Width; x++)
                 {
-                    if (levelRaw.GetAt(x, y).ToString().ToLower()  == "p")
+                    if (levelRaw.GetAt(x, y).ToString().ToLower() == "p")
                         player = new Player(game, new Vector3(x, 0, y));
                     else if (levelRaw.GetAt(x, y).ToString().ToLower() == "e")
                     {
+                        //Depending on the difficulty only add certain enemies
                         enemyFound++;
                         if ((enemyFound % GlobalSettings.EnemyFrequency) == 0)
                         {
@@ -72,7 +75,7 @@ namespace Wrench.src.GameLevelItems
                     }
                     else if (levelRaw.GetAt(x, y).ToString().ToLower() == "h")
                     {
-                        objects.Add(new Health(game, new Vector3(x, 0, y)));                        
+                        objects.Add(new Health(game, new Vector3(x, 0, y)));
                     }
                 }
             }
@@ -108,6 +111,7 @@ namespace Wrench.src.GameLevelItems
         {
             // TODO: Add your update code here
             levelRend.Update(gameTime);
+            //Update all objects
             foreach (GameObject obj in objects)
             {
                 if (obj is Enemy)
@@ -128,6 +132,7 @@ namespace Wrench.src.GameLevelItems
 
             levelCollisions.Update(gameTime);
 
+            //Check for collisions against the walls
             foreach (GameObject obj in objects)
             {
                 if (levelCollisions.IsColliding(obj.BoundingBox))
@@ -137,6 +142,7 @@ namespace Wrench.src.GameLevelItems
                 }
             }
 
+            //Hit enemy if its shot
             if (player.Shot)
             {
                 foreach (GameObject obj in objects)
@@ -152,29 +158,30 @@ namespace Wrench.src.GameLevelItems
 
                 }
             }
-
+            //Update the skybox to the players position
             skybox.SetPosition(player.Position);
-
+            //Remove dead objects
             List<GameObject> toRemove = new List<GameObject>();
             foreach (GameObject obj in objects)
                 if (obj.Alive == false)
                 {
                     toRemove.Add(obj);
-                    if(obj is Enemy)
+                    if (obj is Enemy)
                         enemies--;
                 }
             foreach (GameObject obj in toRemove)
                 objects.Remove(obj);
-
-            if(!player.Alive)
+            //Change to a win/lose state if required
+            if (!player.Alive)
                 Manager.StateManager.PushState(new LoseState(Game, gameState));
-            if(enemies == 0)
+            if (enemies == 0)
                 Manager.StateManager.PushState(new WinState(Game, gameState));
 
 
             base.Update(gameTime);
         }
 
+        //Draw all objects
         public override void Draw(GameTime gameTime)
         {
             skybox.Draw(gameTime);
@@ -185,12 +192,12 @@ namespace Wrench.src.GameLevelItems
             }
             levelCollisions.Draw(gameTime);
 
-            
+
             SpriteBatch sp = Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
             sp.Begin();
             sp.DrawString(font, "Enemies: " + enemies, new Vector2(10, 5), Color.Red);
             sp.End();
-
+            //Reset things the spriteback changes
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
@@ -199,6 +206,7 @@ namespace Wrench.src.GameLevelItems
         }
 
         Random ran = new Random();
+        //Returns a random empty tile
         private Vector3 GetRandomEmpty()
         {
             Vector3 vec = new Vector3();
@@ -211,14 +219,14 @@ namespace Wrench.src.GameLevelItems
 
             return vec;
         }
-
+        //Checks if 2 objects are in sight using walls
         public bool isInSighten(GameObject one, GameObject two)
         {
             Vector3 pos = one.Position + (Vector3.Up / 2.0f);
             Vector3 dir = two.Position - one.Position;
             dir.Normalize();
             Ray ray = new Ray(pos, dir);
-
+            //Check if the ray intersects with any wall before hitting the other object
             float? enemyDist = ray.Intersects(two.BoundingBox);
             bool inSight = false;
             if (enemyDist != null)
@@ -236,7 +244,7 @@ namespace Wrench.src.GameLevelItems
             }
             return inSight;
         }
-
+        //Checks the same as in sight but only in the direction the first object is facing
         public bool isInDirection(GameObject one, GameObject two)
         {
             Matrix forwardMovement = Matrix.CreateRotationY(one.Rotation);

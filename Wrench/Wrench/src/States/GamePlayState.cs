@@ -19,6 +19,7 @@ namespace Wrench.src.States
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
+    // Main game play state
     public class GamePlayState : AState
     {
         GameLevel level;
@@ -38,7 +39,7 @@ namespace Wrench.src.States
         public override void Initialize()
         {
             // TODO: Add your initialization code here
-            
+
             base.Initialize();
         }
 
@@ -48,18 +49,19 @@ namespace Wrench.src.States
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
+            // Add pause state if escape is pressed
             if (Manager.InputManager.HasBeenPressed(Keys.Escape))
                 Manager.StateManager.PushState(new PauseState(Game, this));
 
             level.Update(gameTime);
-
+            //Set mouse to center for offset detection only when playing the game
             Mouse.SetPosition(Game.GraphicsDevice.Viewport.Width / 2, Game.GraphicsDevice.Viewport.Height / 2);
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
+            //Draw state drawing a blank screen first
             spriteBatch.Begin();
             spriteBatch.Draw(backdrop, Game.GraphicsDevice.Viewport.Bounds, Color.Black);
             spriteBatch.End();

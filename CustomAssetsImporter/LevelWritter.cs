@@ -22,6 +22,7 @@ namespace CustomAssetsImporter
     [ContentTypeWriter]
     public class LevelWritter : ContentTypeWriter<TWrite>
     {
+        //Compiles the level into an xnb file
         protected override void Write(ContentWriter output, TWrite value)
         {
             output.Write((Int32)value.Width);

@@ -14,6 +14,7 @@ using System.IO;
 
 namespace Wrench.src.Managers
 {
+    //Preloads all found content
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
@@ -28,18 +29,19 @@ namespace Wrench.src.Managers
         public static void Initialize(Game game)
         {
             string contentPath = game.Content.RootDirectory;
-
+            //Look for all files in the directories
             DirectoryInfo textureDir = new DirectoryInfo(contentPath + "/Textures/");
             DirectoryInfo levelDir = new DirectoryInfo(contentPath + "/Levels/");
             DirectoryInfo fontDir = new DirectoryInfo(contentPath + "/Fonts/");
             DirectoryInfo soundDir = new DirectoryInfo(contentPath + "/Audio/");
             DirectoryInfo effectDir = new DirectoryInfo(contentPath + "/Effects/");
 
+            //Load all files removing their extensions
             foreach (FileInfo file in textureDir.GetFiles())
             {
                 string fileName = file.Name.Replace(file.Extension, "");
                 string fullPath = "Textures/" + fileName;
-                textureList.Add(fileName, game.Content.Load<Texture2D>(fullPath ));
+                textureList.Add(fileName, game.Content.Load<Texture2D>(fullPath));
             }
 
             foreach (FileInfo file in levelDir.GetFiles())
@@ -71,7 +73,7 @@ namespace Wrench.src.Managers
             }
 
         }
-
+        //Return the corresponding asset from the required location
         public static Texture2D GetTexture(string name)
         {
             Texture2D t;

@@ -16,6 +16,7 @@ namespace Wrench.src.GameObjects
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
+    //Gun billboard object
     public class HolsteredGun : Billboard
     {
         public HolsteredGun(Game game, Texture2D texture, Vector2 size)
@@ -34,7 +35,7 @@ namespace Wrench.src.GameObjects
 
             base.Initialize();
         }
-
+        //Sets the position to be slightly off set from the player position and gives it a certain rotation
         public void SetPositionRotation(Vector3 pos, float rot)
         {
             Matrix rotationMatrix = Matrix.CreateRotationY(rot);

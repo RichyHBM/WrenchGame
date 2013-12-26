@@ -7,8 +7,10 @@ using Wrench.src.BaseClasses;
 
 namespace Wrench.src.Managers
 {
+    //Manager to keep track of all rendering matrices
     public class MatrixManager : IManager
     {
+        //Resolution and view parameters
         int width = 1, height = 1;
         float nearPlane = 0.1f, farPlane = 100.0f;
         float fieldOfView = 95;
@@ -40,7 +42,7 @@ namespace Wrench.src.Managers
         public void Draw(GameTime gameTime)
         {
         }
-
+        //Set all the different parameters
         public void SetWidthHeight(int width, int height)
         {
             this.width = width;
@@ -84,6 +86,7 @@ namespace Wrench.src.Managers
             Matrix.Multiply(ref view, ref perspective, out viewPerspective);
         }
 
+        //Get all the matrices
         public Matrix Orthographic
         {
             get { return orthogonal; }

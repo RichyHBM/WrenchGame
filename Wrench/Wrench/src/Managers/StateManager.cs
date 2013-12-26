@@ -16,12 +16,13 @@ namespace Wrench.src.Managers
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
+    // Manages all the different states the game can be in
     public class StateManager : IManager
     {
         List<AState> states = new List<AState>();
         protected Game game;
 
-
+        //Add a new state and use that one from now on
         public void PushState(AState state)
         {
             if (states.Count != 0)
@@ -33,7 +34,7 @@ namespace Wrench.src.Managers
 
             states.Add(state);
         }
-
+        //Removes the last state
         public void RemoveState()
         {
             RemoveState(states.Last());
@@ -48,7 +49,7 @@ namespace Wrench.src.Managers
                 game.Exit();
             states.Last().Resume();
         }
-        
+
         public void Initialize(Game game)
         {
             this.game = game;

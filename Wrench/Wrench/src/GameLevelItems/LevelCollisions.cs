@@ -20,11 +20,13 @@ namespace Wrench.src.GameLevelItems
     {
         Level level;
         List<BoundingBox> levelBoxes = new List<BoundingBox>();
-        public List<BoundingBox> LevelCollisionBoxes { get { return levelBoxes;  } private set { } }
+        public List<BoundingBox> LevelCollisionBoxes { get { return levelBoxes; } private set { } }
+
         public LevelCollisions(Game game, Level lev)
             : base(game)
         {
             level = lev;
+            //Add a collision box for each wall
             for (int y = 0; y < level.Depth; y++)
             {
                 for (int x = 0; x < level.Width; x++)
@@ -42,6 +44,7 @@ namespace Wrench.src.GameLevelItems
 
         public bool IsColliding(BoundingBox box)
         {
+            //Check if the given box is colliding with any other box
             foreach (BoundingBox b in levelBoxes)
             {
                 if (b.Intersects(box) || b.Contains(box) == ContainmentType.Contains || box.Contains(b) == ContainmentType.Contains)
@@ -78,6 +81,7 @@ namespace Wrench.src.GameLevelItems
         {
             foreach (BoundingBox box in levelBoxes)
             {
+                //Draw each bounding box
                 Helpers.DebugShapeRenderer.AddBoundingBox(box, Color.Blue);
             }
             base.Draw(gameTime);

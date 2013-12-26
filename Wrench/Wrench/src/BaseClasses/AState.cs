@@ -13,25 +13,19 @@ using Wrench.src.Managers;
 
 namespace Wrench.src.BaseClasses
 {
-    public enum InnerState
-    {
-        Appearing,
-        Showing,
-        Fading
-    }
-
     /// <summary>
     /// This is a game component that implements IUpdateable.
-    /// </summary>
+    /// </summary> 
+    //Any state the game can be in
     public abstract class AState : Microsoft.Xna.Framework.DrawableGameComponent
     {
         protected SpriteBatch spriteBatch;
-        protected InnerState state = InnerState.Appearing;
         protected Texture2D backdrop;
-        
+
         public AState(Game game)
             : base(game)
         {
+            //Blank texture
             backdrop = ContentPreImporter.GetTexture("backDrop");
             spriteBatch = (Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch);
             // TODO: Construct any child components here

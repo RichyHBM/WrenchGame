@@ -36,7 +36,7 @@ namespace Wrench.src.Helpers
             : base(game)
         {
             this.texture = texture;
-
+            //Build the quad to be displayed
             vertices = new VertexPositionTexture[6]{
                 new VertexPositionTexture(new Vector3(-0.5f * size.X, 0.0f * size.Y, 0.0f), new Vector2(0, 1)),
                 new VertexPositionTexture(new Vector3(-0.5f * size.X, 1.0f * size.Y, 0.0f), new Vector2(0, 0)),
@@ -45,7 +45,7 @@ namespace Wrench.src.Helpers
                 new VertexPositionTexture(new Vector3(0.5f * size.X, 1.0f * size.Y, 0.0f), new Vector2(1, 0)),
                 new VertexPositionTexture(new Vector3(0.5f * size.X, 0.0f * size.Y, 0.0f), new Vector2(1, 1))
             };
-
+            //Use a custom effect
             effect = ContentPreImporter.GetEffect("Billboard");
 
             fogEnabled = GlobalSettings.FogEnabled;
@@ -53,7 +53,7 @@ namespace Wrench.src.Helpers
             fogEnd = GlobalSettings.FogEnd;
             fogColor = GlobalSettings.FogColor;
         }
-
+        //Allow fog parameters to be overriden
         public void OverrideFog(bool enable, Vector3 color, float start, float end)
         {
             fogEnabled = enable;
@@ -65,7 +65,6 @@ namespace Wrench.src.Helpers
         public void SetTexture(Texture2D t)
         {
             this.texture = t;
-
         }
 
         /// <summary>
@@ -97,7 +96,7 @@ namespace Wrench.src.Helpers
         {
             rotation *= Matrix.CreateRotationZ(angle);
         }
-
+        //Make the billboard face a point
         public void Face(Vector3 lookAt)
         {
             rotation *= Matrix.CreateLookAt(position, lookAt, Vector3.Up);
@@ -124,6 +123,7 @@ namespace Wrench.src.Helpers
 
         public override void Draw(GameTime gameTime)
         {
+            //Pass in the parameters to the effect and draw billboard
             Game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
             effect.Parameters["Texture"].SetValue(texture);
             effect.Parameters["World"].SetValue(world);

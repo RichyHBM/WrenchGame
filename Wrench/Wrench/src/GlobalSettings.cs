@@ -10,11 +10,12 @@ namespace Wrench.src
     {
         public enum DifficultyEnum { Easy, Medium, Hard };
         private static DifficultyEnum difficulty;
-        public static DifficultyEnum Difficulty { 
-            set 
+        public static DifficultyEnum Difficulty
+        {
+            set
             {
                 switch (value)
-                { 
+                {
                     case DifficultyEnum.Easy:
                         FogStart = 1.2f;
                         FogEnd = 2.5f;
@@ -37,16 +38,18 @@ namespace Wrench.src
                 FogEnabled = true;
 #endif
                 FogColor = Color.Black.ToVector3();
-                difficulty = value; 
+                difficulty = value;
 
-            } 
-            get { return difficulty; } 
+            }
+            get { return difficulty; }
         }
 
         public static bool FogEnabled { private set; get; }
         public static Vector3 FogColor { private set; get; }
+        //Fog start and end distance
         public static float FogStart { private set; get; }
         public static float FogEnd { private set; get; }
+        //Frequency of enemies to create depending on difficulty
         public static int EnemyFrequency { private set; get; }
     }
 }

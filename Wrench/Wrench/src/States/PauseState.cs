@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Wrench.src.States
 {
+    //State for game paused
     public class PauseState : AState
     {
         SpriteFont titleFont;
@@ -47,10 +48,10 @@ namespace Wrench.src.States
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
+            // Update selection depending on button press
             if (Manager.InputManager.HasBeenPressed(Keys.Enter) || Manager.InputManager.HasBeenPressed(Buttons.A))
             {
-                switch(currentChoice)
+                switch (currentChoice)
                 {
                     case Options.Resume:
                         Manager.StateManager.RemoveState(this);
@@ -87,18 +88,20 @@ namespace Wrench.src.States
                         break;
                 }
             }
-                
+
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
+            //Draw state drawing a semi-transparent screen first
             spriteBatch.Begin();
 
             spriteBatch.Draw(backdrop, Game.GraphicsDevice.Viewport.Bounds, new Color(255, 255, 255, 196));
             //Font has weird top spacing, so draw at -50
             spriteBatch.DrawString(titleFont, "Wrench", new Vector2(10, -50), Color.White);
 
+            //Draw options with correct selection
             if (currentChoice == Options.Resume)
             {
                 spriteBatch.DrawString(optionsFont, "Resume", new Vector2(10, 300), Color.Gold);
@@ -109,7 +112,8 @@ namespace Wrench.src.States
                 spriteBatch.DrawString(optionsFont, "Resume", new Vector2(10, 300), Color.White);
                 spriteBatch.DrawString(optionsFont, "Quit to menu", new Vector2(10, 410), Color.Gold);
             }
-            else{
+            else
+            {
                 spriteBatch.DrawString(optionsFont, "Resume", new Vector2(10, 300), Color.White);
                 spriteBatch.DrawString(optionsFont, "Quit to menu", new Vector2(10, 410), Color.White);
             }

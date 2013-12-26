@@ -33,11 +33,12 @@ namespace Wrench.src.Helpers
             : base(game)
         {
             level = levFile;
+            //Textures for the different surfaces
             brickTexture = ContentPreImporter.GetTexture("bricks");
             floorTexture = ContentPreImporter.GetTexture("floor");
             ceilingTexture = ContentPreImporter.GetTexture("ceiling");
             effect = new BasicEffect(Game.GraphicsDevice);
-
+            //Enable fog if required
             effect.FogEnabled = GlobalSettings.FogEnabled;
             effect.FogColor = GlobalSettings.FogColor;
             effect.FogStart = GlobalSettings.FogStart;
@@ -51,19 +52,20 @@ namespace Wrench.src.Helpers
         public override void Initialize()
         {
             // TODO: Add your initialization code here
-
-            string floorAndCeeling = ".pegh";
+            //.lev characters that require both floor and ceiling or just floor
+            string floorAndCeiling = ".pegh";
             string floor = ",PEGH";
 
             for (int y = 0; y < level.Depth; y++)
             {
                 for (int x = 0; x < level.Width; x++)
                 {
+                    //Add the different types of map tiles for wall, floor, ceiling...
                     if (level.GetAt(x, y) == '#')
                     {
                         wallVertices.AddRange(MapMesh.WallMeshAt(x, y));
                     }
-                    else if (floorAndCeeling.Contains(level.GetAt(x, y)))
+                    else if (floorAndCeiling.Contains(level.GetAt(x, y)))
                     {
                         floorVertices.AddRange(MapMesh.FloorMeshAt(x, y));
                         ceilingVertices.AddRange(MapMesh.CeilingMeshAt(x, y));
@@ -91,26 +93,27 @@ namespace Wrench.src.Helpers
 
         public override void Draw(GameTime gameTime)
         {
+            //Pass all parameters to the effect
             effect.World = Matrix.Identity;
             effect.View = Manager.MatrixManager.View;
             effect.Projection = Manager.MatrixManager.Perspective;
             effect.VertexColorEnabled = false;
             effect.TextureEnabled = true;
-
+            //Draw walls, floors & ceilings
             if (wallVertices.Count > 0)
             {
                 effect.Texture = brickTexture;
                 effect.CurrentTechnique.Passes[0].Apply();
                 GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.TriangleList, wallVertices.ToArray(), 0, wallVertices.Count / 3, VertexPositionNormalTexture.VertexDeclaration);
-            } 
-            
+            }
+
             if (floorVertices.Count > 0)
             {
                 effect.Texture = floorTexture;
                 effect.CurrentTechnique.Passes[0].Apply();
                 GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.TriangleList, floorVertices.ToArray(), 0, floorVertices.Count / 3, VertexPositionNormalTexture.VertexDeclaration);
             }
-            
+
             if (ceilingVertices.Count > 0)
             {
                 effect.Texture = ceilingTexture;

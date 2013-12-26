@@ -22,13 +22,14 @@ namespace Wrench.src.GameObjects
     {
         //its position will always be on the floor, so we need an offset to 'elevate' the camera
         Vector3 headPosition;
-        
+
         //The position the player looks at when not rotated
         Vector3 cameraReference = Vector3.Forward;
         HolsteredGun gun;
         SpriteFont font;
         private Texture2D gunFlashTexture;
         private Texture2D gunTexture;
+        //Time for next shot availability
         private DateTime bulletTime;
         SoundEffect shotSound;
         SoundEffect hurtSound;
@@ -42,12 +43,13 @@ namespace Wrench.src.GameObjects
         public Player(Game game, Vector3 pos)
             : base(game)
         {
+            //Initialize everything
             bulletTime = DateTime.Today;
             this.position = pos;
             headPosition = new Vector3(0, 0.6f, 0);
             RotationSpeed = 0.1f;
             ForwardSpeed = 10f;
-            
+
             boxMin = new Vector3(-0.235f, 0, -0.235f);
             boxMax = new Vector3(0.235f, 0.8f, 0.235f);
             boundingBox = new BoundingBox(position + boxMin, position + boxMax);
@@ -98,12 +100,13 @@ namespace Wrench.src.GameObjects
         {
             // TODO: Add your update code here
             Matrix rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
-
+            //Rotate towards the mouse movement
             amountOfRotation += Manager.InputManager.MouseChange.X * RotationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //Amount returned by joystick is much smaller, so multiply it by a large number
             amountOfRotation -= Manager.InputManager.RightThumbstick().X * 50 * RotationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            //Move player based on button/gamepad press
             if (Manager.InputManager.IsDown(Keys.W) || Manager.InputManager.IsDown(Buttons.LeftThumbstickUp))
             {
                 Matrix forwardMovement = Matrix.CreateRotationY(amountOfRotation);
@@ -134,13 +137,13 @@ namespace Wrench.src.GameObjects
             }
 
             MoveForward(gameTime);
-
+            //Update the camera
             Vector3 cameraPosition = position + headPosition;
             rotationMatrix = Matrix.CreateRotationY(amountOfRotation);
             Vector3 transformedReference = Vector3.Transform(cameraReference, rotationMatrix);
             Vector3 cameraLookat = cameraPosition + transformedReference;
 
-            
+            //Shoot if mouse clicked
             Shot = false;
             if (Manager.InputManager.HasBeenClicked(InputManager.MouseButton.Left) || Manager.InputManager.HasBeenPressed(Buttons.A))
             {
@@ -154,7 +157,7 @@ namespace Wrench.src.GameObjects
                 gun.SetTexture(gunTexture);
 
 
-
+            //Update the matrices
 #if VIEWDEBUG
             Manager.MatrixManager.SetPosition(cameraPosition + new Vector3(1f, 4.0f, 1f));
             Manager.MatrixManager.SetLookAt(cameraPosition);
@@ -162,6 +165,7 @@ namespace Wrench.src.GameObjects
             Manager.MatrixManager.SetPosition(cameraPosition);
             Manager.MatrixManager.SetLookAt(cameraLookat);
 #endif
+            //Update the bounding box and gun position
             boundingBox = new BoundingBox(position + boxMin, position + boxMax);
             gun.SetPositionRotation(position, amountOfRotation);
             gun.Update(gameTime);
@@ -169,12 +173,14 @@ namespace Wrench.src.GameObjects
             base.Update(gameTime);
         }
 
+        //Add health to the player
         public void AddLife(int amount)
         {
             health += amount;
             health = (int)MathHelper.Clamp(health, 0, 100);
         }
 
+        //Backup the players position if it hits an obstacle
         public override void Backup(GameTime gameTime)
         {
             position = lastPosition;
@@ -195,6 +201,7 @@ namespace Wrench.src.GameObjects
             gun.Update(gameTime);
         }
 
+        //Draw all the required information
         public override void Draw(GameTime gameTime)
         {
 
@@ -220,6 +227,7 @@ namespace Wrench.src.GameObjects
             base.Draw(gameTime);
         }
 
+        //Do damage to the player
         public override void Hit(int damage)
         {
             hurtSound.Play();

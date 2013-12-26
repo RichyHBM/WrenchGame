@@ -17,16 +17,26 @@ namespace Wrench.src.States
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
+    // Introduction splash screen
     public class IntroState : AState
     {
+        public enum InnerState
+        {
+            Appearing,
+            Showing,
+            Fading
+        }
+
         SpriteFont font;
         float alpha = 0;
         private float time = 0;
-        
+
+        protected InnerState state = InnerState.Appearing;
+
         public IntroState(Game game)
             : base(game)
         {
-            
+
             // TODO: Construct any child components here
         }
 
@@ -37,7 +47,7 @@ namespace Wrench.src.States
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-            
+            //Make the state fade in and out, removing after certain amount of time
             switch (state)
             {
                 case InnerState.Appearing:
@@ -46,7 +56,7 @@ namespace Wrench.src.States
                     alpha += (float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.1f;
                     break;
                 case InnerState.Showing:
-                    if(time > 3000)
+                    if (time > 3000)
                         state = InnerState.Fading;
                     time += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                     break;
@@ -63,11 +73,11 @@ namespace Wrench.src.States
 
         public override void Draw(GameTime gameTime)
         {
-
+            //Draw state drawing a blank screen first
             spriteBatch.Begin();
 
             spriteBatch.Draw(backdrop, Game.GraphicsDevice.Viewport.Bounds, Color.Black);
-            
+
             Vector2 center = new Vector2(Game.GraphicsDevice.Viewport.Bounds.Center.X,
                                          Game.GraphicsDevice.Viewport.Bounds.Center.Y);
 

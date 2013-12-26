@@ -16,9 +16,9 @@ namespace Wrench.src.Managers
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
+    // Updates all input types and keeps track of their states
     public class InputManager : IManager
     {
-        bool needsMatrixUpdate = false;
         MouseState oldMouseState, currentMouseState;
         KeyboardState oldKeyboardState, currentKeyboardState;
         GamePadState oldGamepadState, currentGamepadState;
@@ -35,11 +35,6 @@ namespace Wrench.src.Managers
             Left,
             Right,
             Middle
-        }
-
-        public void SetMatrixUpdate(bool matrixUpdate)
-        {
-            needsMatrixUpdate = matrixUpdate;
         }
 
         public void Initialize(Game game)
@@ -66,9 +61,6 @@ namespace Wrench.src.Managers
                 game.Exit();
             if (Keyboard.GetState().IsKeyDown(Keys.F5))
                 game.Exit();
-
-            if (needsMatrixUpdate)
-                UpdateMatrix();
         }
 
         private void updateStates()
@@ -85,7 +77,7 @@ namespace Wrench.src.Managers
             mouseChange.Y = centerOfScreen.Y - currentMouseState.Y;
             mousePositionToCenter += mouseChange;
         }
-
+        //Checks for a single press
         public bool HasBeenPressed(Buttons button)
         {
             return oldGamepadState.IsButtonUp(button) && currentGamepadState.IsButtonDown(button);
@@ -95,30 +87,30 @@ namespace Wrench.src.Managers
         {
 
         }
-
+        //Checks for a single press
         public bool HasBeenPressed(Keys key)
         {
             return oldKeyboardState.IsKeyUp(key) && currentKeyboardState.IsKeyDown(key);
         }
-
+        //Checks for button held down
         public bool IsDown(Keys key)
         {
             return currentKeyboardState.IsKeyDown(key);
         }
-
+        //Checks for button held down
         public bool IsDown(Buttons button)
         {
-            return  currentGamepadState.IsButtonDown(button);
+            return currentGamepadState.IsButtonDown(button);
         }
-
+        //Retrieves the right stick
         public Vector2 RightThumbstick()
         {
             return currentGamepadState.ThumbSticks.Right;
         }
-
+        //Checks for a mouse button click
         public bool HasBeenClicked(MouseButton button)
-        { 
-            switch(button)
+        {
+            switch (button)
             {
                 case MouseButton.Left:
                     return (currentMouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released);
@@ -128,11 +120,6 @@ namespace Wrench.src.Managers
                     return (currentMouseState.MiddleButton == ButtonState.Pressed && oldMouseState.MiddleButton == ButtonState.Released);
             }
             return false;
-        }
-
-        public static void UpdateMatrix()
-        {
-
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Wrench
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 576;
             graphics.PreferredBackBufferWidth = 1024;
-            
+
             //graphics.ToggleFullScreen();
             graphics.ApplyChanges();
 
@@ -62,9 +62,11 @@ namespace Wrench
             src.Helpers.DebugShapeRenderer.Initialize(GraphicsDevice);
             Services.AddService(typeof(SpriteBatch), spriteBatch);
 
+            //Add the intro state and the menu state
             Manager.Initialize(this);
             Manager.StateManager.PushState(new MainMenuState(this));
             Manager.StateManager.PushState(new IntroState(this));
+            //Load assets
             font = ContentPreImporter.GetFont("TextFont");
             backgroundMusic = ContentPreImporter.GetSound("Nerves").CreateInstance();  // Put the name of your song in instead of "song_title"
             backgroundMusic.Play();
@@ -92,6 +94,7 @@ namespace Wrench
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //Loop the audio
             if (backgroundMusic.State == SoundState.Stopped)
                 backgroundMusic.Play();
             Manager.Update(gameTime);

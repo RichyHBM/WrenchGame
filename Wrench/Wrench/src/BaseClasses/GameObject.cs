@@ -15,6 +15,7 @@ namespace Wrench.src.BaseClasses
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
+    // Any 3d game object
     public abstract class GameObject : Microsoft.Xna.Framework.DrawableGameComponent
     {
         protected Vector3 position;
@@ -33,7 +34,7 @@ namespace Wrench.src.BaseClasses
 
         public float Rotation { get { return amountOfRotation; } private set { } }
         protected float amountOfRotation = 0;
-        public bool Alive { get; protected set; } 
+        public bool Alive { get; protected set; }
 
         public GameObject(Game game)
             : base(game)
@@ -64,17 +65,19 @@ namespace Wrench.src.BaseClasses
             base.Update(gameTime);
         }
 
-
+        //Moves the object
         public void MoveForward(GameTime gameTime)
         {
             lastPosition = position;
             position += velocity * ForwardSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
+        //Backs up the object if it hits an obstacle
         public virtual void Backup(GameTime gameTime)
         {
             position = lastPosition;
             boundingBox = new BoundingBox(position + boxMin, position + boxMax);
         }
+
         public void ReverseVelocity()
         {
             velocity.X = -velocity.X;

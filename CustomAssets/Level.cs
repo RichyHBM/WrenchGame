@@ -13,6 +13,7 @@ namespace CustomAssets
 {
     public class Level
     {
+        //Map objects and size
         public char[] Map;
         public int Width;
         public int Depth;
@@ -31,6 +32,7 @@ namespace CustomAssets
 
         public Char GetAt(int x, int y)
         {
+            //If invalid coordinate is given just return a wall
             if (x + Width * y >= Map.Count())
                 return '#';
             return Map[x + Width * y];

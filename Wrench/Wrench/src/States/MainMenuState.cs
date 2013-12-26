@@ -17,6 +17,7 @@ namespace Wrench.src.States
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
+    // State for main options selection
     public class MainMenuState : AState
     {
         SpriteFont titleFont;
@@ -65,10 +66,10 @@ namespace Wrench.src.States
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO: Add your update code here
+            // Update selection based on key press
             if (Manager.InputManager.HasBeenPressed(Keys.Enter) || Manager.InputManager.HasBeenPressed(Buttons.A))
             {
-                switch(currentChoice)
+                switch (currentChoice)
                 {
                     case Options.Play:
                         Manager.StateManager.PushState(new LevelSelectionState(Game));
@@ -110,7 +111,7 @@ namespace Wrench.src.States
                 if (currentChoice == Options.Play)
                 {
                     switch (GlobalSettings.Difficulty)
-                    { 
+                    {
                         case GlobalSettings.DifficultyEnum.Medium:
                             GlobalSettings.Difficulty = GlobalSettings.DifficultyEnum.Easy;
                             difficultyString = "Easy >";
@@ -140,18 +141,19 @@ namespace Wrench.src.States
                     }
                 }
             }
-                
+
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
+            //Draw state drawing a blank screen first
             spriteBatch.Begin();
 
             spriteBatch.Draw(backdrop, Game.GraphicsDevice.Viewport.Bounds, Color.Black);
             //Font has weird top spacing, so draw at -50
             spriteBatch.DrawString(titleFont, "Wrench", new Vector2(10, -50), Color.White);
-
+            //Draw options with correct selection
             if (currentChoice == Options.Play)
             {
                 spriteBatch.DrawString(optionsFont, "Play  " + difficultyString, new Vector2(10, 300), Color.Gold);

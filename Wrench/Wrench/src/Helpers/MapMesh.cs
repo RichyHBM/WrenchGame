@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace Wrench.src.Helpers
 {
+    //Creates vertices for the floor, ceiling and wall making their UV correct and normals point in the right direction
     static class MapMesh
     {
         static Vector2 uvx0y0 = new Vector2(0, 0);

@@ -7,6 +7,7 @@ using Wrench.src.BaseClasses;
 
 namespace Wrench.src.Managers
 {
+    //Manages all the different managers in the game
     public static class Manager
     {
         static InputManager inputManager;
